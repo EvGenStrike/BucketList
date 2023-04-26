@@ -18,6 +18,7 @@ namespace BucketList
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            //1
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
