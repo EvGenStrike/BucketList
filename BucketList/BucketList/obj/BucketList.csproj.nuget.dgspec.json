@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\BucketList.csproj": {}
+    "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\BucketList.csproj": {}
   },
   "projects": {
-    "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\BucketList.csproj": {
+    "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\BucketList.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\BucketList.csproj",
+        "projectUniqueName": "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\BucketList.csproj",
         "projectName": "BucketList",
-        "projectPath": "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\BucketList.csproj",
+        "projectPath": "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\BucketList.csproj",
         "packagesPath": "C:\\Users\\flyli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\obj\\",
+        "outputPath": "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [

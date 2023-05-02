@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bQRAajcAYGUrhfW6n1o6D+W7kc5wG0SCLNVjuzdoXXC8uyI062oZPwDY4nXIfUkVNjCxe7p+ZmLQZJUcCdsIYg==",
+  "dgSpecHash": "SJVyhRm7IXxnOAxhBpbvb9LsJMS2jtTQS5UjmBOmqyBimY7rZrAzyV+TeLUo3cJIzoeceWLxRCoH3amI+GZOVA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\flyli\\source\\repos\\BucketList\\BucketList\\BucketList.csproj",
+  "projectFilePath": "C:\\Users\\flyli\\source\\repos\\project\\BucketList\\BucketList\\BucketList.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\flyli\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\flyli\\.nuget\\packages\\xamarin.androidx.activity\\1.1.0.3\\xamarin.androidx.activity.1.1.0.3.nupkg.sha512",
