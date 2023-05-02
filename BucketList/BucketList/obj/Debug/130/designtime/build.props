@@ -25,11 +25,11 @@ androidgeneratejnimarshalmethods=false
 os=windows_nt
 androidincludedebugsymbols=true
 androidpackagenamingpolicy=lowercasecrc64
-_nugetassetstimestamp=638186638572769967
+_nugetassetstimestamp=638186651263300619
 typemapkind=strings-asm
 androidsupportedabis=arm64-v8a
 armeabi-v7a
 x86
 x86_64
 androidmanifestplaceholders=
-projectfullpath=c:\users\flyli\source\repos\bucketlist\bucketlist\bucketlist.csproj
+projectfullpath=c:\users\flyli\source\repos\project\bucketlist\bucketlist\bucketlist.csproj
