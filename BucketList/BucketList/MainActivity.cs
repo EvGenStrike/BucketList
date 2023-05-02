@@ -25,7 +25,7 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_main);
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             //var searchView = FindViewById<Android.Widget.SearchView>(Resource.Id.searchView1);
-            
+            //123
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
