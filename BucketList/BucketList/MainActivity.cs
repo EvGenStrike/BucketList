@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Graphics;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
@@ -20,9 +21,11 @@ namespace BucketList
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
             Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+            //var searchView = FindViewById<Android.Widget.SearchView>(Resource.Id.searchView1);
+            
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
@@ -34,6 +37,7 @@ namespace BucketList
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
+
         }
 
         public override void OnBackPressed()
