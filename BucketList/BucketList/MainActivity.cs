@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Graphics;
 using Android.App;
 using Android.OS;
@@ -11,6 +12,10 @@ using AndroidX.DrawerLayout.Widget;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
+using Android.Widget;
+using Java.Lang;
+using System.Linq;
+using AndroidX.Core.Util;
 
 namespace BucketList
 {
@@ -23,7 +28,18 @@ namespace BucketList
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
-            Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
+
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            var goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            listView.Adapter = adapter;
+
+            bool inDeletion = false;
+            listView.ItemClick += (sender, e) => {
+                listView.Adapter =
+                new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals.Skip(new Random().Next(goals.Count)).ToList());
+            };
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
@@ -71,6 +87,9 @@ namespace BucketList
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
             View view = (View) sender;
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            listView.Adapter =
+            new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, new List<string> { "asdf", "asdg", ",mf", "waeiuor", "asdfasdf"});
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
