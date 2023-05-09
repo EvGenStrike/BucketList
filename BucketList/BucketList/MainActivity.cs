@@ -22,6 +22,7 @@ namespace BucketList
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
+        private List<string> goals;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,14 +32,13 @@ namespace BucketList
             var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
 
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
+            goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             listView.Adapter = adapter;
-
-            bool inDeletion = false;
+            
             listView.ItemClick += (sender, e) => {
                 listView.Adapter =
-                new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals.Skip(new Random().Next(goals.Count)).ToList());
+                new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             };
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
@@ -87,11 +87,9 @@ namespace BucketList
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
             View view = (View) sender;
-            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            listView.Adapter =
-            new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, new List<string> { "asdf", "asdg", ",mf", "waeiuor", "asdfasdf"});
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+            AddGoal("Пойти спать");         
+            //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
+            //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)
@@ -132,6 +130,19 @@ namespace BucketList
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void AddGoal(string goal)
+        {
+            goals.Add(goal);
+            UpdateGoalsView();
+        }
+
+        private void UpdateGoalsView()
+        {
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            listView.Adapter = adapter;
         }
     }
 }
