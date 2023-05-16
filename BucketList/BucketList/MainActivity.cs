@@ -16,6 +16,7 @@ using Android.Widget;
 using Java.Lang;
 using System.Linq;
 using AndroidX.Core.Util;
+using Android.Content;
 
 namespace BucketList
 {
@@ -86,8 +87,10 @@ namespace BucketList
 
         private void FabOnClick(object sender, EventArgs eventArgs)
         {
-            View view = (View) sender;
-            AddGoal("Пойти спать");         
+            Intent intent = new Intent(this, typeof(AddGoalActivity));
+            StartActivityForResult(intent, 1);
+            //View view = (View)sender;
+            //AddGoal("Пойти спать");
             //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
             //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
@@ -130,6 +133,15 @@ namespace BucketList
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.Ok && data != null)
+            {
+                string newItem = data.GetStringExtra("newItem");
+                AddGoal(newItem);
+            }
         }
 
         private void AddGoal(string goal)
