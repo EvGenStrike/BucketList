@@ -20,7 +20,7 @@ using Android.Content;
 
 namespace BucketList
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private List<string> goals;
@@ -30,7 +30,6 @@ namespace BucketList
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
-            var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
 
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
@@ -45,6 +44,7 @@ namespace BucketList
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
+            var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             drawer.AddDrawerListener(toggle);
@@ -155,6 +155,11 @@ namespace BucketList
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             listView.Adapter = adapter;
+        }
+
+        private void InitializeMainScreen()
+        {
+
         }
     }
 }

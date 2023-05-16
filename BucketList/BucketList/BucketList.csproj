@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AddGoalActivity.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="RegistrationActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,6 +154,35 @@
     <AndroidResource Include="Resources\drawable-v21\edit_text_border.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\list.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_name_icon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_icon_left.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_iconfavorite.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_star.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_box.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\goal_add_snake.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_registration.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\registration_background_rectangle.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
