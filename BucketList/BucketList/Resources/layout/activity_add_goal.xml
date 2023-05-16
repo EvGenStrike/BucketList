@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:minWidth="25px"
+	android:minHeight="25px">
+	<Button
+		android:text="Добавить цель"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:id="@+id/button1" />
+    <!--<RelativeLayout
+        android:id="@+id/list"
+        android:layout_alignStart="@drawable/edit_box"
+        android:clipToOutline="true"
+        android:background="@drawable/edit_text_border"
+        android:layout_width="100dp"
+        android:layout_height="100dp" 
+	/>-->
+
+
+
+</RelativeLayout>

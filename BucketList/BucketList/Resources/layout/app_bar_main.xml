@@ -18,11 +18,15 @@
             android:background="?attr/colorMainBackground"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <SearchView
+                android:id="@+id/searchView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:minWidth="25px"
                 android:minHeight="25px"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchView1" />
+                android:searchHintIcon="@null"
+                android:searchIcon="@drawable/ic_search"
+                android:queryHint="Все цели"/>
+
 
 
         </androidx.appcompat.widget.Toolbar>
@@ -55,15 +59,7 @@
         
     />-->
 
-    <ListView
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/goalsListView"
-        android:layout_marginTop="60.0dp"
-        
-        />
+    
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
