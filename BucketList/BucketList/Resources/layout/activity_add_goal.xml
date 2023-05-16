@@ -1,3 +1,4 @@
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -49,18 +50,6 @@
         android:src="@drawable/goal_add_snake"
     />
 
-    <EditText
-        android:id="@+id/goal_add_date_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/goal_add_name_snake_icon"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@id/goal_add_name_text"
-        android:hint="@string/goal_add_date_text"
-    />
-
     <!--Кнопка Добавить цель-->
     <Button
         android:text="@string/goal_add_button_text"
@@ -71,5 +60,15 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/goal_add_button"
     />
+    <Button
+        android:text="Установить дедлайн"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/goal_add_date_snake_icon"
+        android:layout_below="@id/goal_add_name_text"
+        android:id="@+id/button1" />
 
 </RelativeLayout>
