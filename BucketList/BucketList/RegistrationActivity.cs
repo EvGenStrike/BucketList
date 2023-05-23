@@ -26,7 +26,8 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_registration);
             username = FindViewById<EditText>(Resource.Id.registration_add_name_edittext);
 
-            var name = GetUserName();
+            //var name = GetUserName();
+            var name = "";
             if (!string.IsNullOrEmpty(name))
             {
                 StartActivity(typeof(MainActivity));

@@ -71,8 +71,9 @@
 
     <ImageView
         android:id="@+id/registration_snake"
-        android:src="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/snake_image"
         android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
         android:layout_height="200dp"
         android:layout_below="@id/registration_add_user_photo"
     />
@@ -87,5 +88,6 @@
         android:minHeight="25px"
         android:layout_alignParentBottom="true"
     />
+
 
 </RelativeLayout>

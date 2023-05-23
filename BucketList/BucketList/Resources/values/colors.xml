@@ -6,4 +6,10 @@
 	<color name="colorMainBackground">#2c3e50</color>
 	<color name="colorMainYellow">#F0DE3B</color>
 	<color name="colorMainWhite">#FFFFFFFF</color>
+	<array name="button_gradient_colors">
+		<item>#FF0000</item>
+		<!-- Красный цвет -->
+		<item>#FFFF00</item>
+		<!-- Желтый цвет -->
+	</array>
 </resources>
