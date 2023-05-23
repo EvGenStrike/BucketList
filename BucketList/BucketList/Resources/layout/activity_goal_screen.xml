@@ -1,0 +1,79 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/goal_image"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+    />
+
+    <ImageView
+        android:id="@+id/goal_name_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/goal_image"
+        android:background="@drawable/rectangle_1"
+    />
+    <TextView
+        android:id="@+id/goal_name_text"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:text="goal_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@id/goal_image"
+    />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/subgoal_calendar_button"
+        android:layout_below="@id/goal_image"
+        android:layout_toRightOf="@id/goal_name_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        app:fabSize="mini"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+
+    <ImageView
+        android:id="@+id/subgoals_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/goal_name_text"
+        android:layout_above="@id/goal_screen_python"
+        android:background="@drawable/subgoals_background_rectangle"
+    />
+    <ListView
+        android:id="@+id/subgoals_items"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/goal_name_text"
+        android:layout_above="@id/goal_screen_python"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <ImageView
+        android:id="@+id/goal_screen_python"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rectangle_1"
+    />
+
+
+</RelativeLayout>
