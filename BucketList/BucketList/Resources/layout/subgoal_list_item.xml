@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/subgoalRelativeLayout">
+
+    <ImageView
+        android:id="@+id/subgoal_circle_state"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+    />
+
+    <TextView
+        android:id="@+id/subgoal_name"
+        android:layout_toEndOf="@id/subgoal_circle_state"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:text="Buy book"
+        android:textSize="16sp"
+        android:textColor="#000000"
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/subgoal_calendar_button"
+        android:layout_toEndOf="@id/subgoal_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        app:fabSize="mini"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+
+
+
+
+</RelativeLayout>

@@ -35,7 +35,6 @@ namespace BucketList
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
-            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
 
             
 
@@ -49,14 +48,11 @@ namespace BucketList
 
 
 
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             listView.Adapter = adapter;
-            listView.ItemClick += (sender, e) =>
-            {
-                listView.Adapter =
-                new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
-            };
+            listView.ItemClick += OnGoalClick;
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
@@ -128,7 +124,7 @@ namespace BucketList
             }
             else
             {
-                base.OnBackPressed();
+                //base.OnBackPressed();
             }
         }
 
@@ -193,12 +189,14 @@ namespace BucketList
             drawer.CloseDrawer(GravityCompat.Start);
             return true;
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
@@ -222,9 +220,16 @@ namespace BucketList
             listView.Adapter = adapter;
         }
 
-        private void InitializeMainScreen()
+        private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
         {
+            // Получите ссылку на ListView
+            ListView myListView = sender as ListView;
 
+            // Получите выбранный элемент
+            var selectedItem = myListView.GetItemAtPosition(e.Position);
+            Intent intent = new Intent(this, typeof(GoalActivity));
+            intent.PutExtra("goalName", (string)selectedItem);
+            StartActivityForResult(intent, 1);
         }
     }
 }

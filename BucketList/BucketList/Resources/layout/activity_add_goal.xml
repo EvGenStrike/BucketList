@@ -11,7 +11,8 @@
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:id="@+id/goal_add_image" />
+        android:id="@+id/goal_add_image"
+    />
 
     <!--Блок с целью-->
     <ImageView
@@ -69,6 +70,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/goal_add_date_snake_icon"
         android:layout_below="@id/goal_add_name_text"
-        android:id="@+id/button1" />
+        android:id="@+id/button1"
+    />
 
 </RelativeLayout>
