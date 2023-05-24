@@ -3,7 +3,6 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     
-    
     android:id="@+id/rectangle_1"
     android:layout_height="47dp"
     android:layout_alignParentLeft="true"
@@ -18,6 +17,7 @@
     android:textSize="16sp"
     android:textColor="#000000"
     android:text="лофыва"
+    android:maxLines="1"
     >
 
 

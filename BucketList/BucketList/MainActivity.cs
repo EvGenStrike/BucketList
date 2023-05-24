@@ -26,7 +26,7 @@ namespace BucketList
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private List<string> goals;
-        private TextView userName;
+        private string userName;
         private string currentGoalName;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -36,7 +36,7 @@ namespace BucketList
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
 
-            
+            userName = Intent.GetStringExtra("username");
 
             string internalStoragePath = Application.Context.FilesDir.AbsolutePath;
             string filePath = System.IO.Path.Combine(internalStoragePath, "myfile.txt");
@@ -66,9 +66,16 @@ namespace BucketList
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
 
+
+            var headerView = navigationView.GetHeaderView(0);
+            var usernameTextView = headerView.FindViewById<TextView>(Resource.Id.usernameMainTextView);
+            if (!string.IsNullOrEmpty(userName))
+            {
+                usernameTextView.Text = userName;
+            }
+
             // Установка обработчика долгого нажатия
             listView.ItemLongClick += MyListView_ItemLongClick;
-            
 
         }
         
@@ -81,10 +88,10 @@ namespace BucketList
             var selectedItem = myListView.GetItemAtPosition(e.Position);
             currentGoalName = (string)selectedItem;
 
-            //// Отобразите контекстное меню
+            // Отобразите контекстное меню
             RegisterForContextMenu(myListView);
 
-            //// Откройте контекстное меню для выбранного элемента
+            // Откройте контекстное меню для выбранного элемента
             OpenContextMenu(myListView);
         }
         private void RemoveGoal(string goalName)

@@ -3,13 +3,11 @@
     <color name="colorPrimary">#2c3e50</color>
     <color name="colorPrimaryDark">#1B3147</color>
     <color name="colorAccent">#3498db</color>
-	<color name="colorMainBackground">#2c3e50</color>
+	<color name="colorMainBackground">#cae2ff</color>
 	<color name="colorMainYellow">#F0DE3B</color>
 	<color name="colorMainWhite">#FFFFFFFF</color>
-	<array name="button_gradient_colors">
-		<item>#FF0000</item>
-		<!-- Красный цвет -->
-		<item>#FFFF00</item>
-		<!-- Желтый цвет -->
-	</array>
+	<color name="colorMainBackgroundDark">#88bdff</color>
+	<color name="colorFirstGradient">#86a0e6</color>
+	<color name="colorSecondGradient">#b892eb</color>
+	<color name="colorThirdGradient">#f9ff88</color>
 </resources>

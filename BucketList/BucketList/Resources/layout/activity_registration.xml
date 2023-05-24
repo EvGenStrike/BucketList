@@ -39,6 +39,7 @@
         android:background="@drawable/registration_background_rectangle"
     />
     <EditText
+        android:inputType="text"
         android:id="@+id/registration_add_name_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

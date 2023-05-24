@@ -1,21 +1,36 @@
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="vector"
-    android:width="344dp"
-    android:height="56dp"
-    android:viewportWidth="344"
-    android:viewportHeight="56">
-    <path
-        android:name="path"
-        android:pathData="M 14 4 L 330 4 C 331.591 4 333.118 4.633 334.243 5.757 C 335.367 6.882 336 8.409 336 10 L 336 38 C 336 39.591 335.367 41.118 334.243 42.243 C 333.118 43.367 331.591 44 330 44 L 14 44 C 12.409 44 10.882 43.367 9.757 42.243 C 8.633 41.118 8 39.591 8 38 L 8 10 C 8 8.409 8.633 6.882 9.757 5.757 C 10.882 4.633 12.409 4 14 4">
-        <gradient
-            android:type="linear"
-            android:startX="0"
-            android:startY="0"
-            android:endX="344"
-            android:endY="56"
-            android:startColor="#FF0000"
-            android:endColor="#FFFF00"
-            android:gradientRadius="0"/>
-    </path>
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="361dp"
+    android:height="48dp"
+    android:viewportWidth="361"
+    android:viewportHeight="48">
+
+	<group>
+		<clip-path
+            android:pathData="M15.5 0.5H345.5C353.784 0.5 360.5 7.21573 360.5 15.5V32.5C360.5 40.7843 353.784 47.5 345.5 47.5H15.5C7.21573 47.5 0.5 40.7843 0.5 32.5V15.5C0.5 7.21573 7.21573 0.5 15.5 0.5Z" />
+		<path
+            android:pathData="M0.5 0.5V47.5H360.5V0.5">
+			<aapt:attr name="android:fillColor">
+				<gradient
+                    android:type="linear"
+                    android:startX="0"
+                    android:startY="0"
+                    android:endX="360"
+                    android:endY="0"
+                    android:useLevel="false">
+					<item
+                        android:offset="0"
+                        android:color="@color/colorFirstGradient" />
+					<item
+                        android:offset="0.5"
+                        android:color="@color/colorSecondGradient" />
+					<item
+                        android:offset="1"
+                        android:color="@color/colorThirdGradient" />
+				</gradient>
+			</aapt:attr>
+		</path>
+	</group>
 </vector>
+
