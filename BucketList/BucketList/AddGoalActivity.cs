@@ -48,13 +48,18 @@ namespace BucketList
         }
         private void DatePickerButton_Click(object sender, EventArgs e)
         {
-            // Получите текущую дату
-            DateTime currentDate = DateTime.Now;
-
-            // Создайте DatePickerDialog с текущей датой в качестве значения по умолчанию
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, OnDateSet, currentDate.Year, currentDate.Month - 1, currentDate.Day);
-            // Отобразите DatePickerDialog
+            var currentDate = DateTime.Now;
+            DatePickerDialog datePickerDialog 
+                = new DatePickerDialog(
+                                    this,
+                                    OnDateSet,
+                                    currentDate.Year,
+                                    currentDate.Month - 1,
+                                    currentDate.Day
+                                    );
+            datePickerDialog.DatePicker.MinDate = DateTime.Now.GetDateTimeInMillis();
             datePickerDialog.Show();
+            
         }
 
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)

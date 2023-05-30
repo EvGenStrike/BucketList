@@ -19,6 +19,9 @@ using AndroidX.Core.Util;
 using Android.Content;
 using System.IO;
 using Android.Text;
+using Google.Android.Material.Resources;
+using Android.Text.Style;
+using Android.Util;
 
 namespace BucketList
 {
@@ -33,52 +36,22 @@ namespace BucketList
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            Initialize();
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
-
-            userName = Intent.GetStringExtra("username");
-
-            string internalStoragePath = Application.Context.FilesDir.AbsolutePath;
-            string filePath = System.IO.Path.Combine(internalStoragePath, "myfile.txt");
-            var result = "";
-            using (StreamReader writer = new StreamReader(filePath))
-            {
-                result = writer.ReadLine();
-            }
-
-
-
-            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
-            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
-            listView.Adapter = adapter;
-            listView.ItemClick += OnGoalClick;
-
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
-
-            var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
-            drawer.AddDrawerListener(toggle);
-            toggle.SyncState();
-
-            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            navigationView.SetNavigationItemSelectedListener(this);
-
-
-            var headerView = navigationView.GetHeaderView(0);
-            var usernameTextView = headerView.FindViewById<TextView>(Resource.Id.usernameMainTextView);
-            if (!string.IsNullOrEmpty(userName))
-            {
-                usernameTextView.Text = userName;
-            }
-
-            // Установка обработчика долгого нажатия
-            listView.ItemLongClick += MyListView_ItemLongClick;
-
+            SetListView(goals);
+            SetNavigationView();
+            SetUserName();
+            SetFab();
+            SetToolbar();
+            SetPythonCalendarView();
         }
-        
+
+        private void Initialize()
+        {
+            goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
+        }
+
         private void MyListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
         {
             // Получите ссылку на ListView
@@ -238,6 +211,74 @@ namespace BucketList
             intent.PutExtra("goalName", (string)selectedItem);
             StartActivityForResult(intent, 1);
         }
+
+        private void SetNavigationView()
+        {
+            userName = Intent.GetStringExtra("username");
+            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            navigationView.SetNavigationItemSelectedListener(this);
+        }
+
+        private void SetUserName()
+        {
+            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            var headerView = navigationView.GetHeaderView(0);
+            var usernameTextView = headerView.FindViewById<TextView>(Resource.Id.usernameMainTextView);
+            if (!string.IsNullOrEmpty(userName))
+            {
+                usernameTextView.Text = userName;
+            }
+        }
+
+        private void SetListView(List<string> goals)
+        {
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            listView.Adapter = adapter;
+            listView.ItemClick += OnGoalClick;
+            listView.ItemLongClick += MyListView_ItemLongClick;
+        }
+
+        private void SetFab()
+        {
+            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+            fab.Click += FabOnClick;
+        }
+
+        private void SetToolbar()
+        {
+            var toolbar = FindViewById<AndroidX.AppCompat.Widget.Toolbar>(Resource.Id.toolbar);
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            drawer.AddDrawerListener(toggle);
+            toggle.SyncState();
+        }
+
+        private void SetPythonCalendarView()
+        {
+            var calendarView = FindViewById<CalendarView>(Resource.Id.allGoalsCalendarView);
+            calendarView.FirstDayOfWeek = 2;
+            calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
+            calendarView.DateChange += CalendarView_DateChange;
+            calendarView.DateTextAppearance = (Android.Resource.Style.TextAppearanceMedium);
+            
+            // Set the highlighted dates
+            List<DateTime> highlightedDates = new List<DateTime>()
+            {
+                new DateTime(2023, 6, 1),
+                new DateTime(2023, 6, 10),
+                new DateTime(2023, 6, 20)
+            };
+            //calendarView.SetHighlightedDates(highlightedDates);
+        }
+
+        private void CalendarView_DateChange(object sender, CalendarView.DateChangeEventArgs e)
+        {
+            var calendarView = (CalendarView)sender;
+
+        }
     }
 }
+
+
 

@@ -40,8 +40,8 @@ namespace BucketList
             var listView = FindViewById<ListView>(Resource.Id.subgoals_items);
             var subgoals = new List<Subgoal>
             {
-                new Subgoal{SubgoalName = "миша щас три часа ночи я устал", Id = 0},
-                new Subgoal{SubgoalName = "ъъъъъъъъъъъъъъъ", Id = 1},
+                new Subgoal{SubgoalName = "Купить книгу", Id = 0},
+                new Subgoal{SubgoalName = "Прочитать первую главу", Id = 1},
             };
             var adapter = new SubgoalAdapter(this, subgoals);
             listView.Adapter = adapter;

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddGoalActivity.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
     <Compile Include="MainActivity.cs" />

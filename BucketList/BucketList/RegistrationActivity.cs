@@ -52,7 +52,9 @@ namespace BucketList
             if (!string.IsNullOrEmpty(name))
             {
                 WriteUserName(name);
-                StartActivity(typeof(MainActivity));
+                var intent = new Intent(this, typeof(MainActivity));
+                intent.PutExtra("username", name);
+                StartActivity(intent);
             }
             else
             {
