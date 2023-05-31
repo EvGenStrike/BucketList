@@ -29,4 +29,8 @@
 		<item name="android:textColor">#0B1F33</item>
 	</style>
 
+	<style name="CustomDatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
+		<item name="android:colorControlActivated">#F10</item>
+	</style>
+
 </resources>
