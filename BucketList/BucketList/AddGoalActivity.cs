@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Essentials;
-using 
 
 namespace BucketList
 {
@@ -52,7 +51,7 @@ namespace BucketList
         }
         private void DatePickerButton_Click(object sender, EventArgs e)
         {
-            //var currentDate = DateTime.Now;
+            var currentDate = DateTime.Now;
             //datePickerDialog
             //    = new DatePickerDialog(
             //                        this,
@@ -64,14 +63,22 @@ namespace BucketList
             //datePickerDialog.DatePicker.MinDate = DateTime.Now.GetDateTimeInMillis();
             //datePickerDialog.SetContentView(Resource.Layout.calendar);
             //datePickerDialog.Show();
+            LayoutInflater inflater = LayoutInflater.From(this);
+            View datePickerView = inflater.Inflate(Resource.Layout.calendar, null);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                                                this,
+                                                OnDateSet,
+                                                currentDate.Year,
+                                                currentDate.Month - 1,
+                                                currentDate.Day
+                                                );
+            datePickerDialog.SetView(datePickerView);
+            datePickerDialog.Show();
 
         }
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            int[] datePickerLocation = new int[2];
-            datePickerDialog.DatePicker.GetLocationOnScreen(datePickerLocation);
-            int x = datePickerLocation[0]; // Координата X
-            int y = datePickerLocation[1];
             // Получите выбранную дату из DatePickerDialog
             int year = e.Year;
             int month = e.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
