@@ -9,18 +9,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static AndroidX.RecyclerView.Widget.RecyclerView;
 
 namespace BucketList
 {
     [Activity(Label = "GoalActivity")]
     public class GoalActivity : Activity
     {
+        public List<Subgoal> Subgoals;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_goal_screen);
             SetGoalText();
             SetSubGoals();
+            SetListView();
         }
 
         public override void OnBackPressed()
@@ -37,14 +41,24 @@ namespace BucketList
 
         private void SetSubGoals()
         {
-            var listView = FindViewById<ListView>(Resource.Id.subgoals_items);
-            var subgoals = new List<Subgoal>
+            Subgoals = new List<Subgoal>
             {
                 new Subgoal{SubgoalName = "Купить книгу", Id = 0},
                 new Subgoal{SubgoalName = "Прочитать первую главу", Id = 1},
             };
-            var adapter = new SubgoalAdapter(this, subgoals);
+        }
+
+        private void SetListView()
+        {
+            var listView = FindViewById<ListView>(Resource.Id.subgoals_items);
+            var adapter = new SubgoalAdapter(this, Subgoals);
+            adapter.ItemClick += Adapter_ItemClick;
             listView.Adapter = adapter;
+        }
+
+        private void Adapter_ItemClick(object sender, int e)
+        {
+            Toast.MakeText(this, "asdfasf", ToastLength.Long).Show();
         }
     }
 }

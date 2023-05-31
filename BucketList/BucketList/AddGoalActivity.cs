@@ -7,6 +7,7 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.DrawerLayout.Widget;
 using Google.Android.Material.FloatingActionButton;
+using Java.Util.Zip;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace BucketList
         EditText goalAddNameEditText;
         ImageView snake;
         DatePickerDialog datePickerDialog;
+
+        private CalendarView calendarView;
+        private DateTime selectedDate;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -49,9 +54,28 @@ namespace BucketList
             if (text == "") return "Новая цель";
             return text;
         }
+
         private void DatePickerButton_Click(object sender, EventArgs e)
         {
             var currentDate = DateTime.Now;
+
+            LayoutInflater inflater = LayoutInflater.From(this);
+            View datePickerView = inflater.Inflate(Resource.Layout.calendar, null);
+            CalendarView calendarView = datePickerView.FindViewById<CalendarView>(Resource.Id.addGoalCalendar);
+            this.calendarView = calendarView;
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                                                this,
+                                                OnDateSet,
+                                                currentDate.Year,
+                                                currentDate.Month - 1,
+                                                currentDate.Day
+                                                );
+            datePickerDialog.SetView(datePickerView);
+            calendarView.MinDate = currentDate.GetDateTimeInMillis();
+            calendarView.FirstDayOfWeek = 2;
+            calendarView.DateChange += CalendarView_DateChange;
+            datePickerDialog.Show();
+
             //datePickerDialog
             //    = new DatePickerDialog(
             //                        this,
@@ -63,31 +87,53 @@ namespace BucketList
             //datePickerDialog.DatePicker.MinDate = DateTime.Now.GetDateTimeInMillis();
             //datePickerDialog.SetContentView(Resource.Layout.calendar);
             //datePickerDialog.Show();
-            LayoutInflater inflater = LayoutInflater.From(this);
-            View datePickerView = inflater.Inflate(Resource.Layout.calendar, null);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                                                this,
-                                                OnDateSet,
-                                                currentDate.Year,
-                                                currentDate.Month - 1,
-                                                currentDate.Day
-                                                );
-            datePickerDialog.SetView(datePickerView);
-            datePickerDialog.Show();
+            //LayoutInflater inflater = LayoutInflater.From(this);
+            //View datePickerView = inflater.Inflate(Resource.Layout.calendar, null);
+            //DatePickerDialog datePickerDialog = new DatePickerDialog(
+            //                                    this,
+            //                                    OnDateSet,
+            //                                    currentDate.Year,
+            //                                    currentDate.Month - 1,
+            //                                    currentDate.Day
+            //                                    );
+            //datePickerDialog.DatePicker.MinDate = DateTime.Now.GetDateTimeInMillis();
+            //datePickerDialog.SetView(datePickerView);
+            //datePickerDialog.Show();
 
         }
+
+        private void CalendarView_DateChange(object sender, CalendarView.DateChangeEventArgs args)
+        {
+            var selectedDate = new DateTime(args.Year, args.Month + 1, args.DayOfMonth);
+            this.selectedDate = selectedDate;
+        }
+
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            // Получите выбранную дату из DatePickerDialog
-            int year = e.Year;
-            int month = e.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
-            int dayOfMonth = e.DayOfMonth;
-            
+            var year = selectedDate.Year;
+            var month = selectedDate.Month; // Здесь месяц начинается с 0, поэтому добавляем 1
+            var dayOfMonth = selectedDate.Day;
+            var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
+            Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();
+            //var calendarView = datePicker.RootView.FindViewById<CalendarView>(Resource.Id.addGoalCalendar);
+            //var selectedDate = calendarView.Date.GetDateTimeFromMillis();
+            //var year = selectedDate.Year;
+            //var month = selectedDate.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
+            //var dayOfMonth = selectedDate.Day;
+            //var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
+            //Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();
 
-            // Выполните необходимые действия с выбранной датой
-            string selectedDate = $"{dayOfMonth}-{month}-{year}";
-            Toast.MakeText(this, $"Выбранная дата: {selectedDate}", ToastLength.Short).Show();
+
+            //// Получите выбранную дату из DatePickerDialog
+            //int year = e.Year;
+            //int month = e.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
+            //int dayOfMonth = e.DayOfMonth;
+
+
+            //// Выполните необходимые действия с выбранной датой
+            //string selectedDate = $"{dayOfMonth}-{month}-{year}";
+            //Toast.MakeText(this, $"Выбранная дата: {selectedDate}", ToastLength.Short).Show();
         }
     }
 }

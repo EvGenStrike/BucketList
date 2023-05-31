@@ -18,7 +18,7 @@ namespace BucketList
             return (long)timeSpan.TotalMilliseconds;
         }
 
-        private static DateTime GetDateTimeFromMillis(this long millis)
+        public static DateTime GetDateTimeFromMillis(this long millis)
         {
             return new DateTime(1970, 1, 1).AddMilliseconds(millis);
         }

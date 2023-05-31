@@ -3657,109 +3657,109 @@ namespace BucketList
 			public const int add = 2131230779;
 			
 			// aapt resource value: 0x7F08003C
-			public const int alertTitle = 2131230780;
+			public const int addGoalCalendar = 2131230780;
 			
 			// aapt resource value: 0x7F08003D
-			public const int all = 2131230781;
+			public const int addGoalTopText = 2131230781;
 			
 			// aapt resource value: 0x7F08003E
-			public const int allGoalsCalendarView = 2131230782;
+			public const int alertTitle = 2131230782;
+			
+			// aapt resource value: 0x7F08003F
+			public const int all = 2131230783;
+			
+			// aapt resource value: 0x7F080040
+			public const int allGoalsCalendarView = 2131230784;
 			
 			// aapt resource value: 0x7F080000
 			public const int ALT = 2131230720;
 			
-			// aapt resource value: 0x7F08003F
-			public const int always = 2131230783;
-			
-			// aapt resource value: 0x7F080040
-			public const int async = 2131230784;
-			
 			// aapt resource value: 0x7F080041
-			public const int auto = 2131230785;
+			public const int always = 2131230785;
 			
 			// aapt resource value: 0x7F080042
-			public const int beginning = 2131230786;
+			public const int async = 2131230786;
 			
 			// aapt resource value: 0x7F080043
-			public const int blocking = 2131230787;
+			public const int auto = 2131230787;
 			
 			// aapt resource value: 0x7F080044
-			public const int bottom = 2131230788;
+			public const int beginning = 2131230788;
 			
 			// aapt resource value: 0x7F080045
-			public const int browser_actions_header_text = 2131230789;
-			
-			// aapt resource value: 0x7F080048
-			public const int browser_actions_menu_items = 2131230792;
+			public const int blocking = 2131230789;
 			
 			// aapt resource value: 0x7F080046
-			public const int browser_actions_menu_item_icon = 2131230790;
+			public const int bottom = 2131230790;
 			
 			// aapt resource value: 0x7F080047
-			public const int browser_actions_menu_item_text = 2131230791;
-			
-			// aapt resource value: 0x7F080049
-			public const int browser_actions_menu_view = 2131230793;
+			public const int browser_actions_header_text = 2131230791;
 			
 			// aapt resource value: 0x7F08004A
-			public const int button1 = 2131230794;
+			public const int browser_actions_menu_items = 2131230794;
+			
+			// aapt resource value: 0x7F080048
+			public const int browser_actions_menu_item_icon = 2131230792;
+			
+			// aapt resource value: 0x7F080049
+			public const int browser_actions_menu_item_text = 2131230793;
 			
 			// aapt resource value: 0x7F08004B
-			public const int buttonPanel = 2131230795;
+			public const int browser_actions_menu_view = 2131230795;
 			
 			// aapt resource value: 0x7F08004C
-			public const int calendarTitle = 2131230796;
+			public const int button1 = 2131230796;
 			
 			// aapt resource value: 0x7F08004D
-			public const int center = 2131230797;
+			public const int buttonPanel = 2131230797;
 			
 			// aapt resource value: 0x7F08004E
-			public const int center_horizontal = 2131230798;
+			public const int center = 2131230798;
 			
 			// aapt resource value: 0x7F08004F
-			public const int center_vertical = 2131230799;
+			public const int center_horizontal = 2131230799;
 			
 			// aapt resource value: 0x7F080050
-			public const int checkbox = 2131230800;
+			public const int center_vertical = 2131230800;
 			
 			// aapt resource value: 0x7F080051
-			public const int @checked = 2131230801;
+			public const int checkbox = 2131230801;
 			
 			// aapt resource value: 0x7F080052
-			public const int chronometer = 2131230802;
+			public const int @checked = 2131230802;
 			
 			// aapt resource value: 0x7F080053
-			public const int clip_horizontal = 2131230803;
+			public const int chronometer = 2131230803;
 			
 			// aapt resource value: 0x7F080054
-			public const int clip_vertical = 2131230804;
+			public const int clip_horizontal = 2131230804;
 			
 			// aapt resource value: 0x7F080055
-			public const int collapseActionView = 2131230805;
+			public const int clip_vertical = 2131230805;
 			
 			// aapt resource value: 0x7F080056
-			public const int container = 2131230806;
+			public const int collapseActionView = 2131230806;
 			
 			// aapt resource value: 0x7F080057
-			public const int content = 2131230807;
+			public const int container = 2131230807;
 			
 			// aapt resource value: 0x7F080058
-			public const int contentPanel = 2131230808;
+			public const int content = 2131230808;
 			
 			// aapt resource value: 0x7F080059
-			public const int coordinator = 2131230809;
+			public const int contentPanel = 2131230809;
+			
+			// aapt resource value: 0x7F08005A
+			public const int coordinator = 2131230810;
 			
 			// aapt resource value: 0x7F080001
 			public const int CTRL = 2131230721;
 			
-			// aapt resource value: 0x7F08005A
-			public const int custom = 2131230810;
-			
 			// aapt resource value: 0x7F08005B
-			public const int customPanel = 2131230811;
+			public const int custom = 2131230811;
 			
 			// aapt resource value: 0x7F08005C
-			public const int datePicker = 2131230812;
+			public const int customPanel = 2131230812;
 			
 			// aapt resource value: 0x7F08005D
 			public const int decor_content_parent = 2131230813;

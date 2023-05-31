@@ -5,19 +5,29 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/calendarTitle"
-        android:layout_width="match_parent"
+        android:id="@+id/addGoalTopText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выберите дату"
+        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <DatePicker
+    <CalendarView
+        android:id="@+id/addGoalCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addGoalTopText"
+        android:theme="@style/CustomDatePickerDialog"
+    />
+
+    <!--<DatePicker
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/calendarTitle"
         android:calendarViewShown="true"
         android:datePickerMode="calendar"
-        android:theme="@style/CustomDatePickerDialog"/>
+        android:theme="@style/CustomDatePickerDialog"
+    />-->
 
 </RelativeLayout>

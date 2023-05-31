@@ -9,6 +9,8 @@ using Android.Graphics;
 using Android;
 using Google.Android.Material.FloatingActionButton;
 using Android.App;
+using static Android.Icu.Text.Transliterator;
+using static Android.Widget.AdapterView;
 
 namespace BucketList
 {
@@ -19,10 +21,10 @@ namespace BucketList
         public FloatingActionButton subgoalCalendarButton { get; set; }
     }
 
-    public class SubgoalAdapter : BaseAdapter
+    public class SubgoalAdapter : BaseAdapter<Subgoal>
     {
+        public event EventHandler<int> ItemClick;
         private List<Subgoal> subgoals;
-
         private Activity activity;
 
         public SubgoalAdapter(Activity activity, List<Subgoal> subgoals)
@@ -39,10 +41,12 @@ namespace BucketList
             }
         }
 
-        public override Java.Lang.Object GetItem(int position)
-        {
-            return null;
-        }
+        public override Subgoal this[int position] => subgoals[position];
+
+        //public override Java.Lang.Object GetItem(int position)
+        //{
+        //    return subgoals[position];
+        //}
 
         public override long GetItemId(int position)
         {
@@ -52,14 +56,33 @@ namespace BucketList
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.subgoal_list_item, parent, false);
-
             var subgoalCircleState = view.FindViewById<ImageView>(Resource.Id.subgoal_circle_state);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.subgoal_name);
             var subgoalCalendarButton = view.FindViewById<FloatingActionButton>(Resource.Id.subgoal_calendar_button);
 
             subgoalName.Text = subgoals[position].SubgoalName;
+            view.Click += (sender, e) =>
+            {
+                // Вызовите событие ItemClick и передайте позицию элемента списка
+                ItemClick?.Invoke(this, position);
+            };
+            view.Touch += (sender, e) =>
+            {
+                ItemClick?.Invoke(this, position);
+                if (e.Event.Action == MotionEventActions.Down)
+                {
+                    // Измените внешний вид элемента при нажатии
+                    view.Alpha = 0.5f;
+                }
+                else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+                {
+                    // Измените внешний вид элемента при отжатии или отмене нажатия
+                    view.Alpha = 1f;
+                }
+            };
 
             return view;
         }
+
     }
 }
