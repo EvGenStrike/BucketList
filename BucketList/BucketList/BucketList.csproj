@@ -61,7 +61,9 @@
   <ItemGroup>
     <Compile Include="AddGoalActivity.cs" />
     <Compile Include="CalendarAdapter.cs" />
+    <Compile Include="CustomDateDecorator.cs" />
     <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
     <Compile Include="MainActivity.cs" />
@@ -124,6 +126,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Json.Net">
+      <Version>1.0.33</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.0.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />

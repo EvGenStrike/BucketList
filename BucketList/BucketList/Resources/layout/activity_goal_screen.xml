@@ -41,9 +41,10 @@
         android:layout_toRightOf="@id/goal_name_text"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="4dp"
-        app:fabSize="mini"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        app:fabSize="mini"
     />
 
     <ImageView
@@ -67,6 +68,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goal_screen_add_subgoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_above="@id/goal_screen_python"
+        app:srcCompat="@drawable/ic_add"
+        app:maxImageSize="60dp"
+    />
 
     <ImageView
         android:id="@+id/goal_screen_python"

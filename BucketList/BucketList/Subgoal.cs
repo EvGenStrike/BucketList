@@ -13,9 +13,15 @@ namespace BucketList
 {
     public class Subgoal
     {
-        public int Id { get; set; }
         public string SubgoalName { get; set; }
-        public string Deadline { get; set; }
+        public DateTime Deadline { get; set; }
         
+        public Subgoal() { }
+        
+        public Subgoal(string subgoalName, DateTime deadline)
+        {
+            SubgoalName = subgoalName;
+            Deadline = deadline;
+        }
     }
 }

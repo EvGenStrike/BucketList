@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<attr name="colorMainBackground" format="color" />
+	<declare-styleable name="CustomCalendarView">
+		<attr name="highlightColor" format="color" />
+	</declare-styleable>
 </resources>

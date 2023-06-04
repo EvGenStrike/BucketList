@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/allGoalsCalendarView"
         android:id="@+id/goalsListView"
-        />
+    />
 
     
     <com.google.android.material.floatingactionbutton.FloatingActionButton

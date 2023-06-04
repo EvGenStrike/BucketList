@@ -8,6 +8,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.DrawerLayout.Widget;
 using Google.Android.Material.FloatingActionButton;
 using Java.Util.Zip;
+using Json.Net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,19 @@ namespace BucketList
         private CalendarView calendarView;
         private DateTime selectedDate;
 
+        private List<Goal> allGoals;
+        private string maxDeadline;
+        private string currentGoal;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_add_goal);
             goalAddButton = FindViewById<Button>(Resource.Id.goal_add_button);
             goalAddButton.Click += OnClick;
-
+            //allGoals = Extensions.GetSavedGoals();
+            //maxDeadline = Intent.GetStringExtra("maxDeadline");
+            //currentGoal = Intent.GetStringExtra("currentGoal");
             goalAddNameEditText = FindViewById<EditText>(Resource.Id.goal_add_name_text);
             
             var datePickerButton = FindViewById<Button>(Resource.Id.button1);
@@ -43,7 +50,21 @@ namespace BucketList
         private void OnClick(object sender, EventArgs e)
         {
             var intent = new Intent();
-            intent.PutExtra("newItem", GetGoalNameText());
+            var goalName = GetGoalNameText();
+            //if (string.IsNullOrEmpty(currentGoal) && allGoals.Any(x => x.GoalName == goalName))
+            //{
+            //    Toast.MakeText(this, "Цель с таким именем уже существует", ToastLength.Long).Show();
+            //    return;
+            //}
+            //else if (!string.IsNullOrEmpty(currentGoal) && Extensions.DeserializeGoal(currentGoal).Subgoals.Any(x => x.SubgoalName == goalName))
+            //{
+            //    Toast.MakeText(this, "Подцель с таким именем уже существует", ToastLength.Long).Show();
+            //    return;
+            //}
+
+            var goalDeadline = GetGoalDateTime();
+            var goal = new Goal(goalName, goalDeadline);
+            intent.PutExtra("goal", JsonNet.Serialize(goal));
             SetResult(Result.Ok, intent);
             Finish();
         }
@@ -53,6 +74,11 @@ namespace BucketList
             var text = goalAddNameEditText.Text;
             if (text == "") return "Новая цель";
             return text;
+        }
+
+        private DateTime GetGoalDateTime()
+        {
+            return selectedDate;
         }
 
         private void DatePickerButton_Click(object sender, EventArgs e)
@@ -72,6 +98,8 @@ namespace BucketList
                                                 );
             datePickerDialog.SetView(datePickerView);
             calendarView.MinDate = currentDate.GetDateTimeInMillis();
+            //if (!string.IsNullOrEmpty(maxDeadline))
+            //    calendarView.MaxDate = DateTime.Parse(maxDeadline).GetDateTimeInMillis();
             calendarView.FirstDayOfWeek = 2;
             calendarView.DateChange += CalendarView_DateChange;
             datePickerDialog.Show();

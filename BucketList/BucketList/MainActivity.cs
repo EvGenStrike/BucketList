@@ -22,15 +22,16 @@ using Android.Text;
 using Google.Android.Material.Resources;
 using Android.Text.Style;
 using Android.Util;
+using Json.Net;
 
 namespace BucketList
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = false)]
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
-        private List<string> goals;
+        public List<Goal> Goals;
         private string userName;
-        private string currentGoalName;
+        private Goal currentGoalName;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,7 +40,7 @@ namespace BucketList
             Initialize();
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
-            SetListView(goals);
+            SetListView();
             SetNavigationView();
             SetUserName();
             SetFab();
@@ -49,7 +50,13 @@ namespace BucketList
 
         private void Initialize()
         {
-            goals = new List<string> { "Прочесть книгу", "Выучить Java", "Получить место работы в Яндексе" };
+            //goals = new List<Goal>
+            //{
+            //    new Goal("Прочесть книгу", new DateTime(2024, 6, 3)),
+            //    new Goal("Выучить Java", new DateTime(2024, 7, 3)),
+            //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
+            //};
+            Goals = Extensions.GetSavedGoals();
         }
 
         private void MyListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -58,8 +65,8 @@ namespace BucketList
             ListView myListView = sender as ListView;
 
             // Получите выбранный элемент
-            var selectedItem = myListView.GetItemAtPosition(e.Position);
-            currentGoalName = (string)selectedItem;
+            var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
+            currentGoalName = Goals.First(x => x.GoalName == selectedItem);
 
             // Отобразите контекстное меню
             RegisterForContextMenu(myListView);
@@ -67,26 +74,20 @@ namespace BucketList
             // Откройте контекстное меню для выбранного элемента
             OpenContextMenu(myListView);
         }
-        private void RemoveGoal(string goalName)
-        {
-            goals.Remove(goalName);
-            UpdateGoalsView();
-        }
 
         public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
         {
             base.OnCreateContextMenu(menu, v, menuInfo);
-            // Установите заголовок контекстного меню
+
             menu.SetHeaderTitle("Удалить цель?");
 
-            // Добавьте пункт меню для удаления элемента
-            menu.Add(Menu.None, 1, Menu.None, "Да");
-
+            menu.Add(Menu.None, 0, Menu.None, "Да");
+            menu.Add(Menu.None, 1, Menu.None, "Нет");
         }
+
         public override bool OnContextItemSelected(IMenuItem item)
         {
-            // Проверьте, выбран ли пункт меню "Delete"
-            if (item.ItemId == 1)
+            if (item.ItemId == 0)
             {
                 RemoveGoal(currentGoalName);
                 return true;
@@ -182,21 +183,29 @@ namespace BucketList
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok && data != null)
             {
-                string newItem = data.GetStringExtra("newItem");
-                AddGoal(newItem);
+                var newGoal = JsonNet.Deserialize<Goal>(data.GetStringExtra("goal"));
+                AddGoal(newGoal);
             }
         }
 
-        private void AddGoal(string goal)
+        private void AddGoal(Goal goal)
         {
-            goals.Add(goal);
+            Goals.Add(goal);         
+            UpdateGoalsView();
+        }
+
+        private void RemoveGoal(Goal goalName)
+        {
+            Goals.Remove(goalName);
             UpdateGoalsView();
         }
 
         private void UpdateGoalsView()
         {
+            var serializedGoals = Extensions.SerializeGoals(Goals);
+            Extensions.OverwriteGoals(serializedGoals);
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.GoalName).ToList());
             listView.Adapter = adapter;
         }
 
@@ -206,9 +215,9 @@ namespace BucketList
             ListView myListView = sender as ListView;
 
             // Получите выбранный элемент
-            var selectedItem = myListView.GetItemAtPosition(e.Position);
+            var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
             Intent intent = new Intent(this, typeof(GoalActivity));
-            intent.PutExtra("goalName", (string)selectedItem);
+            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem)));
             StartActivityForResult(intent, 1);
         }
 
@@ -230,11 +239,10 @@ namespace BucketList
             }
         }
 
-        private void SetListView(List<string> goals)
+        private void SetListView()
         {
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
-            listView.Adapter = adapter;
+            UpdateGoalsView();
             listView.ItemClick += OnGoalClick;
             listView.ItemLongClick += MyListView_ItemLongClick;
         }
