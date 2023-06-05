@@ -56,6 +56,8 @@ namespace BucketList
             //    new Goal("Выучить Java", new DateTime(2024, 7, 3)),
             //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
             //};
+            if (string.IsNullOrEmpty(Extensions.ReadGoals()))
+                Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
             Goals = Extensions.GetSavedGoals();
         }
 
