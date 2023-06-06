@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="Выберите дату"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <CalendarView

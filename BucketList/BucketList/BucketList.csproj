@@ -59,13 +59,16 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddSubgoalActivity.cs" />
     <Compile Include="AddGoalActivity.cs" />
     <Compile Include="CalendarAdapter.cs" />
+    <Compile Include="CalendarExtensions.cs" />
     <Compile Include="CustomDateDecorator.cs" />
     <Compile Include="DateTimeExtensions.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="GoalExtensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
+    <Compile Include="JavaObjExtensions.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="RegistrationActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

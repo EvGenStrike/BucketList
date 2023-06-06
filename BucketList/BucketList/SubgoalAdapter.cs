@@ -24,11 +24,18 @@ namespace BucketList
 
     public class SubgoalAdapter : BaseAdapter<Subgoal>
     {
+        public EventHandler calendarFabClick { get; set; }
+
         private ListView listView;
         private List<Subgoal> subgoals;
         private Activity activity;
 
-        public SubgoalAdapter(Activity activity, List<Subgoal> subgoals, ListView listView)
+        public SubgoalAdapter
+            (
+            Activity activity,
+            List<Subgoal> subgoals,
+            ListView listView
+            )
         {
             this.activity = activity;
             this.subgoals = subgoals;
@@ -79,6 +86,11 @@ namespace BucketList
                     
                     listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
                 }
+            };
+
+            subgoalCalendarButton.Click += (sender, e) =>
+            {
+                calendarFabClick?.Invoke(sender, e);
             };
 
             return view;

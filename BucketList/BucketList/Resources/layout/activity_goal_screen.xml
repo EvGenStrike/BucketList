@@ -36,7 +36,7 @@
         android:layout_below="@id/goal_image"
     />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/subgoal_calendar_button"
+        android:id="@+id/goal_screen_calendar_button"
         android:layout_below="@id/goal_image"
         android:layout_toRightOf="@id/goal_name_text"
         android:layout_marginLeft="20dp"
@@ -59,7 +59,7 @@
     />
     <ListView
         android:inputType="text"
-        android:id="@+id/subgoals_items"
+        android:id="@+id/goal_screen_subgoals_list_view"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_marginTop="35dp"

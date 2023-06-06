@@ -56,9 +56,9 @@ namespace BucketList
             //    new Goal("Выучить Java", new DateTime(2024, 7, 3)),
             //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
             //};
-            if (string.IsNullOrEmpty(Extensions.ReadGoals()))
-                Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
-            Goals = Extensions.GetSavedGoals();
+            if (string.IsNullOrEmpty(GoalExtensions.ReadGoals()))
+                GoalExtensions.OverwriteGoals(GoalExtensions.SerializeGoals(new List<Goal>()));
+            Goals = GoalExtensions.GetSavedGoals();
         }
 
         private void MyListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -204,8 +204,8 @@ namespace BucketList
 
         private void UpdateGoalsView()
         {
-            var serializedGoals = Extensions.SerializeGoals(Goals);
-            Extensions.OverwriteGoals(serializedGoals);
+            var serializedGoals = GoalExtensions.SerializeGoals(Goals);
+            GoalExtensions.OverwriteGoals(serializedGoals);
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.GoalName).ToList());
             listView.Adapter = adapter;

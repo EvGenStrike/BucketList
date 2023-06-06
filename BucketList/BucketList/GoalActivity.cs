@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using static AndroidX.RecyclerView.Widget.RecyclerView;
 
 namespace BucketList
 {
@@ -23,7 +22,10 @@ namespace BucketList
     {
         public List<Goal> Goals { get; private set; }
         public Goal CurrentGoal { get; private set; }
+
         private Subgoal currentSubgoal;
+
+        private DateTime selectedDate;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -34,11 +36,39 @@ namespace BucketList
             SetGoalText();
             SetListView();
             SetFabAddSubgoal();
+            SetGoalCalendarFab();
+        }
+
+        private void SetGoalCalendarFab()
+        {
+            var goalCalendarFab = FindViewById<FloatingActionButton>(Resource.Id.goal_screen_calendar_button);
+            goalCalendarFab.Click += GoalCalendarFab_Click;
+        }
+
+        private void GoalCalendarFab_Click(object sender, EventArgs e)
+        {
+            var datePickerDialog = GetDatePickerDialog($"Изменить дедлайн цели \"{CurrentGoal.GoalName}\"?");
+            datePickerDialog.Show();
+        }
+
+        private void OnDateChange(object sender, CalendarView.DateChangeEventArgs args)
+        {
+            var selectedDate = new DateTime(args.Year, args.Month + 1, args.DayOfMonth);
+            this.selectedDate = selectedDate;
+        }
+
+        private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
+        {
+            var year = selectedDate.Year;
+            var month = selectedDate.Month;
+            var dayOfMonth = selectedDate.Day;
+            var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
+            Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();            
         }
 
         public void SetGoals()
         {
-            Goals = Extensions.GetSavedGoals();
+            Goals = GoalExtensions.GetSavedGoals();
         }
 
         public void Initialize()
@@ -72,12 +102,11 @@ namespace BucketList
 
         private void SetListView()
         {
-            var listView = FindViewById<ListView>(Resource.Id.subgoals_items);
-            var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
-            listView.Adapter = adapter;
+            UpdateSubgoalsListView();
+            var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
             listView.ItemClick += ListView_ItemClick;
-            //listView.ItemLongClick += ListView_ItemLongClick;
         }
+
         private void SetFabAddSubgoal()
         {
             var fab = FindViewById<FloatingActionButton>(Resource.Id.goal_screen_add_subgoal);
@@ -91,9 +120,9 @@ namespace BucketList
 
         private void SwitchToAddGoalScreen()
         {
-            var intent = new Intent(this, typeof(AddGoalActivity));
+            var intent = new Intent(this, typeof(AddSubgoalActivity));
             intent.PutExtra("maxDeadline", CurrentGoal.Deadline.ToString());
-            intent.PutExtra("currentGoal", Extensions.SerializeGoal(CurrentGoal));
+            intent.PutExtra("currentGoal", GoalExtensions.SerializeGoal(CurrentGoal));
             StartActivityForResult(intent, 1);
         }
 
@@ -105,15 +134,28 @@ namespace BucketList
 
         private void UpdateSubgoalsListView()
         {
-            Extensions.OverwriteGoals(Goals);
-            var listView = FindViewById<ListView>(Resource.Id.subgoals_items);
+            GoalExtensions.OverwriteGoals(Goals);
+            var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
             var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
+            adapter.calendarFabClick += CalendarFab_Click;
             listView.Adapter = adapter;
+        }
+
+        private void CalendarFab_Click(object sender, EventArgs e)
+        {
+            var datePickerDialog = GetDatePickerDialog
+                (
+                $"Изменить дедлайн подцели \"//TODO\"?",
+                (calendarView) =>
+                    {
+                        calendarView.MaxDate = CurrentGoal.Deadline.GetDateTimeInMillis();
+                    }
+                );
+            datePickerDialog.Show();
         }
 
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            //Toast.MakeText(this, "asdfasf", ToastLength.Long).Show();
             ShowContextMenu(sender, e);
         }
 
@@ -121,7 +163,6 @@ namespace BucketList
         {
             ListView myListView = sender as ListView;
 
-            // Получите выбранный элемент
             var selectedItem = myListView.GetItemAtPosition(e.Position);
             currentSubgoal = selectedItem.Cast<Subgoal>();
 
@@ -143,7 +184,6 @@ namespace BucketList
 
         public override bool OnContextItemSelected(IMenuItem item)
         {
-            // Проверьте, выбран ли пункт меню "Delete"
             if (item.ItemId == 0)
             {
                 RemoveSubgoal(currentSubgoal);
@@ -157,6 +197,12 @@ namespace BucketList
         {
             CurrentGoal.RemoveSubgoal(goal);
             UpdateSubgoalsListView();
+        }
+
+        private DatePickerDialog GetDatePickerDialog(string dialogName, Action<CalendarView> calendarSetup = null)
+        {
+            var datePickerDialog = this.GetDatePickerDialog(dialogName, OnDateSet, OnDateChange, calendarSetup);
+            return datePickerDialog;
         }
     }
 }

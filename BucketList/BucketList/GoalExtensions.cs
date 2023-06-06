@@ -13,7 +13,7 @@ using System.Text;
 
 namespace BucketList
 {
-    public static class Extensions
+    public static class GoalExtensions
     {
         public static void WriteTextFile(string fileName, string text)
         {
@@ -44,19 +44,19 @@ namespace BucketList
 
         public static string ReadGoals()
         {
-            var data = Extensions.ReadTextFile("goals.txt");
+            var data = GoalExtensions.ReadTextFile("goals.txt");
             return data;
         }
 
         public static void OverwriteGoals(string data)
         {
-            Extensions.WriteTextFile("goals.txt", data);
+            GoalExtensions.WriteTextFile("goals.txt", data);
         }
 
         public static void OverwriteGoals(List<Goal> goals)
         {
-            var data = Extensions.SerializeGoals(goals);
-            Extensions.WriteTextFile("goals.txt", data);
+            var data = GoalExtensions.SerializeGoals(goals);
+            GoalExtensions.WriteTextFile("goals.txt", data);
         }
 
         public static string SerializeGoals(List<Goal> goals)
@@ -71,14 +71,9 @@ namespace BucketList
 
         public static List<Goal> GetSavedGoals()
         {
-            return Extensions.DeserializeGoals(Extensions.ReadGoals());
+            return GoalExtensions.DeserializeGoals(GoalExtensions.ReadGoals());
         }
 
-        public static T Cast<T>(this Java.Lang.Object obj) where T : class
-        {
-            var propertyInfo = obj.GetType().GetProperty("Instance");
-            return propertyInfo == null ? null : propertyInfo.GetValue(obj, null) as T;
-        }
 
         public static string SerializeGoal(Goal goal)
         {

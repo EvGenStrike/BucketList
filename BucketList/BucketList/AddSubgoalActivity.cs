@@ -17,8 +17,8 @@ using Xamarin.Essentials;
 
 namespace BucketList
 {
-    [Activity(Label = "AddGoalActivity")]
-    public class AddGoalActivity : Activity
+    [Activity(Label = "AddSubgoalActivity")]
+    public class AddSubgoalActivity : Activity
     {
         Button goalAddButton;
         EditText goalAddNameEditText;
@@ -29,8 +29,8 @@ namespace BucketList
         private DateTime selectedDate;
 
         private List<Goal> allGoals;
-        private string maxDeadline;
-        private string currentGoal;
+        private Goal currentGoal;
+        private DateTime maxDeadline;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,6 +39,8 @@ namespace BucketList
             goalAddButton = FindViewById<Button>(Resource.Id.goal_add_button);
             goalAddButton.Click += OnClick;
             allGoals = GoalExtensions.GetSavedGoals();
+            currentGoal = GoalExtensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
+            maxDeadline = DateTime.Parse(Intent.GetStringExtra("maxDeadline"));
             goalAddNameEditText = FindViewById<EditText>(Resource.Id.goal_add_name_text);
             
             var datePickerButton = FindViewById<Button>(Resource.Id.button1);
@@ -49,10 +51,9 @@ namespace BucketList
         {
             var intent = new Intent();
             var goalName = GetGoalNameText();
-            var goalDeadline = GetGoalDateTime();
-            if (allGoals.Any(x => x.GoalName == goalName))
+            if (currentGoal.Subgoals.Any(x => x.SubgoalName == goalName))
             {
-                Toast.MakeText(this, "Цель с таким названием уже существует", ToastLength.Short).Show();
+                Toast.MakeText(this, "Подцель с таким названием уже существует", ToastLength.Short).Show();
                 return;
             }
             if (DateTime.Compare(GetGoalDateTime(), DateTime.Now) <= 0)
@@ -60,6 +61,7 @@ namespace BucketList
                 Toast.MakeText(this, "Вы не выбрали дедлайн", ToastLength.Short).Show();
                 return;
             }
+            var goalDeadline = GetGoalDateTime();
             var goal = new Goal(goalName, goalDeadline);
             intent.PutExtra("goal", JsonNet.Serialize(goal));
             SetResult(Result.Ok, intent);
@@ -95,8 +97,7 @@ namespace BucketList
                                                 );
             datePickerDialog.SetView(datePickerView);
             calendarView.MinDate = currentDate.GetDateTimeInMillis();
-            //if (!string.IsNullOrEmpty(maxDeadline))
-            //    calendarView.MaxDate = DateTime.Parse(maxDeadline).GetDateTimeInMillis();
+            calendarView.MaxDate = maxDeadline.GetDateTimeInMillis();
             calendarView.FirstDayOfWeek = 2;
             calendarView.DateChange += CalendarView_DateChange;
             datePickerDialog.Show();
