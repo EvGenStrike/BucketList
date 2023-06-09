@@ -84,5 +84,15 @@ namespace BucketList
         {
             return JsonNet.Deserialize<Goal>(goal);
         }
+
+        public static string SerializeSubgoal(Subgoal goal)
+        {
+            return JsonNet.Serialize(goal);
+        }
+
+        public static Subgoal DeserializeSubgoal(string goal)
+        {
+            return JsonNet.Deserialize<Subgoal>(goal);
+        }
     }
 }

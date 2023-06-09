@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace BucketList
@@ -25,7 +26,7 @@ namespace BucketList
 
         private Subgoal currentSubgoal;
 
-        private DateTime selectedDate;
+        private DateTime selectedDate = DateTime.MinValue;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -143,9 +144,11 @@ namespace BucketList
 
         private void CalendarFab_Click(object sender, EventArgs e)
         {
+            var fab = sender as FloatingActionButton;
+            var subgoal = GoalExtensions.DeserializeSubgoal((string)fab.Tag);
             var datePickerDialog = GetDatePickerDialog
                 (
-                $"Изменить дедлайн подцели \"//TODO\"?",
+                $"Изменить дедлайн подцели \"{subgoal.SubgoalName}\"?",
                 (calendarView) =>
                     {
                         calendarView.MaxDate = CurrentGoal.Deadline.GetDateTimeInMillis();
