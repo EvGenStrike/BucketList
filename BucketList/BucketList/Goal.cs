@@ -14,16 +14,18 @@ namespace BucketList
     public class Goal
     {
         public string GoalName { get; set; }
+        public string ImagePath { get; set; }
         public DateTime Deadline { get; set; }
         public List<Subgoal> Subgoals { get; set; }
 
         public Goal() { }
 
-        public Goal(string subgoalName, DateTime deadline)
+        public Goal(string subgoalName, DateTime deadline, string image = null)
         {
             GoalName = subgoalName;
             Deadline = deadline;
             Subgoals = new List<Subgoal>();
+            ImagePath = image;
         }
 
         public void AddSubgoal(Subgoal subgoal)

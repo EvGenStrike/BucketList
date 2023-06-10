@@ -9,6 +9,7 @@
 	<string name="goal_add_name_text">"Название цели"</string>
 	<string name="goal_add_date_text">"Дата дедлайна"</string>
 	<string name="goal_add_button_text">"Создать цель"</string>
+	<string name="goal_add_deadline_text">"Установить дедлайн"</string>
 
 	<string name="registration_header_text">"Укажите имя"</string>
 	<string name="registration_add_name_text">"Имя пользователя"</string>

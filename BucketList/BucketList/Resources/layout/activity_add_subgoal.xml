@@ -7,60 +7,49 @@
     android:background="@color/colorMainBackground"
     tools:context=".MainActivity">
 
-    
-    <!--Изображние сверху-->
     <ImageView
-        android:id="@+id/goal_add_image"
+        android:id="@+id/subgoal_add_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:src="@android:drawable/ic_menu_gallery"
-    />
-    <Button
-        android:id="@+id/goal_add_choose_image_button"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="#00FFFF00"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/snake_image"
     />
 
-    <!--Блок с целью-->
     <ImageView
-        android:id="@+id/goal_add_name_snake_icon"
+        android:id="@+id/subgoal_add_name_snake_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/goal_add_image"
+        android:layout_below="@id/subgoal_add_image"
         android:src="@drawable/goal_add_snake"
     />
 
     <EditText
         android:inputType="text"
-        android:id="@+id/goal_add_name_text"
+        android:id="@+id/subgoal_add_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/goal_add_name_snake_icon"
+        android:layout_toEndOf="@id/subgoal_add_name_snake_icon"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/goal_add_image"
+        android:layout_below="@id/subgoal_add_image"
         android:hint="@string/goal_add_name_text"
     />
 
-
-    <!--Блок с целью-->
     <ImageView
-        android:id="@+id/goal_add_date_snake_icon"
+        android:id="@+id/subgoal_add_date_snake_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/goal_add_name_text"
+        android:layout_below="@id/subgoal_add_name_text"
         android:src="@drawable/goal_add_snake"
     />
 
-    <!--Кнопка Добавить цель-->
     <Button
         android:text="@string/goal_add_button_text"
         android:layout_width="match_parent"
@@ -68,19 +57,19 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_alignParentBottom="true"
-        android:id="@+id/goal_add_button"
+        android:id="@+id/subgoal_add_button"
         android:background="@drawable/button_rectangle"
     />
     <Button
-        android:text="Установить дедлайн"
+        android:text="@string/goal_add_deadline_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/goal_add_date_snake_icon"
-        android:layout_below="@id/goal_add_name_text"
-        android:id="@+id/button1"
+        android:layout_toRightOf="@id/subgoal_add_date_snake_icon"
+        android:layout_below="@id/subgoal_add_name_text"
+        android:id="@+id/button2"
         android:background="@drawable/button_rectangle"
     />
 

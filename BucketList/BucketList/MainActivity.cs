@@ -196,9 +196,10 @@ namespace BucketList
             UpdateGoalsView();
         }
 
-        private void RemoveGoal(Goal goalName)
+        private void RemoveGoal(Goal goal)
         {
-            Goals.Remove(goalName);
+            GoalExtensions.DeleteImage(goal.ImagePath);
+            Goals.Remove(goal);
             UpdateGoalsView();
         }
 

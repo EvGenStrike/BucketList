@@ -15,18 +15,24 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using Android.Content.PM;
+
 
 namespace BucketList
 {
     [Activity(Label = "GoalActivity")]
     public class GoalActivity : Activity
     {
+        private const int ReadExternalStoragePermissionRequestCode = 100;
+
         public List<Goal> Goals { get; private set; }
         public Goal CurrentGoal { get; private set; }
 
         private Subgoal currentSubgoal;
 
         private DateTime selectedDate = DateTime.MinValue;
+        private int itemIdThatWantsToChangeDate = -1; //-1 значит item = CurrentGoal, 0..n значит item = CurrentGoal.Subgoals[i];
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -35,9 +41,16 @@ namespace BucketList
             SetGoals();
             Initialize();
             SetGoalText();
+            SetGoalImage();
             SetListView();
             SetFabAddSubgoal();
             SetGoalCalendarFab();
+        }
+
+        private void SetGoalImage()
+        {
+            var goalImage = FindViewById<ImageView>(Resource.Id.goal_screen_image);
+            goalImage.SetImage(CurrentGoal.ImagePath);
         }
 
         private void SetGoalCalendarFab()
@@ -48,7 +61,16 @@ namespace BucketList
 
         private void GoalCalendarFab_Click(object sender, EventArgs e)
         {
-            var datePickerDialog = GetDatePickerDialog($"Изменить дедлайн цели \"{CurrentGoal.GoalName}\"?");
+            var datePickerDialog = GetDatePickerDialog
+                (
+                    $"Изменить дедлайн цели \"{CurrentGoal.GoalName}\"?",
+                    (calendarView) =>
+                        {
+                            calendarView.MinDate = CurrentGoal.Subgoals.Count > 0 ? CurrentGoal.Subgoals.Max(x => x.Deadline).GetDateTimeInMillis() : DateTime.Now.GetDateTimeInMillis();
+                            calendarView.Date = CurrentGoal.Deadline.GetDateTimeInMillis();
+                        }
+                );
+            itemIdThatWantsToChangeDate = -1;
             datePickerDialog.Show();
         }
 
@@ -61,10 +83,23 @@ namespace BucketList
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
             var year = selectedDate.Year;
+            if (year == 1) return;
             var month = selectedDate.Month;
             var dayOfMonth = selectedDate.Day;
-            var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
-            Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();            
+            var selectedDateInString
+                = $"{string.Format("{0:00}", dayOfMonth)}.{string.Format("{0:00}", month)}.{year}";
+            //Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();            
+            if (itemIdThatWantsToChangeDate == -1)
+            {
+                CurrentGoal.Deadline = selectedDate;
+                Toast.MakeText(this, $"Дедлайн цели \"{CurrentGoal.GoalName}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
+            }
+            else
+            {
+                var subgoal = CurrentGoal.Subgoals[itemIdThatWantsToChangeDate];
+                subgoal.Deadline = selectedDate;
+                Toast.MakeText(this, $"Дедлайн подцели \"{subgoal.SubgoalName}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
+            }
         }
 
         public void SetGoals()
@@ -152,8 +187,10 @@ namespace BucketList
                 (calendarView) =>
                     {
                         calendarView.MaxDate = CurrentGoal.Deadline.GetDateTimeInMillis();
+                        calendarView.Date = subgoal.Deadline.GetDateTimeInMillis();
                     }
                 );
+            itemIdThatWantsToChangeDate = CurrentGoal.Subgoals.IndexOf(CurrentGoal.Subgoals.First(x => x.SubgoalName == subgoal.SubgoalName));
             datePickerDialog.Show();
         }
 

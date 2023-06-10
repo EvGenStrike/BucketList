@@ -35,15 +35,15 @@ namespace BucketList
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.activity_add_goal);
-            goalAddButton = FindViewById<Button>(Resource.Id.goal_add_button);
+            SetContentView(Resource.Layout.activity_add_subgoal);
+            goalAddButton = FindViewById<Button>(Resource.Id.subgoal_add_button);
             goalAddButton.Click += OnClick;
             allGoals = GoalExtensions.GetSavedGoals();
             currentGoal = GoalExtensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
             maxDeadline = DateTime.Parse(Intent.GetStringExtra("maxDeadline"));
-            goalAddNameEditText = FindViewById<EditText>(Resource.Id.goal_add_name_text);
+            goalAddNameEditText = FindViewById<EditText>(Resource.Id.subgoal_add_name_text);
             
-            var datePickerButton = FindViewById<Button>(Resource.Id.button1);
+            var datePickerButton = FindViewById<Button>(Resource.Id.button2);
             datePickerButton.Click += DatePickerButton_Click;
         }
 
@@ -138,28 +138,11 @@ namespace BucketList
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
             var year = selectedDate.Year;
-            var month = selectedDate.Month; // Здесь месяц начинается с 0, поэтому добавляем 1
+            var month = selectedDate.Month;
             var dayOfMonth = selectedDate.Day;
-            var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
+            var selectedDateInString
+                = $"{string.Format("{0:00}", dayOfMonth)}.{string.Format("{0:00}", month)}.{year}";
             Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();
-            //var calendarView = datePicker.RootView.FindViewById<CalendarView>(Resource.Id.addGoalCalendar);
-            //var selectedDate = calendarView.Date.GetDateTimeFromMillis();
-            //var year = selectedDate.Year;
-            //var month = selectedDate.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
-            //var dayOfMonth = selectedDate.Day;
-            //var selectedDateInString = $"{dayOfMonth}-{month}-{year}";
-            //Toast.MakeText(this, $"Выбранная дата: {selectedDateInString}", ToastLength.Short).Show();
-
-
-            //// Получите выбранную дату из DatePickerDialog
-            //int year = e.Year;
-            //int month = e.Month + 1; // Здесь месяц начинается с 0, поэтому добавляем 1
-            //int dayOfMonth = e.DayOfMonth;
-
-
-            //// Выполните необходимые действия с выбранной датой
-            //string selectedDate = $"{dayOfMonth}-{month}-{year}";
-            //Toast.MakeText(this, $"Выбранная дата: {selectedDate}", ToastLength.Short).Show();
         }
     }
 }

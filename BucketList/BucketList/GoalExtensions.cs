@@ -94,5 +94,28 @@ namespace BucketList
         {
             return JsonNet.Deserialize<Subgoal>(goal);
         }
+
+        public static void SetImage(this ImageView imageView, string imagePath)
+        {
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                imageView.SetImageURI(Android.Net.Uri.FromFile(new Java.IO.File(imagePath)));
+            }
+        }
+
+        public static void DeleteImage(string imagePath)
+        {
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                try
+                {
+                    File.Delete(imagePath);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error deleting image file {e.Message}");
+                }
+            }
+        }
     }
 }
