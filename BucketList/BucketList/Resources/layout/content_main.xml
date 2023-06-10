@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,11 +13,75 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/allGoalsCalendarView"
-        android:id="@+id/goalsListView"
-    />
+        android:layout_above="@id/deadlineCalendar"
+        android:id="@+id/goalsListView" />
 
-    
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/fab"
+        android:layout_alignTop="@id/fab"
+        android:id="@+id/deadlineCalendar">
+
+        <TextView
+            android:id="@+id/date1"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:padding="20dp"
+            android:background="@drawable/dateincalendarwithpython"
+            android:textAppearance="@style/TextDate"/>
+
+        <TextView
+            android:id="@+id/date2"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date1"
+            android:padding="20dp"
+            android:background="@drawable/dateincalendarwithpython"
+            android:textAppearance="@style/TextDate"
+            />
+
+        <TextView
+            android:id="@+id/date3"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date2"
+            android:padding="20dp"
+            android:background="@drawable/dateincalendarwithpython"
+            android:textAppearance="@style/TextDate"/>
+        <TextView
+            android:id="@+id/date4"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date3"
+            android:padding="20dp"
+            android:background="@drawable/dateincalendarwithpython"
+            android:textAppearance="@style/TextDate"/>
+        <TextView
+            android:id="@+id/date5"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date4"
+            android:padding="20dp"
+            android:background="@drawable/dateincalendarwithpython"
+            android:textAppearance="@style/TextDate"/>
+        <ImageView
+            android:id="@+id/python"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:alpha="0.70"
+            android:layout_toLeftOf="@id/date3"
+            android:layout_height="match_parent"
+            android:src="@drawable/pythoncalendar"/>
+
+        <!-- Добавьте дополнительные числа в каждую ячейку по необходимости -->
+
+    </RelativeLayout>
+
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -36,16 +101,16 @@
         android:layout_above="@id/fab"
     />-->
 
-    <CalendarView
+    <!--<CalendarView
         android:id="@+id/allGoalsCalendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_above="@id/fab"
         android:theme="@style/CustomDatePickerDialog"
-    />
+    />-->
 
-    
-    
+
+
 
 </RelativeLayout>

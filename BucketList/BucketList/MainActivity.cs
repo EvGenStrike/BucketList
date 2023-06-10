@@ -41,6 +41,18 @@ namespace BucketList
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
             SetListView();
+            var nowDay = DateTime.Now.Day;
+            var listTextView = new List<TextView>();
+            var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
+            for (var i = 0; i < calendar.ChildCount - 1; i++)
+                listTextView.Add(calendar.GetChildAt(i) as TextView);
+            foreach (var text in listTextView)
+            {
+                text.Text = nowDay.ToString();
+                if (text.Text == "12")
+                    text.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                nowDay++;
+            }
             SetNavigationView();
             SetUserName();
             SetFab();
@@ -267,11 +279,11 @@ namespace BucketList
 
         private void SetPythonCalendarView()
         {
-            var calendarView = FindViewById<CalendarView>(Resource.Id.allGoalsCalendarView);
-            calendarView.FirstDayOfWeek = 2;
-            calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
-            calendarView.DateChange += CalendarView_DateChange;
-            calendarView.DateTextAppearance = (Android.Resource.Style.TextAppearanceMedium);
+            //var calendarView = FindViewById<CalendarView>(Resource.Id.allGoalsCalendarView);
+            //calendarView.FirstDayOfWeek = 2;
+            //calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
+            //calendarView.DateChange += CalendarView_DateChange;
+            //calendarView.DateTextAppearance = (Android.Resource.Style.TextAppearanceMedium);
             
             // Set the highlighted dates
             List<DateTime> highlightedDates = new List<DateTime>()

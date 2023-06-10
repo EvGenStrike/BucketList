@@ -32,5 +32,10 @@
 	<style name="CustomDatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
 		<item name="android:colorControlActivated">#F10</item>
 	</style>
+	<style name="TextDate">
+		<item name="android:textSize">20dp</item>
+		<item name="android:textColor">@android:color/black</item>
+		<item name="android:textStyle">bold</item>
+	</style>
 
 </resources>
