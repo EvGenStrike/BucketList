@@ -5,6 +5,6 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-	<dimen name="date_python_calendar_width">70dp</dimen>
-	<dimen name="date_python_calendar_heigth">65dp</dimen>
+	<dimen name="date_python_calendar_width">40dp</dimen>
+	<dimen name="date_python_calendar_heigth">40dp</dimen>
 </resources>
