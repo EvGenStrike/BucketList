@@ -71,7 +71,7 @@ namespace BucketList
             var subgoalCircleState = view.FindViewById<ImageView>(Resource.Id.subgoal_circle_state);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.subgoal_name);
             var subgoalCalendarButton = view.FindViewById<FloatingActionButton>(Resource.Id.subgoal_calendar_button);
-            subgoalCalendarButton.Tag = GoalExtensions.SerializeSubgoal(subgoals[position]);
+            subgoalCalendarButton.Tag = Extensions.SerializeSubgoal(subgoals[position]);
             subgoalName.Text = subgoals[position].SubgoalName;
 
             view.Touch += (sender, e) =>

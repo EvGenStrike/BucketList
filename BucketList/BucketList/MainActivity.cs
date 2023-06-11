@@ -47,6 +47,25 @@ namespace BucketList
             SetFab();
             SetToolbar();
             SetPythonCalendarView();
+            SetSearchView();
+        }
+
+        private void SetSearchView()
+        {
+            var searchView = FindViewById<Android.Widget.SearchView>(Resource.Id.main_screen_search);
+            searchView.QueryTextChange += SearchView_QueryTextChange;
+        }
+
+        private void SearchView_QueryTextChange(object sender, Android.Widget.SearchView.QueryTextChangeEventArgs e)
+        {
+            var searchView = sender as Android.Widget.SearchView;
+            var text = searchView.Query.ToLower().Trim();
+            var goals = 
+                Goals
+                .Select(x => x.GoalName)
+                .Where(x => x.ToLower().Contains(text))
+                .ToList();
+            UpdateGoalsViewForSearchView(goals);
         }
 
         private void Initialize()
@@ -58,9 +77,9 @@ namespace BucketList
             //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
             //};
             datesPythonCalendar = new Dictionary<TextView, DateTime>();
-            if (string.IsNullOrEmpty(GoalExtensions.ReadGoals()))
-                GoalExtensions.OverwriteGoals(GoalExtensions.SerializeGoals(new List<Goal>()));
-            Goals = GoalExtensions.GetSavedGoals();
+            if (string.IsNullOrEmpty(Extensions.ReadGoals()))
+                Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
+            Goals = Extensions.GetSavedGoals();
         }
 
         private void MyListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -143,34 +162,26 @@ namespace BucketList
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
-            int id = item.ItemId;
-
-            if (id == Resource.Id.nav_camera)
-            {
-                // Handle the camera action
-            }
-            else if (id == Resource.Id.nav_gallery)
-            {
-
-            }
-            else if (id == Resource.Id.nav_slideshow)
-            {
-
-            }
-            else if (id == Resource.Id.nav_manage)
-            {
-
-            }
-            else if (id == Resource.Id.nav_share)
-            {
-
-            }
-            else if (id == Resource.Id.nav_send)
-            {
-
-            }
-
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            var id = item.ItemId;
+            
+            if (id == Resource.Id.nav_statistics)
+            {
+                var intent = new Intent(this, typeof(StatisticsActivity));
+                StartActivityForResult(intent, 1);
+            }
+            else if (id == Resource.Id.nav_account)
+            {
+
+            }
+            else if (id == Resource.Id.nav_python_settings)
+            {
+
+            }
+            else if (id == Resource.Id.nav_allow_notifications)
+            {
+
+            }
             drawer.CloseDrawer(GravityCompat.Start);
             return true;
         }
@@ -208,27 +219,30 @@ namespace BucketList
 
         private void RemoveGoal(Goal goal)
         {
-            GoalExtensions.DeleteImage(goal.ImagePath);
+            Extensions.DeleteImage(goal.ImagePath);
             Goals.Remove(goal);
             foreach (var date in datesPythonCalendar)
             {
-                foreach (var goal1 in Goals)
-                {
-                    if (date.Value.Date != goal1.Deadline.Date)
-                        date.Key.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
-                }
+                if (goal.Deadline.Date == date.Value.Date)
+                    date.Key.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
             }
             UpdateGoalsView();
         }
 
         private void UpdateGoalsView()
         {
-            var serializedGoals = GoalExtensions.SerializeGoals(Goals);
-            GoalExtensions.OverwriteGoals(serializedGoals);
+            var serializedGoals = Extensions.SerializeGoals(Goals);
+            Extensions.OverwriteGoals(serializedGoals);
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.GoalName).ToList());
             listView.Adapter = adapter;
-            
+        }
+
+        private void UpdateGoalsViewForSearchView(List<string> goals)
+        {
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            listView.Adapter = adapter;
         }
 
         private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -245,8 +259,12 @@ namespace BucketList
 
         private void SetNavigationView()
         {
-            userName = Intent.GetStringExtra("username");
+            var user = Extensions.GetSavedUser();
+            userName = user.UserName;
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            var headerView = navigationView.GetHeaderView(0);
+            var userImage = headerView.FindViewById<ImageView>(Resource.Id.imageView);
+            userImage.SetImage(user.UserPhotoPath);
             navigationView.SetNavigationItemSelectedListener(this);
         }
 

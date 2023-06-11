@@ -47,7 +47,7 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_add_goal);
             goalAddButton = FindViewById<Button>(Resource.Id.goal_add_button);
             goalAddButton.Click += OnClick;
-            allGoals = GoalExtensions.GetSavedGoals();
+            allGoals = Extensions.GetSavedGoals();
             goalAddNameEditText = FindViewById<EditText>(Resource.Id.goal_add_name_text);
             chooseImageButton = FindViewById<Button>(Resource.Id.goal_add_choose_image_button);
             goalImage = FindViewById<ImageView>(Resource.Id.goal_add_image);
@@ -158,7 +158,7 @@ namespace BucketList
                 return;
             }
             var goal = new Goal(goalName, goalDeadline, imagePath);
-            var serializedGoal = GoalExtensions.SerializeGoal(goal);
+            var serializedGoal = Extensions.SerializeGoal(goal);
             intent.PutExtra("goal", serializedGoal);
             SetResult(Result.Ok, intent);
             Finish();
@@ -166,7 +166,7 @@ namespace BucketList
 
         public override void OnBackPressed()
         {
-            GoalExtensions.DeleteImage(imagePath);
+            Extensions.DeleteImage(imagePath);
             base.OnBackPressed();
         }
 

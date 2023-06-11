@@ -16,4 +16,7 @@
 	<string name="registration_add_name_edittext">"Введите имя"</string>
 	<string name="registration_profile_photo_text">Фотография профиля</string>
 	<string name="registration_button">"Готово"</string>
+
+	<string name="statistics_box_done">"Выполено"</string>
+	<string name="statistics_box_not_done">"Не выполено"</string>
 </resources>

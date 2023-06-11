@@ -18,7 +18,7 @@
             android:background="@color/colorMainBackgroundDark"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <SearchView
-                android:id="@+id/searchView1"
+                android:id="@+id/main_screen_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minWidth="25px"

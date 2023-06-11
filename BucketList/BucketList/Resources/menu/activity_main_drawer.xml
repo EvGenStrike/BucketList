@@ -2,38 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+	
 	<item android:title="Статистика и аккаунт">
 		<menu>
-	<group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/goal_add_snake"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/goal_add_snake"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/goal_add_snake"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/goal_add_snake"
-            android:title="Tools" />
-    </group>
+	        <group android:checkableBehavior="all">
+                <item
+                    android:id="@+id/nav_statistics"
+                    android:icon="@drawable/goal_add_snake"
+                    android:title="Статистика" />
+                <item
+                    android:id="@+id/nav_account"
+                    android:icon="@drawable/goal_add_snake"
+                    android:title="Аккаунт" />
+            </group>
 		</menu>
 	</item>
+	
     <item android:title="Дополнительно">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/goal_add_snake"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/goal_add_snake"
-                android:title="Send" />
+			<group android:checkableBehavior="all">
+                <item
+                    android:id="@+id/nav_python_settings"
+                    android:icon="@drawable/goal_add_snake"
+                    android:title="Настройка питона" />
+                <item
+                    android:id="@+id/nav_allow_notifications"
+                    android:icon="@drawable/goal_add_snake"
+                    android:title="Разрешить уведомления" />
+			</group>
         </menu>
     </item>
 

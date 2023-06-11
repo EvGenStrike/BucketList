@@ -38,8 +38,8 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_add_subgoal);
             goalAddButton = FindViewById<Button>(Resource.Id.subgoal_add_button);
             goalAddButton.Click += OnClick;
-            allGoals = GoalExtensions.GetSavedGoals();
-            currentGoal = GoalExtensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
+            allGoals = Extensions.GetSavedGoals();
+            currentGoal = Extensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
             maxDeadline = DateTime.Parse(Intent.GetStringExtra("maxDeadline"));
             goalAddNameEditText = FindViewById<EditText>(Resource.Id.subgoal_add_name_text);
             

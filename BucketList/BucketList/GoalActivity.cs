@@ -104,7 +104,7 @@ namespace BucketList
 
         public void SetGoals()
         {
-            Goals = GoalExtensions.GetSavedGoals();
+            Goals = Extensions.GetSavedGoals();
         }
 
         public void Initialize()
@@ -158,7 +158,7 @@ namespace BucketList
         {
             var intent = new Intent(this, typeof(AddSubgoalActivity));
             intent.PutExtra("maxDeadline", CurrentGoal.Deadline.ToString());
-            intent.PutExtra("currentGoal", GoalExtensions.SerializeGoal(CurrentGoal));
+            intent.PutExtra("currentGoal", Extensions.SerializeGoal(CurrentGoal));
             StartActivityForResult(intent, 1);
         }
 
@@ -170,7 +170,7 @@ namespace BucketList
 
         private void UpdateSubgoalsListView()
         {
-            GoalExtensions.OverwriteGoals(Goals);
+            Extensions.OverwriteGoals(Goals);
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
             var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
             adapter.calendarFabClick += CalendarFab_Click;
@@ -180,7 +180,7 @@ namespace BucketList
         private void CalendarFab_Click(object sender, EventArgs e)
         {
             var fab = sender as FloatingActionButton;
-            var subgoal = GoalExtensions.DeserializeSubgoal((string)fab.Tag);
+            var subgoal = Extensions.DeserializeSubgoal((string)fab.Tag);
             var datePickerDialog = GetDatePickerDialog
                 (
                 $"Изменить дедлайн подцели \"{subgoal.SubgoalName}\"?",

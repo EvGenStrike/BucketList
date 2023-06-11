@@ -13,7 +13,7 @@ using System.Text;
 
 namespace BucketList
 {
-    public static class GoalExtensions
+    public static class Extensions
     {
         public static void WriteTextFile(string fileName, string text)
         {
@@ -42,21 +42,47 @@ namespace BucketList
             }
         }
 
+        public static string ReadUser()
+        {
+            var data = Extensions.ReadTextFile("user.txt");
+            return data;
+        }
+
+        public static void OverwriteUser(string data)
+        {
+            Extensions.WriteTextFile("user.txt", data);
+        }
+
+        public static string SerializeUser(User user)
+        {
+            return JsonNet.Serialize(user);
+        }
+
+        public static User DeserializeUser(string user)
+        {
+            return JsonNet.Deserialize<User>(user);
+        }
+
+        public static User GetSavedUser()
+        {
+            return Extensions.DeserializeUser(Extensions.ReadUser());
+        }
+
         public static string ReadGoals()
         {
-            var data = GoalExtensions.ReadTextFile("goals.txt");
+            var data = Extensions.ReadTextFile("goals.txt");
             return data;
         }
 
         public static void OverwriteGoals(string data)
         {
-            GoalExtensions.WriteTextFile("goals.txt", data);
+            Extensions.WriteTextFile("goals.txt", data);
         }
 
         public static void OverwriteGoals(List<Goal> goals)
         {
-            var data = GoalExtensions.SerializeGoals(goals);
-            GoalExtensions.WriteTextFile("goals.txt", data);
+            var data = Extensions.SerializeGoals(goals);
+            Extensions.WriteTextFile("goals.txt", data);
         }
 
         public static string SerializeGoals(List<Goal> goals)
@@ -71,7 +97,7 @@ namespace BucketList
 
         public static List<Goal> GetSavedGoals()
         {
-            return GoalExtensions.DeserializeGoals(GoalExtensions.ReadGoals());
+            return Extensions.DeserializeGoals(Extensions.ReadGoals());
         }
 
 
