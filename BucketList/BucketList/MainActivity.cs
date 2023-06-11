@@ -32,6 +32,7 @@ namespace BucketList
         public List<Goal> Goals;
         private string userName;
         private Goal currentGoalName;
+        private Dictionary<TextView, DateTime> datesPythonCalendar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,18 +42,6 @@ namespace BucketList
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
             SetListView();
-            var nowDay = DateTime.Now.Day;
-            var listTextView = new List<TextView>();
-            var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
-            for (var i = 0; i < calendar.ChildCount - 1; i++)
-                listTextView.Add(calendar.GetChildAt(i) as TextView);
-            foreach (var text in listTextView)
-            {
-                text.Text = nowDay.ToString();
-                if (text.Text == "12")
-                    text.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
-                nowDay++;
-            }
             SetNavigationView();
             SetUserName();
             SetFab();
@@ -68,6 +57,7 @@ namespace BucketList
             //    new Goal("Выучить Java", new DateTime(2024, 7, 3)),
             //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
             //};
+            datesPythonCalendar = new Dictionary<TextView, DateTime>();
             if (string.IsNullOrEmpty(GoalExtensions.ReadGoals()))
                 GoalExtensions.OverwriteGoals(GoalExtensions.SerializeGoals(new List<Goal>()));
             Goals = GoalExtensions.GetSavedGoals();
@@ -204,7 +194,15 @@ namespace BucketList
 
         private void AddGoal(Goal goal)
         {
-            Goals.Add(goal);         
+            Goals.Add(goal);
+            foreach (var date in datesPythonCalendar)
+            {
+                foreach (var goal1 in Goals)
+                {
+                    if (date.Value.Date == goal1.Deadline.Date)
+                        date.Key.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                }
+            }
             UpdateGoalsView();
         }
 
@@ -212,6 +210,14 @@ namespace BucketList
         {
             GoalExtensions.DeleteImage(goal.ImagePath);
             Goals.Remove(goal);
+            foreach (var date in datesPythonCalendar)
+            {
+                foreach (var goal1 in Goals)
+                {
+                    if (date.Value.Date != goal1.Deadline.Date)
+                        date.Key.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+                }
+            }
             UpdateGoalsView();
         }
 
@@ -222,6 +228,7 @@ namespace BucketList
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.GoalName).ToList());
             listView.Adapter = adapter;
+            
         }
 
         private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -284,7 +291,7 @@ namespace BucketList
             //calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
             //calendarView.DateChange += CalendarView_DateChange;
             //calendarView.DateTextAppearance = (Android.Resource.Style.TextAppearanceMedium);
-            
+
             // Set the highlighted dates
             List<DateTime> highlightedDates = new List<DateTime>()
             {
@@ -293,6 +300,22 @@ namespace BucketList
                 new DateTime(2023, 6, 20)
             };
             //calendarView.SetHighlightedDates(highlightedDates);
+            var currentDateTime = DateTime.Now;
+            var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
+            for (var i = 0; i < calendar.ChildCount; i++)
+            {
+                var date = calendar.GetChildAt(i) as TextView;
+                if (date == null) return;
+                date.Text = currentDateTime.Day.ToString();
+                datesPythonCalendar[date] = currentDateTime;
+                foreach (var goal in Goals)
+                {
+                    if (goal.Deadline.Date == datesPythonCalendar[date].Date)
+                        date.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                }
+                currentDateTime = currentDateTime.AddDays(1);
+
+            }
         }
 
         private void CalendarView_DateChange(object sender, CalendarView.DateChangeEventArgs e)

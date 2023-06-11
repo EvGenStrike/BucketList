@@ -18,9 +18,10 @@
 
 
     <RelativeLayout
-        android:layout_width="280dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
         android:layout_toLeftOf="@id/fab"
         android:layout_alignTop="@id/fab"
         android:id="@+id/deadlineCalendar">
@@ -29,7 +30,7 @@
             android:id="@+id/date1"
             android:layout_width="@dimen/date_python_calendar_width"
             android:layout_height="@dimen/date_python_calendar_heigth"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
@@ -38,7 +39,7 @@
             android:layout_width="@dimen/date_python_calendar_width"
             android:layout_height="@dimen/date_python_calendar_heigth"
             android:layout_toRightOf="@id/date1"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
@@ -47,7 +48,7 @@
             android:layout_width="@dimen/date_python_calendar_width"
             android:layout_height="@dimen/date_python_calendar_heigth"
             android:layout_toRightOf="@id/date2"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
@@ -56,7 +57,7 @@
             android:layout_width="@dimen/date_python_calendar_width"
             android:layout_height="@dimen/date_python_calendar_heigth"
             android:layout_toRightOf="@id/date3"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
@@ -65,7 +66,7 @@
             android:layout_width="@dimen/date_python_calendar_width"
             android:layout_height="@dimen/date_python_calendar_heigth"
             android:layout_toRightOf="@id/date4"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
@@ -73,12 +74,16 @@
 
         <ImageView
             android:id="@+id/python"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:alpha="0.70"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:alpha="0.9"
             android:layout_toLeftOf="@id/date3"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/pythoncalendar1"
+            android:layout_alignTop="@id/date1"
+            android:layout_alignBottom="@id/date1"
+            android:scaleX="1.2"
+            android:layout_marginTop="-8dp"
         />
 
 
