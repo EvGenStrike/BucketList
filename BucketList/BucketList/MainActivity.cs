@@ -70,12 +70,6 @@ namespace BucketList
 
         private void Initialize()
         {
-            //goals = new List<Goal>
-            //{
-            //    new Goal("Прочесть книгу", new DateTime(2024, 6, 3)),
-            //    new Goal("Выучить Java", new DateTime(2024, 7, 3)),
-            //    new Goal("Сдать сессию", new DateTime(2024, 8, 3)),
-            //};
             datesPythonCalendar = new Dictionary<TextView, DateTime>();
             if (string.IsNullOrEmpty(Extensions.ReadGoals()))
                 Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));

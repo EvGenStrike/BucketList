@@ -19,6 +19,8 @@ namespace BucketList
     [Activity(Label = "StatisticsActivity")]
     public class StatisticsActivity : Activity
     {
+        private User user;
+
         ImageView backArrow;
         ImageView userPhoto;
 
@@ -26,12 +28,19 @@ namespace BucketList
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_statistics_screen);
+            SetUser();
             SetBackArrow();
             SetUserPhoto();
         }
 
+        private void SetUser()
+        {
+            user = Extensions.GetSavedUser();
+        }
+
         private void SetUserPhoto()
         {
+
             var photoPath = Extensions.GetSavedUser().UserPhotoPath;
             userPhoto = FindViewById<ImageView>(Resource.Id.statistics_screen_user_photo);
             userPhoto.SetImage(photoPath);

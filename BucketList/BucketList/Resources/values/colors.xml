@@ -10,4 +10,5 @@
 	<color name="colorFirstGradient">#86a0e6</color>
 	<color name="colorSecondGradient">#b892eb</color>
 	<color name="colorThirdGradient">#f9ff88</color>
+	<color name="colorBackgroundPrim">#7db0d1</color>
 </resources>
