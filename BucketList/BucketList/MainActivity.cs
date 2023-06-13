@@ -299,22 +299,12 @@ namespace BucketList
 
         private void SetPythonCalendarView()
         {
-            //var calendarView = FindViewById<CalendarView>(Resource.Id.allGoalsCalendarView);
-            //calendarView.FirstDayOfWeek = 2;
-            //calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
-            //calendarView.DateChange += CalendarView_DateChange;
-            //calendarView.DateTextAppearance = (Android.Resource.Style.TextAppearanceMedium);
-
-            // Set the highlighted dates
-            List<DateTime> highlightedDates = new List<DateTime>()
-            {
-                new DateTime(2023, 6, 1),
-                new DateTime(2023, 6, 10),
-                new DateTime(2023, 6, 20)
-            };
-            //calendarView.SetHighlightedDates(highlightedDates);
-            var currentDateTime = DateTime.Now;
             var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
+            var buttonCalendarOpen = FindViewById<Button>(Resource.Id.calendarButton);
+            buttonCalendarOpen.Click += ButtonCalendarOpen_Click;
+
+            var currentDateTime = DateTime.Now.AddDays(-3);
+            
             for (var i = 0; i < calendar.ChildCount; i++)
             {
                 // Дата - это TextView в Layout
@@ -332,38 +322,11 @@ namespace BucketList
             }
         }
 
-        public void OnDeadlineDate_Click(object sender, EventArgs e)
+        private void ButtonCalendarOpen_Click(object sender, EventArgs e)
         {
             var intent = new Intent(this, typeof(CalendarActivity));
             intent.PutExtra("goals", Extensions.SerializeGoals(Goals));
             StartActivity(intent);
-            //var textView = sender as TextView;
-
-            //var goal = textView.Tag.JavaCast<DatePythonCalendar>().Goal;
-            //CreateDateDialog(goal);
-        }
-
-        private void CreateDateDialog(Goal goal)
-        {
-            var builder = new AlertDialog.Builder(this);
-            var dialogView = LayoutInflater.Inflate(Resource.Layout.dialog_date, null);
-            builder.SetView(dialogView);
-            
-            var buttonDismiss = dialogView.FindViewById<Button>(Resource.Id.buttonDismissDialog);
-            var goalName = dialogView.FindViewById<TextView>(Resource.Id.goalName);
-            var goalDeadline = dialogView.FindViewById<TextView>(Resource.Id.goalDeadline);
-            var goalImage = dialogView.FindViewById<ImageView>(Resource.Id.goalImage);
-
-            // Устанавливаем значения для вьюшек
-            if (goal.ImagePath != null)
-                goalImage.SetImage(goal.ImagePath);
-            goalName.Text = goal.GoalName;
-            goalDeadline.Text = goal.Deadline.Date.ToString();
-
-            var dialog = builder.Create();
-            // Зыкрытие по нажатию кнопки
-            buttonDismiss.Click += (sender, e) => { dialog.Dismiss(); };
-            dialog.Show();
         }
 
         private void SetDeadlineDate(Goal goal, DatePythonCalendar date)
@@ -372,7 +335,6 @@ namespace BucketList
             {
                 date.Goal = goal;
                 date.View.Tag = date;
-                date.View.Click += OnDeadlineDate_Click;
                 date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
             }
         }
@@ -381,7 +343,6 @@ namespace BucketList
             if (goal.Deadline.Date == date.Deadline.Date)
             {
                 date.Goal = null;
-                date.View.Click -= OnDeadlineDate_Click;
                 date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
             }
         }
