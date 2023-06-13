@@ -23,6 +23,7 @@ using Google.Android.Material.Resources;
 using Android.Text.Style;
 using Android.Util;
 using Json.Net;
+using AlertDialog = Android.App.AlertDialog;
 
 namespace BucketList
 {
@@ -30,9 +31,9 @@ namespace BucketList
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         public List<Goal> Goals;
+        public List<DatePythonCalendar> datesPythonCalendar;
         private string userName;
         private Goal currentGoalName;
-        private Dictionary<TextView, DateTime> datesPythonCalendar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -60,7 +61,7 @@ namespace BucketList
         {
             var searchView = sender as Android.Widget.SearchView;
             var text = searchView.Query.ToLower().Trim();
-            var goals = 
+            var goals =
                 Goals
                 .Select(x => x.GoalName)
                 .Where(x => x.ToLower().Contains(text))
@@ -70,7 +71,7 @@ namespace BucketList
 
         private void Initialize()
         {
-            datesPythonCalendar = new Dictionary<TextView, DateTime>();
+            datesPythonCalendar = new List<DatePythonCalendar>();
             if (string.IsNullOrEmpty(Extensions.ReadGoals()))
                 Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
             Goals = Extensions.GetSavedGoals();
@@ -92,14 +93,24 @@ namespace BucketList
             OpenContextMenu(myListView);
         }
 
-        public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
+        public override void OnCreateContextMenu(IContextMenu menu, View view, IContextMenuContextMenuInfo menuInfo)
         {
-            base.OnCreateContextMenu(menu, v, menuInfo);
+            base.OnCreateContextMenu(menu, view, menuInfo);
 
-            menu.SetHeaderTitle("Удалить цель?");
+            // Меню для цели
+            if (view is ListView)
+            {
+                menu.SetHeaderTitle("Удалить цель?");
 
-            menu.Add(Menu.None, 0, Menu.None, "Да");
-            menu.Add(Menu.None, 1, Menu.None, "Нет");
+                menu.Add(Menu.None, 0, Menu.None, "Да");
+                menu.Add(Menu.None, 1, Menu.None, "Нет");
+            }
+
+            // Меню для даты в календаре с питоном
+            else if (view is TextView)
+            {
+
+            }
         }
 
         public override bool OnContextItemSelected(IMenuItem item)
@@ -128,7 +139,6 @@ namespace BucketList
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
         }
@@ -148,17 +158,13 @@ namespace BucketList
         {
             Intent intent = new Intent(this, typeof(AddGoalActivity));
             StartActivityForResult(intent, 1);
-            //View view = (View)sender;
-            //AddGoal("Пойти спать");
-            //Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-            //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             var id = item.ItemId;
-            
+
             if (id == Resource.Id.nav_statistics)
             {
                 var intent = new Intent(this, typeof(StatisticsActivity));
@@ -202,11 +208,7 @@ namespace BucketList
             Goals.Add(goal);
             foreach (var date in datesPythonCalendar)
             {
-                foreach (var goal1 in Goals)
-                {
-                    if (date.Value.Date == goal1.Deadline.Date)
-                        date.Key.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
-                }
+                SetDeadlineDate(goal, date);
             }
             UpdateGoalsView();
         }
@@ -217,8 +219,7 @@ namespace BucketList
             Goals.Remove(goal);
             foreach (var date in datesPythonCalendar)
             {
-                if (goal.Deadline.Date == date.Value.Date)
-                    date.Key.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+                DeleteDeadlineFromDate(goal, date);
             }
             UpdateGoalsView();
         }
@@ -316,24 +317,73 @@ namespace BucketList
             var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
             for (var i = 0; i < calendar.ChildCount; i++)
             {
-                var date = calendar.GetChildAt(i) as TextView;
-                if (date == null) return;
-                date.Text = currentDateTime.Day.ToString();
-                datesPythonCalendar[date] = currentDateTime;
+                // Дата - это TextView в Layout
+                var dateView = calendar.GetChildAt(i) as TextView;
+                if (dateView == null) return;
+                var date = new DatePythonCalendar(currentDateTime, dateView);
+                dateView.Text = currentDateTime.Day.ToString();
+                datesPythonCalendar.Add(date);
                 foreach (var goal in Goals)
                 {
-                    if (goal.Deadline.Date == datesPythonCalendar[date].Date)
-                        date.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                    SetDeadlineDate(goal, date);
                 }
+                // Изменяем текущий день на следующий
                 currentDateTime = currentDateTime.AddDays(1);
-
             }
         }
 
-        private void CalendarView_DateChange(object sender, CalendarView.DateChangeEventArgs e)
+        public void OnDeadlineDate_Click(object sender, EventArgs e)
         {
-            var calendarView = (CalendarView)sender;
+            var intent = new Intent(this, typeof(CalendarActivity));
+            intent.PutExtra("goals", Extensions.SerializeGoals(Goals));
+            StartActivity(intent);
+            //var textView = sender as TextView;
 
+            //var goal = textView.Tag.JavaCast<DatePythonCalendar>().Goal;
+            //CreateDateDialog(goal);
+        }
+
+        private void CreateDateDialog(Goal goal)
+        {
+            var builder = new AlertDialog.Builder(this);
+            var dialogView = LayoutInflater.Inflate(Resource.Layout.dialog_date, null);
+            builder.SetView(dialogView);
+            
+            var buttonDismiss = dialogView.FindViewById<Button>(Resource.Id.buttonDismissDialog);
+            var goalName = dialogView.FindViewById<TextView>(Resource.Id.goalName);
+            var goalDeadline = dialogView.FindViewById<TextView>(Resource.Id.goalDeadline);
+            var goalImage = dialogView.FindViewById<ImageView>(Resource.Id.goalImage);
+
+            // Устанавливаем значения для вьюшек
+            if (goal.ImagePath != null)
+                goalImage.SetImage(goal.ImagePath);
+            goalName.Text = goal.GoalName;
+            goalDeadline.Text = goal.Deadline.Date.ToString();
+
+            var dialog = builder.Create();
+            // Зыкрытие по нажатию кнопки
+            buttonDismiss.Click += (sender, e) => { dialog.Dismiss(); };
+            dialog.Show();
+        }
+
+        private void SetDeadlineDate(Goal goal, DatePythonCalendar date)
+        {
+            if (date.Deadline.Date == goal.Deadline.Date)
+            {
+                date.Goal = goal;
+                date.View.Tag = date;
+                date.View.Click += OnDeadlineDate_Click;
+                date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+            }
+        }
+        private void DeleteDeadlineFromDate(Goal goal, DatePythonCalendar date)
+        {
+            if (goal.Deadline.Date == date.Deadline.Date)
+            {
+                date.Goal = null;
+                date.View.Click -= OnDeadlineDate_Click;
+                date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+            }
         }
     }
 }

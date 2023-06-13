@@ -1,0 +1,73 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMainBackgroundDark">
+
+        <ImageView
+            android:id="@+id/goalImage"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"/>
+        <TextView
+            android:id="@+id/goalNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дедлайн для цели:"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/goalImage"
+            android:layout_alignTop="@id/goalImage"
+            />
+        <TextView
+           android:singleLine="false"
+            android:id="@+id/goalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/goalImage"
+            android:layout_below="@id/goalNameTitle"
+            />
+        <TextView
+            android:id="@+id/goalDeadlineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дедлайн цели:"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/goalImage"
+            android:layout_below="@id/goalName"
+            />
+        <TextView
+            android:id="@+id/goalDeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toEndOf="@id/goalImage"
+            android:layout_below="@id/goalDeadlineTitle"
+            />
+        <Button
+            android:id="@+id/buttonDismissDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:layout_below="@id/goalDeadline"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/goalImage"
+            />
+
+    </RelativeLayout>
+</ScrollView>

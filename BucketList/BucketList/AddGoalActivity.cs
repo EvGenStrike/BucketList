@@ -109,7 +109,6 @@ namespace BucketList
 
                 var imagePath = CopyImageToAppFiles(uri);
                 this.imagePath = imagePath;
-
                 if (!string.IsNullOrEmpty(imagePath))
                 {
                     goalImage.SetImageURI(Android.Net.Uri.FromFile(new Java.IO.File(imagePath)));

@@ -61,9 +61,10 @@
   <ItemGroup>
     <Compile Include="AddSubgoalActivity.cs" />
     <Compile Include="AddGoalActivity.cs" />
-    <Compile Include="CalendarAdapter.cs" />
+    <Compile Include="CalendarActivity.cs" />
     <Compile Include="CalendarExtensions.cs" />
     <Compile Include="CustomDateDecorator.cs" />
+    <Compile Include="DatePythonCalendar.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Goal.cs" />
@@ -256,6 +257,26 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-v21\rectangle_for_statistics_not_done.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\dialog_date.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_calendar.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\pythonBody.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\pythonHead.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -1,0 +1,359 @@
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="80dp"
+    android:rowCount="6"
+    android:columnCount="7"
+    android:id="@+id/calendar">
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="ПН" 
+        android:tag="Monday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="ВТ"
+        android:tag="Tuesday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="СР" 
+        android:tag="Wednesday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="ЧТ" 
+        android:tag="Thursday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="ПТ"
+        android:tag="System.DayOfWeek.Friday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="СБ"
+        android:tag="Saturday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:text="ВС"
+        android:tag="Sunday"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+   <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+   <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:background="@drawable/dateincalendarwithpython"
+        android:textColor="@android:color/black"
+        android:layout_height="50dp"
+        android:layout_columnWeight="1"
+        android:gravity="center"/>
+
+
+</GridLayout>
