@@ -32,6 +32,8 @@ namespace BucketList
             username = FindViewById<EditText>(Resource.Id.registration_add_name_edittext);
 
             var name = Extensions.ReadUser();
+            //var name = "";
+
             if (!string.IsNullOrEmpty(name))
             {
                 var intent = new Intent(this, typeof(MainActivity));

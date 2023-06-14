@@ -104,7 +104,7 @@ namespace BucketList
             foreach (var date in datesPythonCalendar)
             {
                 date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
-                date.View.SetTextColor(Color.Black);
+                date.View.SetTextColor(Android.Graphics.Color.Black);
             }
 
             foreach (var textView in textViewsWithClickEventSubscribe)
@@ -182,7 +182,7 @@ namespace BucketList
             // Рисуем питона
             if (date.Deadline.Date < currentDateTime.Date)
             {
-                date.View.SetTextColor(Color.LightGray);
+                date.View.SetTextColor(Android.Graphics.Color.LightGray);
                 date.View.Background = GetDrawable(Resource.Drawable.pythonBody);
             }
             else if (date.Deadline.Date == currentDateTime.Date)
@@ -214,7 +214,8 @@ namespace BucketList
             if (goal.ImagePath != null)
                 goalImage.SetImage(goal.ImagePath);
             goalName.Text = goal.GoalName;
-            goalDeadline.Text = goal.Deadline.Date.ToShortDateString();
+            //goalDeadline.Text = goal.Deadline.Date.ToShortDateString();
+            goalDeadline.Text = $"{string.Format("{0:00}", goal.Deadline.Day)}.{string.Format("{0:00}", goal.Deadline.Month)}.{goal.Deadline.Year}";
 
             var dialog = builder.Create();
             // Зыкрытие по нажатию кнопки

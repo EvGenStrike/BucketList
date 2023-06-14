@@ -11,11 +11,10 @@ using System.Text;
 
 namespace BucketList
 {
-    public class Statistics
+    public enum Color
     {
-        public int GoalsCreatedCount { get; set; }
-        public int GoalsDoneCount { get; set; }
-        public int GoalsFailedCount { get; set; }
-        public int GoalsDeletedCount { get; set; }
+        Red,
+        Green,
+        Blue,
     }
 }

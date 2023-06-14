@@ -53,6 +53,11 @@ namespace BucketList
             Extensions.WriteTextFile("user.txt", data);
         }
 
+        public static void OverwriteUser(User user)
+        {
+            Extensions.WriteTextFile("user.txt", Extensions.SerializeUser(user));
+        }
+
         public static string SerializeUser(User user)
         {
             return JsonNet.Serialize(user);

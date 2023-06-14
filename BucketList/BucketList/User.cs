@@ -15,13 +15,23 @@ namespace BucketList
     {
         public string UserName { get; set; }
         public string UserPhotoPath { get; set; }
+        public Statistics UserStatistics { get; set; }
+        public DateTime UserRegistrationDate { get; set; }
+        public bool UserAllowNotifications { get; set; }
+        public PythonSettings UserPythonSettings { get; set; }
 
-        public User() { }
+        public User()
+        {
+            UserStatistics = new Statistics();
+            UserPythonSettings = new PythonSettings();
+        }
 
         public User(string userName, string userPhotoPath = null)
         {
             UserName = userName;
             UserPhotoPath = userPhotoPath;
+            UserStatistics = new Statistics();
+            UserPythonSettings = new PythonSettings();
         }
     }
 }

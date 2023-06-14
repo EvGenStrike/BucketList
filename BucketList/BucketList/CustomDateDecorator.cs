@@ -12,7 +12,7 @@ namespace BucketList
     public class CustomCalendarView : CalendarView
     {
         private HashSet<DateTime> highlightedDates;
-        private Color highlightColor;
+        private Android.Graphics.Color highlightColor;
 
         public CustomCalendarView(Context context) : base(context)
         {
@@ -28,7 +28,7 @@ namespace BucketList
             int highlightColorResource = attributes.GetResourceId(Resource.Styleable.CustomCalendarView_highlightColor, 0);
             if (highlightColorResource != 0)
             {
-                highlightColor = new Color(Context.GetColor(highlightColorResource));
+                highlightColor = new Android.Graphics.Color(Context.GetColor(highlightColorResource));
             }
             attributes.Recycle();
         }
@@ -36,7 +36,7 @@ namespace BucketList
         private void Initialize()
         {
             highlightedDates = new HashSet<DateTime>();
-            highlightColor = Color.Red;
+            highlightColor = Android.Graphics.Color.Red;
 
             // Установка слушателя событий выбора даты
             DateChange += OnDateChange;

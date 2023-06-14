@@ -66,11 +66,14 @@
     <Compile Include="CustomDateDecorator.cs" />
     <Compile Include="DatePythonCalendar.cs" />
     <Compile Include="DateTimeExtensions.cs" />
+    <Compile Include="DeadlineMark.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
     <Compile Include="JavaObjExtensions.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="PythonSettings.cs" />
     <Compile Include="RegistrationActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

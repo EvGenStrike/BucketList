@@ -24,6 +24,11 @@ namespace BucketList
         ImageView backArrow;
         ImageView userPhoto;
 
+        TextView totalCreatedGoals;
+        TextView doneGoals;
+        TextView failedGoals;
+        TextView deletedGoals;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,6 +36,17 @@ namespace BucketList
             SetUser();
             SetBackArrow();
             SetUserPhoto();
+            SetStatistics();
+        }
+
+        private void SetStatistics()
+        {
+            totalCreatedGoals = FindViewById<TextView>(Resource.Id.statistics_screen_total_goals_created_count);
+            doneGoals = FindViewById<TextView>(Resource.Id.statistics_screen_done_goals_created_count);
+            failedGoals = FindViewById<TextView>(Resource.Id.statistics_screen_failed_goals_created_count);
+            deletedGoals = FindViewById<TextView>(Resource.Id.statistics_screen_deleted_goals_created_count);
+
+            totalCreatedGoals.Text = user.UserStatistics.
         }
 
         private void SetUser()

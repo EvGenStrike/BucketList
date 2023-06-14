@@ -32,6 +32,7 @@ namespace BucketList
     {
         public List<Goal> Goals;
         public List<DatePythonCalendar> datesPythonCalendar;
+        private User user;
         private string userName;
         private Goal currentGoalName;
 
@@ -49,6 +50,21 @@ namespace BucketList
             SetToolbar();
             SetPythonCalendarView();
             SetSearchView();
+            UpdateStatistics();
+        }
+
+        private void UpdateStatistics()
+        {
+            var failedGoals = GetFailedGoals();
+            user.UserStatistics.GoalsFailedCount += failedGoals.Count;
+            Extensions.OverwriteUser(user);
+        }
+
+        private List<Goal> GetFailedGoals()
+        {
+            return Goals
+                    .Where(x => x.Deadline < DateTime.Now)
+                    .ToList();
         }
 
         private void SetSearchView()
@@ -75,6 +91,7 @@ namespace BucketList
             if (string.IsNullOrEmpty(Extensions.ReadGoals()))
                 Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
             Goals = Extensions.GetSavedGoals();
+            user = Extensions.GetSavedUser();
         }
 
         private void MyListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -210,6 +227,8 @@ namespace BucketList
             {
                 SetDeadlineDate(goal, date);
             }
+            user.UserStatistics.GoalsCreatedCount++;
+            Extensions.OverwriteUser(user);
             UpdateGoalsView();
         }
 
@@ -221,6 +240,8 @@ namespace BucketList
             {
                 DeleteDeadlineFromDate(goal, date);
             }
+            user.UserStatistics.GoalsDeletedCount++;
+            Extensions.OverwriteUser(user);
             UpdateGoalsView();
         }
 
