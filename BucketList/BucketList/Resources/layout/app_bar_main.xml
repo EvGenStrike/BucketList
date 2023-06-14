@@ -20,10 +20,9 @@
             <SearchView
                 android:id="@+id/main_screen_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:minWidth="25px"
                 android:minHeight="25px"
-                android:searchHintIcon="@null"
                 android:searchIcon="@drawable/ic_search"
                 android:queryHint="Все цели"/>
 

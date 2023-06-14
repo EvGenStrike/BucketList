@@ -211,7 +211,7 @@ namespace BucketList
             if (goal.ImagePath != null)
                 goalImage.SetImage(goal.ImagePath);
             goalName.Text = goal.GoalName;
-            goalDeadline.Text = goal.Deadline.Date.ToString();
+            goalDeadline.Text = goal.Deadline.Date.ToShortDateString();
 
             var dialog = builder.Create();
             // Зыкрытие по нажатию кнопки
