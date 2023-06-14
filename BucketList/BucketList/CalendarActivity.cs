@@ -166,6 +166,7 @@ namespace BucketList
         {
             base.OnBackPressed();
         }
+
         private void SetDate(Goal goal, DatePythonCalendar date, DateTime currentDateTime)
         {
             // Рисуем мышку
@@ -189,6 +190,7 @@ namespace BucketList
                 date.View.Background = GetDrawable(Resource.Drawable.pythonHead);
             }
         }
+
         public void OnDeadlineDate_Click(object sender, EventArgs e)
         {
             var textView = sender as TextView;
@@ -196,6 +198,7 @@ namespace BucketList
             var goal = textView.Tag.JavaCast<DatePythonCalendar>().Goal;
             CreateDateDialog(goal);
         }
+
         private void CreateDateDialog(Goal goal)
         {
             var builder = new AlertDialog.Builder(this);
@@ -215,7 +218,11 @@ namespace BucketList
 
             var dialog = builder.Create();
             // Зыкрытие по нажатию кнопки
-            buttonDismiss.Click += (sender, e) => { dialog.Dismiss(); };
+            buttonDismiss.Click += (sender, e) =>
+            {
+                dialog.Dismiss(); 
+            };
+
             dialog.Show();
         }
     }
