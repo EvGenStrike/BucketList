@@ -23,4 +23,10 @@
 	<string name="statistics_done_goals_text">"Целей выполнено: "</string>
 	<string name="statistics_failed_goals_text">"Целей не выполнено: "</string>
 	<string name="statistics_deleted_goals_text">"Целей удалено: "</string>
+
+	<string name="goal_screen_do_goal">"Выполнить цель"</string>
+
+	<string name="main_future_goals">"Поставленные цели"</string>
+	<string name="main_done_goals">"Выполненные цели"</string>
+	<string name="main_failed_goals">"Просроченные цели"</string>
 </resources>

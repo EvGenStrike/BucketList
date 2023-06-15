@@ -70,9 +70,11 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
+    <Compile Include="GoalType.cs" />
     <Compile Include="JavaObjExtensions.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="NotificationService.cs" />
     <Compile Include="PythonSettings.cs" />
     <Compile Include="RegistrationActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

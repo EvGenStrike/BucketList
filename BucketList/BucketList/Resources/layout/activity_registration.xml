@@ -91,6 +91,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/button_rectangle"
     />
 
 

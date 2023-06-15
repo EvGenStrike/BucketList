@@ -12,7 +12,7 @@
         android:id="@+id/goal_screen_image"
         android:src="@drawable/snake_image"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
     />
@@ -26,8 +26,8 @@
         android:background="@drawable/rectangle_1"
     />
     <TextView
-        android:inputType="text"
         android:id="@+id/goal_name_text"
+        android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:textSize="18sp"
@@ -87,9 +87,20 @@
         android:id="@+id/goal_screen_python"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/goal_screen_do_goal_button"
         android:layout_marginTop="15dp"
         android:background="@drawable/rectangle_1"
+    />
+
+    <Button
+        android:id="@+id/goal_screen_do_goal_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/goal_screen_do_goal"
+        android:background="@drawable/button_rectangle"
+        android:textSize="18sp"
     />
 
 

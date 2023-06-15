@@ -29,6 +29,7 @@ namespace BucketList
         public Goal CurrentGoal { get; private set; }
 
         private Subgoal currentSubgoal;
+        User user;
 
         private DateTime selectedDate = DateTime.MinValue;
         private int itemIdThatWantsToChangeDate = -1; //-1 значит item = CurrentGoal, 0..n значит item = CurrentGoal.Subgoals[i];
@@ -45,6 +46,33 @@ namespace BucketList
             SetListView();
             SetFabAddSubgoal();
             SetGoalCalendarFab();
+            SetDoGoalButton();
+        }
+
+        private void SetDoGoalButton()
+        {
+            var button = FindViewById<Button>(Resource.Id.goal_screen_do_goal_button);
+            if (CurrentGoal.GoalType == GoalType.Done)
+            {
+                button.Text = "Цель уже выполнена";
+                return;
+            }
+            if (CurrentGoal.GoalType == GoalType.Failed)
+            {
+                button.Text = "Цель просрочена";
+                return;
+            }
+            button.Click += DoGoalButton_Click;
+        }
+
+        private void DoGoalButton_Click(object sender, EventArgs e)
+        {
+            CurrentGoal.GoalType = GoalType.Done;
+            Extensions.OverwriteGoals(Goals);
+            user = Extensions.GetSavedUser();
+            user.UserStatistics.GoalsDoneCount++;
+            Extensions.OverwriteUser(user);
+            OnBackPressed();
         }
 
         private void SetGoalImage()

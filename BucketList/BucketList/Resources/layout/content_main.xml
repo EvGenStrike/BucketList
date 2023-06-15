@@ -9,13 +9,23 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
     <ListView
+        android:id="@+id/goalsListView"
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/deadlineCalendar"
-        android:id="@+id/goalsListView" />
+        android:layout_above="@id/button_future_goals"
+    />
 
+    <Button
+        android:id="@+id/button_future_goals"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_above="@id/deadlineCalendar"
+        android:text="chosen_goals"
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"
+    />
 
     <RelativeLayout
         android:layout_width="wrap_content"
