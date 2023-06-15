@@ -4,7 +4,7 @@
           android:versionName="1.0"
           package="com.companyname.bucketlist">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
-	
+
 	<application
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
@@ -19,15 +19,15 @@
             android:exported="false"
 			android:label="Notification Service"
 			android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-    
 			>
 			<intent-filter>
 				<action android:name="android.service.notification.NotificationListenerService" />
 			</intent-filter>
 		</service>
-		
+
+
 	</application>
-	
+
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -36,4 +36,7 @@
 	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 </manifest>

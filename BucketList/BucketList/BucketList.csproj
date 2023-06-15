@@ -72,8 +72,10 @@
     <Compile Include="GoalActivity.cs" />
     <Compile Include="GoalType.cs" />
     <Compile Include="JavaObjExtensions.cs" />
+    <Compile Include="JobService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="NotificationReceiver.cs" />
     <Compile Include="NotificationService.cs" />
     <Compile Include="PythonSettings.cs" />
     <Compile Include="RegistrationActivity.cs" />

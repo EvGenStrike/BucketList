@@ -26,6 +26,7 @@ using Json.Net;
 using AlertDialog = Android.App.AlertDialog;
 using Java.Util;
 using AndroidX.Core.App;
+using Android.App.Job;
 
 namespace BucketList
 {
@@ -347,37 +348,37 @@ namespace BucketList
             Extensions.OverwriteUser(user);
             UpdateGoalsView();
 
-            var notificationTime = DateTime.Now;
+            var notificationTime = DateTime.Now.AddSeconds(15);
+            ShowNotification(notificationTime, "чел", "АВХАВХЗАВХАВХАВХАВХВАВХААВХАВХВАХВХАХАВАХВХВАХВАХАВХАВХАВХВАХВАХВАХВАХАВ");
+            
 
-            //var builder = new NotificationCompat.Builder(this, CHANNEL_ID).SetAutoCancel(true)
-            //    .SetContentTitle("test")
-            //    .SetNumber(_count)
-            //    .SetSmallIcon(Resource.Drawable.snake_image)
-            //    .SetContentText($"пожалуйста заработай");
+            //ShowNotification("test", "fdg");
 
-            //var nmc = NotificationManagerCompat.From(this);
-            //nmc.Notify(NOTIFICATION_ID, builder.Build());
-            //_count++;
+            //var jobScheduler = (JobScheduler)GetSystemService(JobSchedulerService);
 
-            //// Получаем объект AlarmManager
-            //var alarmManager = (AlarmManager)GetSystemService(Context.AlarmService);
+            //var jobBuilder = new JobInfo.Builder(0, new ComponentName(this, Java.Lang.Class.FromType(typeof(MyJobService))));
+            //jobBuilder.SetPersisted(true);
+            //jobBuilder.SetRequiredNetworkType(NetworkType.Any);
+            //jobBuilder.SetRequiresCharging(false);
 
-            //// Создаем интент для запуска вашей службы уведомлений
-            //var intent = new Intent(this, typeof(NotificationService));
+            //var currentTimeMillis = Java.Lang.JavaSystem.CurrentTimeMillis();
+            //var notificationTimeMillis = (long)(notificationTime - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
-            //// Устанавливаем дату и время, за день до которой нужно отправить уведомление
-            //var notificationDate = notificationTime.AddMinutes(1);
+            //jobBuilder.SetMinimumLatency(notificationTimeMillis - currentTimeMillis);
 
-            //// Устанавливаем время, в которое нужно запустить уведомление
-            //var calendar = Calendar.GetInstance(Java.Util.TimeZone.Default);
-            //calendar.TimeInMillis = Java.Lang.JavaSystem.CurrentTimeMillis();
-            //calendar.Set(CalendarField.HourOfDay, notificationDate.Hour);
-            //calendar.Set(CalendarField.Minute, notificationDate.Minute);
-            //calendar.Set(CalendarField.Second, 0);
+            //var jobInfo = jobBuilder.Build();
 
-            //// Устанавливаем интент в AlarmManager для запуска службы уведомлений в нужное время
-            //var pendingIntent = PendingIntent.GetService(this, 0, intent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
-            //alarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, calendar.TimeInMillis, pendingIntent);
+            //jobScheduler.Schedule(jobInfo);
+        }
+
+        private void ShowNotification(DateTime notificationTime, string title, string message)
+        {
+            var intent = new Intent(this, typeof(NotificationService));
+            intent.PutExtra("notificationTime", notificationTime.GetDateTimeInMillis());
+            intent.PutExtra("title", title);
+            intent.PutExtra("message", message);
+
+            StartService(intent);
         }
 
         private void RemoveGoal(Goal goal)
