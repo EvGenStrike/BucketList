@@ -1,0 +1,56 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorMainBackground">
+        <TextView
+            android:id="@+id/dialogFilterTitle"
+            android:text="Выберите тип отображаемых целей:"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:paddingStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/buttonFuture"
+            android:tag="Future"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialogFilterTitle"
+            android:text="Поставленные цели"
+            android:textColor="@android:color/black"
+            />
+
+        <Button
+            android:id="@+id/buttonDone"
+            android:tag="Done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Выполненные цели"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/buttonFuture"
+            android:layout_marginTop="16dp"
+            />
+
+        <Button
+            android:id="@+id/buttonFailed"
+            android:tag="Failed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Просроченные цели"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/buttonDone"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_rectangle"
+            />
+
+    </RelativeLayout>
+</ScrollView>

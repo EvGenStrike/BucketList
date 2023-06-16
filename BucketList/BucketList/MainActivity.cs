@@ -27,6 +27,9 @@ using AlertDialog = Android.App.AlertDialog;
 using Java.Util;
 using AndroidX.Core.App;
 using Android.App.Job;
+using Enum = System.Enum;
+using System.Drawing;
+using Android.Content.Res;
 
 namespace BucketList
 {
@@ -68,33 +71,58 @@ namespace BucketList
         private void SetGoalsTypeButton()
         {
             goalTypeButton = FindViewById<Button>(Resource.Id.button_future_goals);
+            goalTypeButton.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.LightGray);
             goalTypeButton.Click += GoalsTypeButton_Click;
-            UpdateGoalTypeButtonText();
-        }
-
-        private void UpdateGoalTypeButtonText()
-        {
-            switch (currentGoalType)
-            {
-                case GoalType.Future:
-                    goalTypeButton.Text = "Поставленные цели";
-                    break;
-                case GoalType.Done:
-                    goalTypeButton.Text = "Выполненные цели";
-                    break;
-                case GoalType.Failed:
-                    goalTypeButton.Text = "Просроченные цели";
-                    break;
-            }
         }
 
         private void GoalsTypeButton_Click(object sender, EventArgs e)
         {
-            var goalsTypeButton = sender as Button;
+            var builder = new AlertDialog.Builder(this);
+            var dialogView = LayoutInflater.Inflate(Resource.Layout.dialog_filter, null);
+            builder.SetView(dialogView);
+            var colorNotPressedButton = ColorStateList.ValueOf(Android.Graphics.Color.SkyBlue);
 
-            RegisterForContextMenu(goalsTypeButton);
+            var buttonFuture = dialogView.FindViewById<Button>(Resource.Id.buttonFuture);
+            var buttonDone = dialogView.FindViewById<Button>(Resource.Id.buttonDone);
+            var buttonFailed = dialogView.FindViewById<Button>(Resource.Id.buttonFailed);
 
-            OpenContextMenu(goalsTypeButton);
+            // Кнопки фильтров
+            var filteredButtons = new List<Button>()
+            {
+                buttonFuture,
+                buttonDone,
+                buttonFailed
+            };
+
+            // Подписываемся на клик кнопки и изменяем цвет кнопок
+            foreach (var filteredButton in filteredButtons)
+            {
+                filteredButton.Click += (sender, e) =>
+                {
+                    FilteredButton_Click(sender, filteredButtons);
+                };
+                filteredButton.BackgroundTintList = colorNotPressedButton;
+            }
+
+            var dialog = builder.Create();
+            dialog.Show();
+        }
+
+        private void FilteredButton_Click(object sender, List<Button> filteredButtons)
+        {
+            var button = sender as Button;
+
+            // Меняем цвет выбранного типа
+            var colorPressedButton = ColorStateList.ValueOf(Android.Graphics.Color.LightGray);
+            button.BackgroundTintList = colorPressedButton;
+
+            // Меняем цвета других кнопок
+            foreach (var filteredButton in filteredButtons.Where(x => x != button))
+                filteredButton.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.SkyBlue);
+
+            // Получаю enum GoalType из Tag кнопки
+            var goalType = (GoalType)Enum.Parse(typeof(GoalType), button.Tag.ToString());
+            ChangeCurrentGoalType(goalType);
         }
 
         private void UpdateStatistics()
@@ -191,22 +219,6 @@ namespace BucketList
                 menu.Add(Menu.None, 0, Menu.None, "Да");
                 menu.Add(Menu.None, 1, Menu.None, "Нет");
             }
-
-            // Меню для выбора отображаемых целей
-            if (view is Button)
-            {
-                menu.SetHeaderTitle("Выберите тип отображаемых целей");
-
-                menu.Add(Menu.None, 2, Menu.None, "Поставленные цели");
-                menu.Add(Menu.None, 3, Menu.None, "Выполненные цели");
-                menu.Add(Menu.None, 4, Menu.None, "Просроченные цели");
-            }
-
-            // Меню для даты в календаре с питоном
-            else if (view is TextView)
-            {
-
-            }
         }
 
         public override bool OnContextItemSelected(IMenuItem item)
@@ -215,29 +227,6 @@ namespace BucketList
             if (item.ItemId == 0)
             {
                 RemoveGoal(currentGoalName);
-                return true;
-            }
-
-            // Меню для выбора отображаемых целей
-            //"Поставленные цели"
-            if (item.ItemId == 2)
-            {
-                ChangeCurrentGoalType(GoalType.Future);
-                UpdateGoalTypeButtonText();
-                return true;
-            }
-            //"Выполненые цели"
-            if (item.ItemId == 3)
-            {
-                ChangeCurrentGoalType(GoalType.Done);
-                UpdateGoalTypeButtonText();
-                return true;
-            }
-            //"Просроченные цели"
-            if (item.ItemId == 4)
-            {
-                ChangeCurrentGoalType(GoalType.Failed);
-                UpdateGoalTypeButtonText();
                 return true;
             }
 
@@ -350,7 +339,7 @@ namespace BucketList
 
             var notificationTime = DateTime.Now.AddSeconds(15);
             ShowNotification(notificationTime, "чел", "АВХАВХЗАВХАВХАВХАВХВАВХААВХАВХВАХВХАХАВАХВХВАХВАХАВХАВХАВХВАХВАХВАХВАХАВ");
-            
+
 
             //ShowNotification("test", "fdg");
 
@@ -475,7 +464,7 @@ namespace BucketList
             buttonCalendarOpen.Click += ButtonCalendarOpen_Click;
 
             var currentDateTime = DateTime.Now.AddDays(-3);
-            
+
             for (var i = 0; i < calendar.ChildCount; i++)
             {
                 // Дата - это TextView в Layout

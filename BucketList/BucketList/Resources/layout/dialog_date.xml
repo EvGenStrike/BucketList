@@ -12,16 +12,18 @@
 
         <ImageView
             android:id="@+id/goalImage"
-            android:layout_width="110dp"
+            android:layout_width="100dp"
             android:layout_height="110dp"
             android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"/>
+            android:layout_marginStart="12dp"
+            android:src="@drawable/snake_image"/>
         <TextView
             android:id="@+id/goalNameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дедлайн для цели:"
+            android:text="Название цели:"
             android:textSize="18sp"
+            android:layout_marginStart="12dp"
             android:textColor="@android:color/black"
             android:layout_toEndOf="@id/goalImage"
             android:layout_alignTop="@id/goalImage"
@@ -32,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:layout_marginStart="12dp"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:layout_toEndOf="@id/goalImage"
@@ -42,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Дедлайн цели:"
+            android:layout_marginStart="12dp"
             android:textSize="18sp"
             android:textColor="@android:color/black"
             android:layout_toEndOf="@id/goalImage"
@@ -51,6 +55,7 @@
             android:id="@+id/goalDeadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:text=""
             android:textSize="18sp"
             android:textColor="@android:color/black"

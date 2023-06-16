@@ -14,17 +14,24 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/button_future_goals"
+        android:layout_below="@id/button_future_goals"
     />
-
+    <ImageView
+        android:id="@+id/filterIcon"
+        android:layout_width="30dp"
+        android:layout_marginStart="250dp"
+        android:layout_height="40dp"
+        android:src="@drawable/filter_icon"
+        />
     <Button
         android:id="@+id/button_future_goals"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_above="@id/deadlineCalendar"
-        android:text="chosen_goals"
-        android:textSize="18dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Фильтр"
+        android:textColor="@android:color/black"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@id/filterIcon"
+        android:textSize="12dp"
     />
 
     <RelativeLayout
@@ -34,6 +41,7 @@
         android:gravity="center_horizontal"
         android:layout_toLeftOf="@id/fab"
         android:layout_alignTop="@id/fab"
+        android:layout_marginTop="4dp"
         android:id="@+id/deadlineCalendar">
         <Button
             android:id="@+id/calendarButton"
