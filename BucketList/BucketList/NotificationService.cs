@@ -74,7 +74,7 @@ namespace BucketList
             var notificationIntent = new Intent(this, typeof(NotificationReceiver));
             notificationIntent.PutExtra("title", title);
             notificationIntent.PutExtra("message", description);
-            var pendingIntent = PendingIntent.GetBroadcast(this, 0, notificationIntent, PendingIntentFlags.UpdateCurrent);
+            var pendingIntent = PendingIntent.GetBroadcast(this, 0, notificationIntent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
             alarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, notificationTime, pendingIntent);
         }
     }

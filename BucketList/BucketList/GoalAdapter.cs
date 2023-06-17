@@ -13,9 +13,9 @@ using static Android.Content.ClipData;
 
 namespace BucketList
 {
-    public class GoalAdapter : BaseAdapter<Goal>
+    public class GoalAdapter : BaseAdapter<Goal>, IAdapter
     {
-
+        public event EventHandler<int> ItemLongClick;
         private ListView listView;
         private List<Goal> goals;
         private Activity activity;
@@ -53,7 +53,7 @@ namespace BucketList
             var rectangle = view.FindViewById<ImageView>(Resource.Id.rect);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.rectangle_1);
             subgoalName.Text = goals[position].GoalName;
-            
+
             view.Touch += (sender, e) =>
             {
                 //ItemClick?.Invoke(this, position);
@@ -75,10 +75,11 @@ namespace BucketList
                     //listView.PerformItemClick(view, position, item);
                 }
             };
-            //view.LongClick += (sender, e) =>
-            //{
-            //    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
-            //};
+
+            view.LongClick += (sender, e) =>
+            {
+                ItemLongClick?.Invoke(this, position);
+            };
 
             return view;
         }

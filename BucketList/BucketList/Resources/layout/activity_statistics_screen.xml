@@ -1,21 +1,22 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBackground"
+    android:background="@color/colorMainVioletDark"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/statistics_screen_back_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@drawable/ic_menu_left_arrow"
         android:clickable="true"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:focusable="true"
+        android:backgroundTint="@android:color/white"
     />
 
     <ImageView
@@ -28,171 +29,161 @@
     />
 
 
-    <ImageView
-        android:id="@+id/statistics_screen_total_goals_created_box_up"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_user_photo"
-        android:layout_marginTop="30dp"
-        android:src="@color/colorBackgroundPrim"
-    />
-    <TextView
-        android:id="@+id/statistics_screen_total_goals_created_text"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/statistics_screen_user_photo"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/statistics_total_goals_text"
-        style="@style/statistics_text"
+        android:layout_marginTop="10dp"
+        android:id="@+id/total_goals_layout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/green_rect"
+        />
+        <TextView
+            android:id="@+id/statistics_screen_total_goals_created_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="@string/statistics_total_goals_text"
+            style="@style/statistics_text"
     />
-    <TextView
-        android:id="@+id/statistics_screen_total_goals_created_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_user_photo"
-        android:layout_toRightOf="@id/statistics_screen_total_goals_created_text"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:layout_marginRight="20dp"
-        android:text="test"
-        style="@style/statistics_text"
-    />
-    <ImageView
-        android:id="@+id/statistics_screen_total_goals_created_box_down"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_total_goals_created_count"
-        android:src="@color/colorBackgroundPrim"
+        <TextView
+            android:id="@+id/statistics_screen_total_goals_created_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/statistics_screen_total_goals_created_text"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:text="test"
+            style="@style/statistics_text"
     />
 
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/statistics_screen_done_goals_created_box_up"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_total_goals_created_text"
-        android:layout_marginTop="10dp"
-        android:src="@color/colorBackgroundPrim"
-    />
-    <TextView
-        android:id="@+id/statistics_screen_done_goals_created_text"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_total_goals_created_text"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/statistics_done_goals_text"
-        style="@style/statistics_text"
-        android:textColor="#0000FF"
+        android:layout_below="@id/total_goals_layout"
+        android:id="@+id/done_goals_layout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/green_rect"
+        />
+        <TextView
+            android:id="@+id/statistics_screen_done_goals_created_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:text="@string/statistics_done_goals_text"
+            style="@style/statistics_text"
+            android:textColor="#4ab550"
     />
-    <TextView
-        android:id="@+id/statistics_screen_done_goals_created_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_total_goals_created_text"
-        android:layout_toRightOf="@id/statistics_screen_done_goals_created_text"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:layout_marginRight="20dp"
-        android:text="test"
-        style="@style/statistics_text"
-        android:textColor="#0000FF"
+        <TextView
+            android:id="@+id/statistics_screen_done_goals_created_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/statistics_screen_done_goals_created_text"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:text="test"
+            style="@style/statistics_text"
+            android:textColor="#4ab550"
     />
-    <ImageView
-        android:id="@+id/statistics_screen_done_goals_created_box_down"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_done_goals_created_count"
-        android:src="@color/colorBackgroundPrim"
-    />
+    </RelativeLayout>
 
-
-    <ImageView
-        android:id="@+id/statistics_screen_failed_goals_created_box_up"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_done_goals_created_count"
-        android:layout_marginTop="10dp"
-        android:src="@color/colorBackgroundPrim"
-    />
-    <TextView
-        android:id="@+id/statistics_screen_failed_goals_created_text"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_done_goals_created_box_down"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/statistics_failed_goals_text"
-        style="@style/statistics_text"
-        android:textColor="#FF0000"
+        android:layout_below="@id/done_goals_layout"
+        android:id="@+id/failed_goals_layout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/green_rect"
+        />
+        <TextView
+            android:id="@+id/statistics_screen_failed_goals_created_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="@string/statistics_failed_goals_text"
+            style="@style/statistics_text"
+            android:textColor="#FF0000"
     />
-    <TextView
-        android:id="@+id/statistics_screen_failed_goals_created_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_done_goals_created_text"
-        android:layout_toRightOf="@id/statistics_screen_failed_goals_created_text"
-        android:layout_above="@id/statistics_screen_failed_goals_created_box_down"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:layout_marginRight="20dp"
-        android:text="test"
-        style="@style/statistics_text"
-        android:textColor="#FF0000"
+        <TextView
+            android:id="@+id/statistics_screen_failed_goals_created_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/statistics_screen_failed_goals_created_text"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:text="test"
+            style="@style/statistics_text"
+            android:textColor="#FF0000"
     />
-    <ImageView
-        android:id="@+id/statistics_screen_failed_goals_created_box_down"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_failed_goals_created_text"
-        android:src="@color/colorBackgroundPrim"
-    />
+    </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/statistics_screen_deleted_goals_created_box_up"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_failed_goals_created_count"
-        android:layout_marginTop="10dp"
-        android:src="@color/colorBackgroundPrim"
-    />
-    <TextView
-        android:id="@+id/statistics_screen_deleted_goals_created_text"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_failed_goals_created_box_down"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/statistics_deleted_goals_text"
-        style="@style/statistics_text"
-        android:textColor="#ff0084"
+        android:layout_below="@id/failed_goals_layout"
+        android:id="@+id/deleted_goals_layout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/green_rect"
+        />
+        <TextView
+            android:id="@+id/statistics_screen_deleted_goals_created_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="@string/statistics_deleted_goals_text"
+            style="@style/statistics_text"
+            android:textColor="#ff0084"
     />
-    <TextView
-        android:id="@+id/statistics_screen_deleted_goals_created_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/statistics_screen_failed_goals_created_text"
-        android:layout_toRightOf="@id/statistics_screen_deleted_goals_created_text"
-        android:layout_above="@id/statistics_screen_deleted_goals_created_box_down"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:layout_marginRight="20dp"
-        android:text="test"
-        style="@style/statistics_text"
-        android:textColor="#ff0084"
+        <TextView
+            android:id="@+id/statistics_screen_deleted_goals_created_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/statistics_screen_deleted_goals_created_text"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            android:text="test"
+            style="@style/statistics_text"
+            android:textColor="#ff0084"
     />
-    <ImageView
-        android:id="@+id/statistics_screen_deleted_goals_created_box_down"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/statistics_screen_deleted_goals_created_text"
-        android:src="@color/colorBackgroundPrim"
-    />
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+    android:layout_height="110dp"
     android:layout_width="wrap_content"
     android:id="@+id/all_goals_list_item_relative_layout">
     <ImageView
         android:id="@+id/rect"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:src="@drawable/green_rect"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true" 
+        android:layout_marginStart="20dp"/>
+    <ImageView
+        android:id="@+id/rect1"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/snake_in_listview"
+        android:layout_marginStart="10dp"/>
+    <ImageView
+        android:id="@+id/rect2"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_next_icon"
+        android:layout_marginStart="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
 
     <TextView
         android:id="@+id/rectangle_1"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:textSize="27sp"
+        android:textColor="@android:color/white"
         android:text="1212121"
         android:maxLines="1"
         android:layout_centerInParent="true"/>

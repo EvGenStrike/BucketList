@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBackground"
+    android:background="@color/colorMainVioletDark"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/monthName"
             android:textSize="100px"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="90dp"/>
@@ -29,6 +29,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             app:srcCompat="@drawable/arrow_before_icon"
+            android:backgroundTint="@color/colorMainViolet"
             app:maxImageSize="60dp"
     />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,6 +40,7 @@
             app:srcCompat="@drawable/arrow_next_icon"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:backgroundTint="@color/colorMainViolet"
             app:maxImageSize="60dp"
     />
     </RelativeLayout>

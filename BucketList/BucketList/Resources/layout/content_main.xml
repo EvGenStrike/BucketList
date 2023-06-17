@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBackground"
+    android:background="@color/colorMainVioletDark"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
     <ListView
@@ -16,6 +16,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/button_future_goals"
         android:layout_above="@id/deadlineCalendar"
+        android:divider="@null"
+        android:dividerHeight="0dp"
     />
     <ImageView
         android:id="@+id/filterIcon"
@@ -27,12 +29,15 @@
     <Button
         android:id="@+id/button_future_goals"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="37dp"
         android:text="Фильтр"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:layout_alignParentRight="true"
         android:layout_toEndOf="@id/filterIcon"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="10dp"
         android:textSize="12dp"
+        android:backgroundTint="@color/colorMainViolet"
     />
 
     <RelativeLayout
@@ -43,7 +48,8 @@
         android:layout_toLeftOf="@id/fab"
         android:layout_alignTop="@id/fab"
         android:layout_marginTop="4dp"
-        android:id="@+id/deadlineCalendar">
+        android:id="@+id/deadlineCalendar"
+        android:layout_marginStart="16dp">
         <Button
             android:id="@+id/calendarButton"
             android:layout_width="match_parent"
@@ -98,15 +104,6 @@
             android:background="@drawable/dateInCalendarWithPython"
             android:textAppearance="@style/TextDate"
         />
-        <TextView
-            android:id="@+id/date6"
-            android:layout_width="@dimen/date_python_calendar_width"
-            android:layout_height="@dimen/date_python_calendar_heigth"
-            android:layout_toRightOf="@id/date5"
-            android:gravity="center"
-            android:background="@drawable/dateInCalendarWithPython"
-            android:textAppearance="@style/TextDate"
-        />
 
 
         <ImageView
@@ -136,6 +133,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_add"
+        android:backgroundTint="@color/colorMainViolet"
         app:maxImageSize="60dp"
     />
 

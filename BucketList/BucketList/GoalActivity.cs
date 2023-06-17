@@ -60,6 +60,9 @@ namespace BucketList
             if (CurrentGoal.GoalType == GoalType.Failed)
             {
                 button.Text = "Цель просрочена";
+
+                button.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
+                button.SetTextColor(Android.Graphics.Color.LightGray);
                 return;
             }
             button.Click += DoGoalButton_Click;
@@ -174,7 +177,13 @@ namespace BucketList
         private void SetFabAddSubgoal()
         {
             var fab = FindViewById<FloatingActionButton>(Resource.Id.goal_screen_add_subgoal);
-            fab.Click += Fab_Click;
+            if (CurrentGoal.GoalType == GoalType.Failed)
+            {
+                fab.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
+                
+                return;
+            }
+                fab.Click += Fab_Click;
         }
 
         private void Fab_Click(object sender, EventArgs e)

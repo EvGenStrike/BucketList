@@ -20,7 +20,7 @@ namespace BucketList
             // Создаем PendingIntent для запуска приложения при нажатии на уведомление
             var notificationIntent = new Intent(context, typeof(MainActivity));
             notificationIntent.SetFlags(ActivityFlags.NewTask | ActivityFlags.ClearTask);
-            var pendingIntent = PendingIntent.GetActivity(context, 0, notificationIntent, PendingIntentFlags.UpdateCurrent);
+            var pendingIntent = PendingIntent.GetActivity(context, 0, notificationIntent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
 
             // Создаем уведомление
             var title = intent.GetStringExtra("title");

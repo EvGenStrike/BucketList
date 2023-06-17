@@ -2,47 +2,51 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:minWidth="25px"
-    android:minHeight="25px"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="80dp"
     android:clickable="true"
     android:id="@+id/subgoalRelativeLayout">
-
+    <ImageView
+        android:id="@+id/rect"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_height="45dp"
+        android:src="@drawable/green_rect"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"/>
 
     <ImageView
         android:id="@+id/subgoal_circle_state"
         android:src="@android:drawable/ic_menu_gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="12dp"
+        android:layout_centerVertical="true"
     />
 
     <TextView
         android:id="@+id/subgoal_name"
         android:layout_toEndOf="@id/subgoal_circle_state"
         android:layout_toStartOf="@id/subgoal_calendar_button"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:gravity="center|left"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
+        android:layout_width="20dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="12dp"
+        android:layout_centerVertical="true"
         android:text="Buy book"
         android:textSize="16sp"
-        android:textColor="#000000"
+        android:textColor="@android:color/white"
     />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/subgoal_calendar_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:layout_marginTop="8dp"
+        android:layout_centerVertical="true"
         android:src="@android:drawable/ic_menu_my_calendar"
         app:fabSize="mini"
     />

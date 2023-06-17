@@ -8,13 +8,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorMainBackground">
+        android:background="@color/colorMainVioletDark">
         <TextView
             android:id="@+id/dialogFilterTitle"
             android:text="Выберите тип отображаемых целей:"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="18dp"
-            android:paddingStart="10dp"
+            android:paddingStart="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -26,7 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/dialogFilterTitle"
             android:text="Поставленные цели"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             />
 
         <Button
@@ -35,9 +37,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Выполненные цели"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_below="@id/buttonFuture"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             />
 
         <Button
@@ -46,10 +50,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Просроченные цели"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_below="@id/buttonDone"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_rectangle"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             />
 
     </RelativeLayout>

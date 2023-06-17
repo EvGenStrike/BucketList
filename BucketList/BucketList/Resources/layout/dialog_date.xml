@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorMainBackgroundDark">
+        android:background="@color/colorMainVioletDark">
 
         <ImageView
             android:id="@+id/goalImage"
@@ -24,7 +24,7 @@
             android:text="Название цели:"
             android:textSize="18sp"
             android:layout_marginStart="12dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_toEndOf="@id/goalImage"
             android:layout_alignTop="@id/goalImage"
             />
@@ -36,7 +36,7 @@
             android:text=""
             android:layout_marginStart="12dp"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_toEndOf="@id/goalImage"
             android:layout_below="@id/goalNameTitle"
             />
@@ -47,7 +47,7 @@
             android:text="Дедлайн цели:"
             android:layout_marginStart="12dp"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_toEndOf="@id/goalImage"
             android:layout_below="@id/goalName"
             />
@@ -58,7 +58,7 @@
             android:layout_marginStart="12dp"
             android:text=""
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:layout_toEndOf="@id/goalImage"
             android:layout_below="@id/goalDeadlineTitle"
             />
@@ -72,6 +72,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@id/goalImage"
+            android:backgroundTint="@color/colorMainViolet"
             />
 
     </RelativeLayout>

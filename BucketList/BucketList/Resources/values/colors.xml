@@ -11,4 +11,8 @@
 	<color name="colorSecondGradient">#b892eb</color>
 	<color name="colorThirdGradient">#f9ff88</color>
 	<color name="colorBackgroundPrim">#7db0d1</color>
+	<color name="colorMainViolet">#d692f7</color>
+	<color name="colorMainVioletDark">#964abd</color>
+	<color name="colorYellow">#fff23b</color>
+	<color name="colorGray">#6d6b73</color>
 </resources>

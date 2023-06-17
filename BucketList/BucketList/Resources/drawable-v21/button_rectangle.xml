@@ -21,13 +21,13 @@
                     android:useLevel="false">
 					<item
                         android:offset="0"
-                        android:color="@color/colorFirstGradient" />
+                        android:color="@color/colorMainYellow" />
 					<item
                         android:offset="0.5"
-                        android:color="@color/colorSecondGradient" />
+                        android:color="@color/colorMainViolet" />
 					<item
                         android:offset="1"
-                        android:color="@color/colorThirdGradient" />
+                        android:color="@color/colorMainViolet" />
 				</gradient>
 			</aapt:attr>
 		</path>

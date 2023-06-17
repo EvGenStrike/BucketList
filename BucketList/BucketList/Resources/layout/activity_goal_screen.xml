@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorMainBackground"
+    android:background="@color/colorMainVioletDark"
     tools:context=".MainActivity">
 
 
@@ -16,13 +16,19 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
     />
-
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_screen_image"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:id="@+id/goal_name_layout">
     <ImageView
         android:id="@+id/goal_name_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/goal_screen_image"
         android:background="@drawable/rectangle_1"
     />
     <TextView
@@ -49,8 +55,9 @@
         android:src="@android:drawable/ic_menu_my_calendar"
         app:fabSize="mini"
     />
+    </RelativeLayout>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/subgoals_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,37 +66,111 @@
         android:layout_below="@id/goal_name_text"
         android:layout_above="@id/goal_screen_python"
         android:background="@drawable/subgoals_background_rectangle"
-    />
+    />-->
     <ListView
         android:inputType="text"
         android:id="@+id/goal_screen_subgoals_list_view"
         android:minWidth="25px"
         android:minHeight="25px"
-        android:layout_marginTop="35dp"
-        android:layout_below="@id/goal_name_text"
-        android:layout_above="@id/goal_screen_python"
+        android:layout_below="@id/goal_name_layout"
+        android:layout_above="@id/goal_screen_add_subgoal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/goal_screen_add_subgoal"
+        android:layout_alignTop="@id/goal_screen_add_subgoal"
+        android:layout_below="@id/goal_screen_subgoals_list_view"
+        android:layout_above="@id/goal_screen_do_goal_button"
+        android:layout_marginTop="10dp"
+        android:id="@+id/deadlineCalendarGoalScreen"
+        android:layout_marginStart="16dp">
+        <Button
+            android:id="@+id/calendarButtonGoalScreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/deadlineCalendarGoalScreen"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:alpha="0"
+            />
+        <TextView
+            android:id="@+id/date1GoalScreen"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:gravity="center"
+            android:background="@drawable/dateInCalendarWithPython"
+            android:textAppearance="@style/TextDate"
+        />
+        <TextView
+            android:id="@+id/date2GoalScreen"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date1GoalScreen"
+            android:gravity="center"
+            android:background="@drawable/dateInCalendarWithPython"
+            android:textAppearance="@style/TextDate"
+        />
+        <TextView
+            android:id="@+id/date3GoalScreen"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date2GoalScreen"
+            android:gravity="center"
+            android:background="@drawable/dateInCalendarWithPython"
+            android:textAppearance="@style/TextDate"
+        />
+        <TextView
+            android:id="@+id/date4GoalScreen"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date3GoalScreen"
+            android:gravity="center"
+            android:background="@drawable/dateInCalendarWithPython"
+            android:textAppearance="@style/TextDate"
+        />
+        <TextView
+            android:id="@+id/date5GoalScreen"
+            android:layout_width="@dimen/date_python_calendar_width"
+            android:layout_height="@dimen/date_python_calendar_heigth"
+            android:layout_toRightOf="@id/date4GoalScreen"
+            android:gravity="center"
+            android:background="@drawable/dateInCalendarWithPython"
+            android:textAppearance="@style/TextDate"
         />
 
+
+        <ImageView
+            android:id="@+id/pythonGoalScreen"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:alpha="0.9"
+            android:layout_toLeftOf="@id/date3GoalScreen"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pythoncalendar1"
+            android:layout_alignTop="@id/date1GoalScreen"
+            android:layout_alignBottom="@id/date1GoalScreen"
+            android:scaleX="1.2"
+            android:layout_marginTop="-8dp"
+        />
+
+
+    </RelativeLayout>
      <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/goal_screen_add_subgoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_above="@id/goal_screen_python"
-        app:srcCompat="@drawable/ic_add"
-        app:maxImageSize="60dp"
-    />
-
-    <ImageView
-        android:id="@+id/goal_screen_python"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_above="@id/goal_screen_do_goal_button"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/rectangle_1"
+        app:srcCompat="@drawable/ic_add"
+        android:backgroundTint="@color/colorMainViolet"
+        app:maxImageSize="60dp"
     />
 
     <Button
@@ -97,11 +178,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
         android:layout_marginTop="15dp"
         android:text="@string/goal_screen_do_goal"
         android:background="@drawable/button_rectangle"
         android:textSize="18sp"
     />
+
+    
 
 
 </RelativeLayout>

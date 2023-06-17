@@ -30,6 +30,8 @@ using Android.App.Job;
 using Enum = System.Enum;
 using System.Drawing;
 using Android.Content.Res;
+using AndroidX.Core.Content;
+using Google.Android.Material.Internal;
 
 namespace BucketList
 {
@@ -71,7 +73,6 @@ namespace BucketList
         private void SetGoalsTypeButton()
         {
             goalTypeButton = FindViewById<Button>(Resource.Id.button_future_goals);
-            goalTypeButton.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.LightGray);
             goalTypeButton.Click += GoalsTypeButton_Click;
         }
 
@@ -80,7 +81,6 @@ namespace BucketList
             var builder = new AlertDialog.Builder(this);
             var dialogView = LayoutInflater.Inflate(Resource.Layout.dialog_filter, null);
             builder.SetView(dialogView);
-            var colorNotPressedButton = ColorStateList.ValueOf(Android.Graphics.Color.SkyBlue);
 
             var buttonFuture = dialogView.FindViewById<Button>(Resource.Id.buttonFuture);
             var buttonDone = dialogView.FindViewById<Button>(Resource.Id.buttonDone);
@@ -94,35 +94,30 @@ namespace BucketList
                 buttonFailed
             };
 
-            // Подписываемся на клик кнопки и изменяем цвет кнопок
-            foreach (var filteredButton in filteredButtons)
-            {
-                filteredButton.Click += (sender, e) =>
-                {
-                    FilteredButton_Click(sender, filteredButtons);
-                };
-                filteredButton.BackgroundTintList = colorNotPressedButton;
-            }
-
             var dialog = builder.Create();
             dialog.Show();
-        }
 
-        private void FilteredButton_Click(object sender, List<Button> filteredButtons)
-        {
-            var button = sender as Button;
+            // Подписываемся на клик кнопки и зыкрываем диалог по клику
+            foreach (var filteredButton in filteredButtons)
+            {
+                // Получаю enum GoalType из Tag кнопки
+                var buttonGoalType = (GoalType)Enum.Parse(typeof(GoalType), filteredButton.Tag.ToString());
 
-            // Меняем цвет выбранного типа
-            var colorPressedButton = ColorStateList.ValueOf(Android.Graphics.Color.LightGray);
-            button.BackgroundTintList = colorPressedButton;
+                filteredButton.Click += (sender, e) =>
+                {
+                    ChangeCurrentGoalType(buttonGoalType);
+                    dialog.Dismiss();
+                };
 
-            // Меняем цвета других кнопок
-            foreach (var filteredButton in filteredButtons.Where(x => x != button))
-                filteredButton.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.SkyBlue);
-
-            // Получаю enum GoalType из Tag кнопки
-            var goalType = (GoalType)Enum.Parse(typeof(GoalType), button.Tag.ToString());
-            ChangeCurrentGoalType(goalType);
+                //Устанавливаем цвет кнопки и возможность прожатия
+                if (buttonGoalType == currentGoalType)
+                {
+                    filteredButton.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
+                    filteredButton.Enabled = false;
+                }
+                else
+                    filteredButton.BackgroundTintList = GetColorStateList(Resource.Color.colorMainViolet);
+            }
         }
 
         private void UpdateStatistics()
@@ -163,7 +158,8 @@ namespace BucketList
             }
             var goals =
                 Goals
-                .Where(x => x.GoalName.ToLower().Contains(text))
+                .Select(x => x.GoalName)
+                .Where(x => x.ToLower().Contains(text))
                 .ToList();
             UpdateGoalsViewForView(goals);
         }
@@ -235,10 +231,10 @@ namespace BucketList
         private void ChangeCurrentGoalType(GoalType newGoalType)
         {
             currentGoalType = newGoalType;
-            var goals = Goals.Where(x => x.GoalType == newGoalType).ToList();
+            var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.GoalName).ToList();
             UpdateGoalsViewForView(goals);
         }
-
+         
         public override void OnBackPressed()
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -255,6 +251,7 @@ namespace BucketList
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
+            
             return true;
         }
 
@@ -278,6 +275,7 @@ namespace BucketList
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+
             var id = item.ItemId;
 
             if (id == Resource.Id.nav_statistics)
@@ -320,9 +318,9 @@ namespace BucketList
             }
         }
 
-        private List<Goal> GetGoalsForListViewWithGoalType(GoalType goalType)
+        private List<string> GetGoalsForListViewWithGoalType(GoalType goalType)
         {
-            return Goals.Where(x => x.GoalType == goalType).ToList();
+            return Goals.Where(x => x.GoalType == goalType).Select(x => x.GoalName).ToList();
         }
 
         private void AddGoal(Goal goal)
@@ -392,23 +390,26 @@ namespace BucketList
             UpdateGoalsViewForView(GetGoalsForListViewWithGoalType(currentGoalType));
         }
 
-        private void UpdateGoalsViewForView(List<Goal> goals)
+        private void UpdateGoalsViewForView(List<string> goals)
         {
+            
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var adapter = new GoalAdapter(this, goals, listView);
-            //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            //var adapter = new GoalAdapter(this, goals, listView);
+            //adapter.ItemLongClick += MyListView_ItemLongClick;
+            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Resource.Id.rectangle_1 , goals);
             listView.Adapter = adapter;
+            
         }
-
+        
         private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             // Получите ссылку на ListView
             ListView myListView = sender as ListView;
 
             // Получите выбранный элемент
-            var selectedItem = myListView.GetItemAtPosition(e.Position).Cast<Goal>();
+            var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
             Intent intent = new Intent(this, typeof(GoalActivity));
-            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem.GoalName)));
+            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem)));
             StartActivityForResult(intent, 1);
         }
 
