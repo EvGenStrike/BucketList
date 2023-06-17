@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
+    android:layout_width="wrap_content"
+    android:id="@+id/all_goals_list_item_relative_layout">
     <ImageView
         android:id="@+id/rect"
         android:layout_width="wrap_content"

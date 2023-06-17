@@ -163,8 +163,7 @@ namespace BucketList
             }
             var goals =
                 Goals
-                .Select(x => x.GoalName)
-                .Where(x => x.ToLower().Contains(text))
+                .Where(x => x.GoalName.ToLower().Contains(text))
                 .ToList();
             UpdateGoalsViewForView(goals);
         }
@@ -236,7 +235,7 @@ namespace BucketList
         private void ChangeCurrentGoalType(GoalType newGoalType)
         {
             currentGoalType = newGoalType;
-            var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.GoalName).ToList();
+            var goals = Goals.Where(x => x.GoalType == newGoalType).ToList();
             UpdateGoalsViewForView(goals);
         }
 
@@ -321,9 +320,9 @@ namespace BucketList
             }
         }
 
-        private List<string> GetGoalsForListViewWithGoalType(GoalType goalType)
+        private List<Goal> GetGoalsForListViewWithGoalType(GoalType goalType)
         {
-            return Goals.Where(x => x.GoalType == goalType).Select(x => x.GoalName).ToList();
+            return Goals.Where(x => x.GoalType == goalType).ToList();
         }
 
         private void AddGoal(Goal goal)
@@ -393,10 +392,10 @@ namespace BucketList
             UpdateGoalsViewForView(GetGoalsForListViewWithGoalType(currentGoalType));
         }
 
-        private void UpdateGoalsViewForView(List<string> goals)
+        private void UpdateGoalsViewForView(List<Goal> goals)
         {
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var adapter = new GoalAdapter(this, Goals, listView);
+            var adapter = new GoalAdapter(this, goals, listView);
             //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             listView.Adapter = adapter;
         }
@@ -407,9 +406,9 @@ namespace BucketList
             ListView myListView = sender as ListView;
 
             // Получите выбранный элемент
-            var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
+            var selectedItem = myListView.GetItemAtPosition(e.Position).Cast<Goal>();
             Intent intent = new Intent(this, typeof(GoalActivity));
-            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem)));
+            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem.GoalName)));
             StartActivityForResult(intent, 1);
         }
 
@@ -437,12 +436,10 @@ namespace BucketList
 
         private void SetListView()
         {
-            
             UpdateGoalsView();
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             listView.ItemClick += OnGoalClick;
             listView.ItemLongClick += MyListView_ItemLongClick;
-
         }
 
         private void SetFab()

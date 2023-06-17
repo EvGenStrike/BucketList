@@ -86,8 +86,8 @@ namespace BucketList
                 {
                     // Измените внешний вид элемента при отжатии или отмене нажатия
                     view.Alpha = 1f;
-                    
-                    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
+                    var itemId = listView.Adapter.GetItemId(position);
+                    listView.PerformItemClick(view, position, itemId);
                 }
             };
 

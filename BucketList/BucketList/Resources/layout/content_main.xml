@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/button_future_goals"
+        android:layout_above="@id/deadlineCalendar"
     />
     <ImageView
         android:id="@+id/filterIcon"

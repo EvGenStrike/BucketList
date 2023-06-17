@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static Android.Content.ClipData;
 
 namespace BucketList
 {
@@ -52,7 +53,7 @@ namespace BucketList
             var rectangle = view.FindViewById<ImageView>(Resource.Id.rect);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.rectangle_1);
             subgoalName.Text = goals[position].GoalName;
-
+            
             view.Touch += (sender, e) =>
             {
                 //ItemClick?.Invoke(this, position);
@@ -61,18 +62,23 @@ namespace BucketList
                     // Измените внешний вид элемента при нажатии
                     view.Alpha = 0.5f;
                 }
-                else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+                else if (e.Event.Action == MotionEventActions.Up)
+                {
+                    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
+                }
+                else if (e.Event.Action == MotionEventActions.Cancel)
                 {
                     // Измените внешний вид элемента при отжатии или отмене нажатия
                     view.Alpha = 1f;
 
-                    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
+                    var item = listView.Adapter.GetItemId(position);
+                    //listView.PerformItemClick(view, position, item);
                 }
             };
-            view.LongClick += (sender, e) =>
-            {
-                    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
-            };
+            //view.LongClick += (sender, e) =>
+            //{
+            //    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
+            //};
 
             return view;
         }
