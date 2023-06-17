@@ -56,7 +56,7 @@ namespace BucketList
 
         //public override Java.Lang.Object GetItem(int position)
         //{
-        //    return subgoals[position];
+        //    return goals[position];
         //}
 
         public override long GetItemId(int position)

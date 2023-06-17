@@ -396,7 +396,8 @@ namespace BucketList
         private void UpdateGoalsViewForView(List<string> goals)
         {
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
+            var adapter = new GoalAdapter(this, Goals, listView);
+            //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, goals);
             listView.Adapter = adapter;
         }
 
@@ -436,10 +437,12 @@ namespace BucketList
 
         private void SetListView()
         {
-            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            
             UpdateGoalsView();
+            var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             listView.ItemClick += OnGoalClick;
             listView.ItemLongClick += MyListView_ItemLongClick;
+
         }
 
         private void SetFab()

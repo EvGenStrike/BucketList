@@ -70,6 +70,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Goal.cs" />
     <Compile Include="GoalActivity.cs" />
+    <Compile Include="GoalAdapter.cs" />
     <Compile Include="GoalType.cs" />
     <Compile Include="JavaObjExtensions.cs" />
     <Compile Include="JobService.cs" />
@@ -307,6 +308,14 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-v21\filter_icon.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\test.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\green_rect.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
