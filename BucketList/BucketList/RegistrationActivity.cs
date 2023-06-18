@@ -146,6 +146,7 @@ namespace BucketList
                 var user = new User(name, imagePath);
                 var userSerialied = Extensions.SerializeUser(user);
                 Extensions.OverwriteUser(userSerialied);
+                Extensions.OverwriteGoals(new List<Goal>());
                 var intent = new Intent(this, typeof(MainActivity));
                 intent.PutExtra("username", "outdated");
                 StartActivity(intent);

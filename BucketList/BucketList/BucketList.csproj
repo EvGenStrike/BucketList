@@ -342,9 +342,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-v21\anim.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\layout\activity_account.xml" />
   </ItemGroup>
   <ItemGroup>
