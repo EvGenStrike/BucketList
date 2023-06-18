@@ -106,7 +106,7 @@
         />
 
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/python"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
@@ -118,7 +118,7 @@
             android:layout_alignBottom="@id/date1"
             android:scaleX="1.2"
             android:layout_marginTop="-8dp"
-        />
+        />-->
 
 
     </RelativeLayout>

@@ -72,6 +72,7 @@
     <Compile Include="GoalActivity.cs" />
     <Compile Include="GoalAdapter.cs" />
     <Compile Include="GoalType.cs" />
+    <Compile Include="IGoal.cs" />
     <Compile Include="JavaObjExtensions.cs" />
     <Compile Include="JobService.cs" />
     <Compile Include="MainActivity.cs" />
@@ -336,6 +337,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-v21\deadlineMouseDeadWithPythonHead.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\anim.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

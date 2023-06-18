@@ -15,9 +15,9 @@ namespace BucketList
     {
         public DateTime Deadline { get; set; } 
         public TextView View { get; set; }
-        public Goal Goal { get; set; }
+        public IGoal Goal { get; set; }
         public event EventHandler Click;
-        public DatePythonCalendar(Goal goal, DateTime deadline, TextView view)
+        public DatePythonCalendar(IGoal goal, DateTime deadline, TextView view)
         {
             Deadline = deadline;
             Goal = goal;

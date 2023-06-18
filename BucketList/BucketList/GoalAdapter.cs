@@ -52,7 +52,7 @@ namespace BucketList
 
             var rectangle = view.FindViewById<ImageView>(Resource.Id.rect);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.rectangle_1);
-            subgoalName.Text = goals[position].GoalName;
+            subgoalName.Text = goals[position].Name;
 
             view.Touch += (sender, e) =>
             {

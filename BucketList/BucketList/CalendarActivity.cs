@@ -22,17 +22,17 @@ namespace BucketList
     {
         private List<DatePythonCalendar> datesPythonCalendar = new List<DatePythonCalendar>();
         public List<TextView> textViewsWithClickEventSubscribe = new List<TextView>();
-        private List<Goal> goals = new List<Goal>();
+        private List<IGoal> goals = new List<IGoal>();
         private GridLayout calendar;
         private DateTime currentDateTimeInCalendar;
-        private HashSet<Goal> setDeadlineGoals = new HashSet<Goal>();
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_calendar);
 
             var goalsJson = Intent.GetStringExtra("goals");
-            goals = Extensions.DeserializeGoals(goalsJson);
+            goals = Extensions.DeserializeGoals(goalsJson).Cast<IGoal>().ToList();
 
             var nextButton = FindViewById<FloatingActionButton>(Resource.Id.nextMonthButton);
             var previousButton = FindViewById<FloatingActionButton>(Resource.Id.previousMonthButton);
@@ -130,7 +130,9 @@ namespace BucketList
             DateTime currentDateTime)
         {
             // Первые 7 элементов - дни недели, пропускаем их
-            for (var indexCurrentDay = indexFirstDateCell; indexCurrentDay < calendar.ChildCount; indexCurrentDay++)
+            for (var indexCurrentDay = indexFirstDateCell;
+                indexCurrentDay < calendar.ChildCount;
+                indexCurrentDay++)
             {
                 // Дата - это TextView в Layout
                 var dateView = calendar.GetChildAt(indexCurrentDay) as TextView;
@@ -143,13 +145,15 @@ namespace BucketList
                 firstDayInCalendar = firstDayInCalendar.AddDays(1);
             }
 
-            DrawDatesWithGoals(currentDateTime);
-            DrawDatesWithoutGoals(currentDateTime);
+            DrawDatesWithGoals();
+            DrawDatesWithoutGoals();
 
         }
 
-        private void DrawDatesWithoutGoals(DateTime currentDateTime)
+        private void DrawDatesWithoutGoals()
         {
+            var currentDateTime = DateTime.Now;
+
             foreach (var date in datesPythonCalendar.Where(x => x.Goal == null))
             {
                 if (date.Deadline.Date < currentDateTime.Date)
@@ -158,12 +162,17 @@ namespace BucketList
                     date.View.Background = GetDrawable(Resource.Drawable.pythonBody);
                 }
                 else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
                     date.View.Background = GetDrawable(Resource.Drawable.pythonHead);
+                }
             }
         }
 
-        private void DrawDatesWithGoals(DateTime currentDateTime)
+        private void DrawDatesWithGoals()
         {
+            var currentDateTime = DateTime.Now;
+
             foreach (var date in datesPythonCalendar.Where(x => x.Goal != null))
             {
                 date.View.Tag = date;
@@ -173,7 +182,10 @@ namespace BucketList
                 if (date.Deadline.Date < currentDateTime.Date)
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonBody);
                 else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
+                }
                 else
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
             }
@@ -182,6 +194,7 @@ namespace BucketList
         private void SetDatesList(DateTime firstDayInCalendar, TextView dateView)
         {
             var canAddDateWithoutGoal = true;
+
             foreach (var goal in goals)
             {
                 if (goal.Deadline.Date == firstDayInCalendar.Date)
@@ -191,6 +204,7 @@ namespace BucketList
                     break;
                 }
             }
+
             if (canAddDateWithoutGoal)
                 datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
         }
@@ -205,6 +219,7 @@ namespace BucketList
                     return i + 7;
                 }
             }
+
             return 0;
         }
 
@@ -258,7 +273,7 @@ namespace BucketList
             CreateDateDialog(goal);
         }
 
-        private void CreateDateDialog(Goal goal)
+        private void CreateDateDialog(IGoal goal)
         {
             var builder = new AlertDialog.Builder(this);
             var dialogView = LayoutInflater.Inflate(Resource.Layout.dialog_date, null);
@@ -270,9 +285,13 @@ namespace BucketList
             var goalImage = dialogView.FindViewById<ImageView>(Resource.Id.goalImage);
 
             // Устанавливаем значения для вьюшек
-            if (goal.ImagePath != null)
-                goalImage.SetImage(goal.ImagePath);
-            goalName.Text = goal.GoalName;
+            if (goal as Goal != null)
+            {
+                if (((Goal)goal).ImagePath != null)
+                    goalImage.SetImage(((Goal)goal).ImagePath);
+            }
+            
+            goalName.Text = goal.Name;
             //goalDeadline.Text = goal.Deadline.Date.ToShortDateString();
             goalDeadline.Text = $"{string.Format("{0:00}", goal.Deadline.Day)}.{string.Format("{0:00}", goal.Deadline.Month)}.{goal.Deadline.Year}";
 

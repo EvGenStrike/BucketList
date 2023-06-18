@@ -51,7 +51,7 @@ namespace BucketList
         {
             var intent = new Intent();
             var goalName = GetGoalNameText();
-            if (currentGoal.Subgoals.Any(x => x.SubgoalName == goalName))
+            if (currentGoal.Subgoals.Any(x => x.Name == goalName))
             {
                 Toast.MakeText(this, "Подцель с таким названием уже существует", ToastLength.Short).Show();
                 return;

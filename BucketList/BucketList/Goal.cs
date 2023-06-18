@@ -11,9 +11,9 @@ using System.Text;
 
 namespace BucketList
 {
-    public class Goal
+    public class Goal : IGoal
     {
-        public string GoalName { get; set; }
+        public string Name { get; set; }
         public string ImagePath { get; set; }
         public DateTime Deadline { get; set; }
         public List<Subgoal> Subgoals { get; set; }
@@ -26,7 +26,7 @@ namespace BucketList
 
         public Goal(string subgoalName, DateTime deadline, string image = null)
         {
-            GoalName = subgoalName;
+            Name = subgoalName;
             Deadline = deadline;
             Subgoals = new List<Subgoal>();
             ImagePath = image;

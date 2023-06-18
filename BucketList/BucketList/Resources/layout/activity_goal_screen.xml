@@ -80,7 +80,6 @@
         android:background="@drawable/subgoals_background_rectangle"
     />-->
     <ListView
-        android:inputType="text"
         android:id="@+id/goal_screen_subgoals_list_view"
         android:minWidth="25px"
         android:minHeight="25px"
@@ -172,7 +171,7 @@
         />
 
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/pythonGoalScreen"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
@@ -184,16 +183,18 @@
             android:layout_alignBottom="@id/date1GoalScreen"
             android:scaleX="1.2"
             android:layout_marginTop="-8dp"
-        />
+        />-->
 
 
     </RelativeLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/goal_screen_add_subgoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
         android:layout_above="@id/goal_screen_do_goal_button"
         app:srcCompat="@drawable/ic_add"
         android:backgroundTint="@color/colorMainViolet"

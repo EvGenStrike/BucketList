@@ -11,16 +11,16 @@ using System.Text;
 
 namespace BucketList
 {
-    public class Subgoal
+    public class Subgoal : IGoal
     {
-        public string SubgoalName { get; set; }
+        public string Name { get; set; }
         public DateTime Deadline { get; set; }
-        
+
         public Subgoal() { }
-        
+
         public Subgoal(string subgoalName, DateTime deadline)
         {
-            SubgoalName = subgoalName;
+            Name = subgoalName;
             Deadline = deadline;
         }
     }

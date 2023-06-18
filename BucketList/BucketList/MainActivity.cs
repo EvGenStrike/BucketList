@@ -32,6 +32,7 @@ using System.Drawing;
 using Android.Content.Res;
 using AndroidX.Core.Content;
 using Google.Android.Material.Internal;
+using Android.Telephony;
 
 namespace BucketList
 {
@@ -49,6 +50,8 @@ namespace BucketList
         private string userName;
         private Goal currentGoalName;
         private GoalType currentGoalType;
+        private RelativeLayout calendar;
+        private Button buttonCalendarOpen;
 
         Button goalTypeButton;
 
@@ -59,15 +62,23 @@ namespace BucketList
             Initialize();
             SetTitle(Resource.String.empty_string);
             SetContentView(Resource.Layout.activity_main);
+            SetCalendarValues();
             SetListView();
             SetNavigationView();
             SetUserName();
             SetFab();
-            SetToolbar();
             SetPythonCalendarView();
+            SetToolbar();
             SetSearchView();
             UpdateStatistics();
             SetGoalsTypeButton();
+        }
+
+        private void SetCalendarValues()
+        {
+            calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
+            buttonCalendarOpen = FindViewById<Button>(Resource.Id.calendarButton);
+            buttonCalendarOpen.Click += ButtonCalendarOpen_Click;
         }
 
         private void SetGoalsTypeButton()
@@ -160,7 +171,7 @@ namespace BucketList
             }
             var goals =
                 Goals
-                .Select(x => x.GoalName)
+                .Select(x => x.Name)
                 .Where(x => x.ToLower().Contains(text))
                 .ToList();
             UpdateGoalsViewForView(goals);
@@ -169,10 +180,13 @@ namespace BucketList
         private void Initialize()
         {
             datesPythonCalendar = new List<DatePythonCalendar>();
+
             if (string.IsNullOrEmpty(Extensions.ReadGoals()))
                 Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
+
             Goals = Extensions.GetSavedGoals();
             user = Extensions.GetSavedUser();
+
             currentGoalType = GoalType.Any;
             SetFailedGoals();
         }
@@ -195,7 +209,7 @@ namespace BucketList
 
             // Получите выбранный элемент
             var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
-            currentGoalName = Goals.First(x => x.GoalName == selectedItem);
+            currentGoalName = Goals.First(x => x.Name == selectedItem);
 
             // Отобразите контекстное меню
             RegisterForContextMenu(myListView);
@@ -235,12 +249,16 @@ namespace BucketList
             currentGoalType = newGoalType;
             if (currentGoalType == GoalType.Any)
             {
-                var goals = Goals.Select(x => x.GoalName).ToList();
+                var goals = Goals.Select(x => x.Name).ToList();
+                datesPythonCalendar.Clear();
+                SetPythonCalendarView();
                 UpdateGoalsViewForView(goals);
             }
             else
             {
-                var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.GoalName).ToList();
+                var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.Name).ToList();
+                datesPythonCalendar.Clear();
+                SetPythonCalendarView();
                 UpdateGoalsViewForView(goals);
             }
             
@@ -331,9 +349,15 @@ namespace BucketList
 
         private List<string> GetGoalsForListViewWithGoalType(GoalType goalType)
         {
-            if (goalType == GoalType.Any)
-                return Goals.Select(x => x.GoalName).ToList();
-            return Goals.Where(x => x.GoalType == goalType).Select(x => x.GoalName).ToList();
+            if (Goals != null)
+            {
+                if (goalType == GoalType.Any)
+                    return Goals.Select(x => x.Name).ToList();
+                var goals = Goals.Where(x => x.GoalType == goalType);
+                if (goals != null)
+                    return goals.Select(x => x.Name).ToList();
+            }
+            return new List<string>();
         }
 
         private void AddGoal(Goal goal)
@@ -341,7 +365,7 @@ namespace BucketList
             Goals.Add(goal);
             foreach (var date in datesPythonCalendar)
             {
-                SetDeadlineDate(goal, date);
+                AddGoalUpdateCalendar(goal, date);
             }
             user.UserStatistics.GoalsCreatedCount++;
             Extensions.OverwriteUser(user);
@@ -386,7 +410,7 @@ namespace BucketList
             Goals.Remove(goal);
             foreach (var date in datesPythonCalendar)
             {
-                DeleteDeadlineFromDate(goal, date);
+                DeleteGoalUpdateCalendar(goal, date);
             }
             user.UserStatistics.GoalsDeletedCount++;
             Extensions.OverwriteUser(user);
@@ -398,20 +422,18 @@ namespace BucketList
             var serializedGoals = Extensions.SerializeGoals(Goals);
             Extensions.OverwriteGoals(serializedGoals);
             //var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.GoalName).ToList());
+            //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.Name).ToList());
             //listView.Adapter = adapter;
             UpdateGoalsViewForView(GetGoalsForListViewWithGoalType(currentGoalType));
         }
 
         private void UpdateGoalsViewForView(List<string> goals)
         {
-            
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             //var adapter = new GoalAdapter(this, goals, listView);
             //adapter.ItemLongClick += MyListView_ItemLongClick;
             var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Resource.Id.rectangle_1 , goals);
             listView.Adapter = adapter;
-            
         }
         
         private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -422,7 +444,7 @@ namespace BucketList
             // Получите выбранный элемент
             var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
             Intent intent = new Intent(this, typeof(GoalActivity));
-            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.GoalName == selectedItem)));
+            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.Name == selectedItem)));
             StartActivityForResult(intent, 1);
         }
 
@@ -473,27 +495,97 @@ namespace BucketList
 
         private void SetPythonCalendarView()
         {
-            var calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendar);
-            var buttonCalendarOpen = FindViewById<Button>(Resource.Id.calendarButton);
-            buttonCalendarOpen.Click += ButtonCalendarOpen_Click;
+            var currentDateTime = DateTime.Now.AddDays(-2);
 
-            var currentDateTime = DateTime.Now.AddDays(-3);
-
-            for (var i = 0; i < calendar.ChildCount; i++)
+            for (var i = 1; i < calendar.ChildCount; i++)
             {
                 // Дата - это TextView в Layout
                 var dateView = calendar.GetChildAt(i) as TextView;
-                if (dateView == null) return;
-                var date = new DatePythonCalendar(currentDateTime, dateView);
+                if (dateView == null) continue;
+
                 dateView.Text = currentDateTime.Day.ToString();
-                datesPythonCalendar.Add(date);
-                foreach (var goal in Goals)
-                {
-                    SetDeadlineDate(goal, date);
-                }
-                // Изменяем текущий день на следующий
+                SetDatesList(currentDateTime, dateView);
                 currentDateTime = currentDateTime.AddDays(1);
             }
+
+            DrawDatesWithoutGoals();
+            DrawDatesWithGoals();
+        }
+
+        private void DrawDatesWithoutGoals()
+        {
+            var currentDateTime = DateTime.Now;
+
+            foreach (var date in datesPythonCalendar.Where(x => x.Goal == null))
+            {
+                if (date.Deadline.Date < currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.pythonBody);
+                }
+                else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.pythonHead);
+                }
+                else
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.Black);
+                    date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+                }
+            }
+        }
+
+        private void DrawDatesWithGoals()
+        {
+            var currentDateTime = DateTime.Now;
+
+            foreach (var date in datesPythonCalendar.Where(x => x.Goal != null))
+            {
+                if (date.Deadline.Date < currentDateTime.Date)
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonBody);
+                else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
+                }
+                else
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+            }
+        }
+
+        private void SetDatesList(DateTime firstDayInCalendar, TextView dateView)
+        {
+            var canAddDateWithoutGoal = true;
+
+            if (currentGoalType != GoalType.Any)
+            {
+                foreach (var goal in Goals.Where(x => x.GoalType == currentGoalType))
+                {
+                    if (goal.Deadline.Date == firstDayInCalendar.Date)
+                    {
+                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        canAddDateWithoutGoal = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var goal in Goals)
+                {
+                    if (goal.Deadline.Date == firstDayInCalendar.Date)
+                    {
+                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        canAddDateWithoutGoal = false;
+                        break;
+                    }
+                }
+            }
+            
+
+            if (canAddDateWithoutGoal)
+                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
         }
 
         private void ButtonCalendarOpen_Click(object sender, EventArgs e)
@@ -503,7 +595,7 @@ namespace BucketList
             StartActivity(intent);
         }
 
-        private void SetDeadlineDate(Goal goal, DatePythonCalendar date)
+        private void AddGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
         {
             if (date.Deadline.Date == goal.Deadline.Date)
             {
@@ -512,7 +604,8 @@ namespace BucketList
                 date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
             }
         }
-        private void DeleteDeadlineFromDate(Goal goal, DatePythonCalendar date)
+
+        private void DeleteGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
         {
             if (goal.Deadline.Date == date.Deadline.Date)
             {

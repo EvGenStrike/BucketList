@@ -7,7 +7,6 @@ using Android.Widget;
 using AndroidX.Core.Util;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
-using Google.Android.Material.FloatingActionButton;
 using Json.Net;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using Android.Content.PM;
-
+using Google.Android.Material.FloatingActionButton;
 
 namespace BucketList
 {
@@ -34,12 +33,15 @@ namespace BucketList
         private DateTime selectedDate = DateTime.MinValue;
         private int itemIdThatWantsToChangeDate = -1; //-1 значит item = CurrentGoal, 0..n значит item = CurrentGoal.Subgoals[i];
 
-
+        private RelativeLayout calendar;
+        private Button buttonCalendarOpen;
+        public List<DatePythonCalendar> datesPythonCalendar = new List<DatePythonCalendar>();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_goal_screen);
             SetGoals();
+            SetCalendarValues();
             Initialize();
             SetGoalText();
             SetGoalImage();
@@ -47,6 +49,21 @@ namespace BucketList
             SetFabAddSubgoal();
             SetGoalCalendarFab();
             SetDoGoalButton();
+            SetPythonCalendarView();
+        }
+
+        private void SetCalendarValues()
+        {
+            calendar = FindViewById<RelativeLayout>(Resource.Id.deadlineCalendarGoalScreen);
+            buttonCalendarOpen = FindViewById<Button>(Resource.Id.calendarButtonGoalScreen);
+            buttonCalendarOpen.Click += ButtonCalendarOpen_Click;
+        }
+
+        private void ButtonCalendarOpen_Click(object sender, EventArgs e)
+        {
+            var intent = new Intent(this, typeof(CalendarActivity));
+            intent.PutExtra("goals", Extensions.SerializeSubgoals(CurrentGoal.Subgoals));
+            StartActivity(intent);
         }
 
         private void SetDoGoalButton()
@@ -94,7 +111,7 @@ namespace BucketList
         {
             var datePickerDialog = GetDatePickerDialog
                 (
-                    $"Изменить дедлайн цели \"{CurrentGoal.GoalName}\"?",
+                    $"Изменить дедлайн цели \"{CurrentGoal.Name}\"?",
                     (calendarView) =>
                         {
                             calendarView.MinDate = CurrentGoal.Subgoals.Count > 0 ? CurrentGoal.Subgoals.Max(x => x.Deadline).GetDateTimeInMillis() : DateTime.Now.GetDateTimeInMillis();
@@ -123,13 +140,13 @@ namespace BucketList
             if (itemIdThatWantsToChangeDate == -1)
             {
                 CurrentGoal.Deadline = selectedDate;
-                Toast.MakeText(this, $"Дедлайн цели \"{CurrentGoal.GoalName}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
+                Toast.MakeText(this, $"Дедлайн цели \"{CurrentGoal.Name}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
             }
             else
             {
                 var subgoal = CurrentGoal.Subgoals[itemIdThatWantsToChangeDate];
                 subgoal.Deadline = selectedDate;
-                Toast.MakeText(this, $"Дедлайн подцели \"{subgoal.SubgoalName}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
+                Toast.MakeText(this, $"Дедлайн подцели \"{subgoal.Name}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
             }
         }
 
@@ -141,7 +158,7 @@ namespace BucketList
         public void Initialize()
         {
             var goal = JsonNet.Deserialize<Goal>(Intent.GetStringExtra("goal"));
-            var desiredGoal = Goals.FirstOrDefault(x => x.GoalName == goal.GoalName);
+            var desiredGoal = Goals.FirstOrDefault(x => x.Name == goal.Name);
             CurrentGoal = desiredGoal;
         }
 
@@ -151,7 +168,7 @@ namespace BucketList
             if (resultCode == Result.Ok && data != null)
             {
                 var tempGoal = JsonNet.Deserialize<Goal>(data.GetStringExtra("goal"));
-                var newSubgoal = new Subgoal(tempGoal.GoalName, tempGoal.Deadline);
+                var newSubgoal = new Subgoal(tempGoal.Name, tempGoal.Deadline);
                 AddSubgoal(newSubgoal);
             }
         }
@@ -164,7 +181,7 @@ namespace BucketList
         private void SetGoalText()
         {
             var goalTextView = FindViewById<TextView>(Resource.Id.goal_name_text);
-            goalTextView.Text = CurrentGoal.GoalName;
+            goalTextView.Text = CurrentGoal.Name;
         }
 
         private void SetListView()
@@ -172,6 +189,12 @@ namespace BucketList
             UpdateSubgoalsListView();
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
             listView.ItemClick += ListView_ItemClick;
+            listView.LongClick += ListView_LongClick;
+        }
+
+        private void ListView_LongClick(object sender, View.LongClickEventArgs e)
+        {
+            Toast.MakeText(this, "я в ахуе, гении", 0).Show();
         }
 
         private void SetFabAddSubgoal()
@@ -180,10 +203,9 @@ namespace BucketList
             if (CurrentGoal.GoalType == GoalType.Failed)
             {
                 fab.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
-                
                 return;
             }
-                fab.Click += Fab_Click;
+            fab.Click += Fab_Click;
         }
 
         private void Fab_Click(object sender, EventArgs e)
@@ -199,19 +221,26 @@ namespace BucketList
             StartActivityForResult(intent, 1);
         }
 
-        private void AddSubgoal(Subgoal subgoal)
-        {
-            CurrentGoal.AddSubgoal(subgoal);
-            UpdateSubgoalsListView();
-        }
-
         private void UpdateSubgoalsListView()
         {
             Extensions.OverwriteGoals(Goals);
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
+            //var adapter = new ArrayAdapter<string>(this,
+            //    Resource.Layout.subgoal_list_item,
+            //    Resource.Id.subgoal_name,
+            //    CurrentGoal.Subgoals.Select(x => x.Name).ToList());
             var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
             adapter.calendarFabClick += CalendarFab_Click;
+            
             listView.Adapter = adapter;
+            //for (var i = 0; i < listView.Adapter.Count; i++)
+            //{
+            //    var item = listView.Adapter.GetItem(i);
+            //    var view = listView.Adapter.GetView(i, null, listView);
+            //    var button = view.FindViewById<Button>(Resource.Id.subgoal_calendar_button);
+            //    button.Focusable = true;
+            //    button.Click += CalendarFab_Click;
+            //}
         }
 
         private void CalendarFab_Click(object sender, EventArgs e)
@@ -220,20 +249,27 @@ namespace BucketList
             var subgoal = Extensions.DeserializeSubgoal((string)fab.Tag);
             var datePickerDialog = GetDatePickerDialog
                 (
-                $"Изменить дедлайн подцели \"{subgoal.SubgoalName}\"?",
+                $"Изменить дедлайн подцели \"{subgoal.Name}\"?",
                 (calendarView) =>
                     {
                         calendarView.MaxDate = CurrentGoal.Deadline.GetDateTimeInMillis();
                         calendarView.Date = subgoal.Deadline.GetDateTimeInMillis();
                     }
                 );
-            itemIdThatWantsToChangeDate = CurrentGoal.Subgoals.IndexOf(CurrentGoal.Subgoals.First(x => x.SubgoalName == subgoal.SubgoalName));
+            itemIdThatWantsToChangeDate = CurrentGoal.Subgoals.IndexOf(CurrentGoal.Subgoals.First(x => x.Name == subgoal.Name));
             datePickerDialog.Show();
         }
 
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            ShowContextMenu(sender, e);
+            ListView myListView = sender as ListView;
+
+            var selectedItem = myListView.GetItemAtPosition(e.Position);
+            currentSubgoal = selectedItem.Cast<Subgoal>();
+
+            RegisterForContextMenu(myListView);
+
+            OpenContextMenu(myListView);
         }
 
         private void ShowContextMenu(object sender, AdapterView.ItemClickEventArgs e)
@@ -269,11 +305,122 @@ namespace BucketList
 
             return base.OnContextItemSelected(item);
         }
+        private void AddSubgoal(Subgoal subgoal)
+        {
+            CurrentGoal.AddSubgoal(subgoal);
+            foreach (var date in datesPythonCalendar)
+            {
+                AddSubgoalUpdateCalendar(subgoal, date);
+            }
+            UpdateSubgoalsListView();
+        }
+
+        private void AddSubgoalUpdateCalendar(Subgoal goal, DatePythonCalendar date)
+        {
+            if (date.Deadline.Date == goal.Deadline.Date)
+            {
+                date.Goal = goal;
+                date.View.Tag = date;
+                date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+            }
+        }
 
         private void RemoveSubgoal(Subgoal goal)
         {
             CurrentGoal.RemoveSubgoal(goal);
+            foreach (var date in datesPythonCalendar)
+            {
+                DeleteSubgoalUpdateCalendar(goal, date);
+            }
             UpdateSubgoalsListView();
+        }
+
+        private void DeleteSubgoalUpdateCalendar(Subgoal goal, DatePythonCalendar date)
+        {
+            if (goal.Deadline.Date == date.Deadline.Date)
+            {
+                date.Goal = null;
+                date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+            }
+        }
+
+        private void SetPythonCalendarView()
+        {
+            var currentDateTime = DateTime.Now.AddDays(-2);
+
+            for (var i = 1; i < calendar.ChildCount; i++)
+            {
+                // Дата - это TextView в Layout
+                var dateView = calendar.GetChildAt(i) as TextView;
+                if (dateView == null) continue;
+
+                dateView.Text = currentDateTime.Day.ToString();
+                SetDatesList(currentDateTime, dateView);
+                currentDateTime = currentDateTime.AddDays(1);
+            }
+
+            DrawDatesWithoutGoals();
+            DrawDatesWithGoals();
+        }
+
+        private void DrawDatesWithoutGoals()
+        {
+            var currentDateTime = DateTime.Now;
+
+            foreach (var date in datesPythonCalendar.Where(x => x.Goal == null))
+            {
+                if (date.Deadline.Date < currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.pythonBody);
+                }
+                else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.pythonHead);
+                }
+                else
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.Black);
+                    date.View.Background = GetDrawable(Resource.Drawable.dateInCalendarWithPython);
+                }
+            }
+        }
+
+        private void DrawDatesWithGoals()
+        {
+            var currentDateTime = DateTime.Now;
+
+            foreach (var date in datesPythonCalendar.Where(x => x.Goal != null))
+            {
+                if (date.Deadline.Date < currentDateTime.Date)
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonBody);
+                else if (date.Deadline.Date == currentDateTime.Date)
+                {
+                    date.View.SetTextColor(Android.Graphics.Color.LightGray);
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
+                }
+                else
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+            }
+        }
+
+        private void SetDatesList(DateTime firstDayInCalendar, TextView dateView)
+        {
+            var canAddDateWithoutGoal = true;
+
+            foreach (var goal in CurrentGoal.Subgoals)
+            {
+                if (goal.Deadline.Date == firstDayInCalendar.Date)
+                {
+                    datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                    canAddDateWithoutGoal = false;
+                    break;
+                }
+            }
+
+            if (canAddDateWithoutGoal)
+                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
         }
 
         private DatePickerDialog GetDatePickerDialog(string dialogName, Action<CalendarView> calendarSetup = null)

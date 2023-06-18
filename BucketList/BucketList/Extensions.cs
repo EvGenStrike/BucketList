@@ -120,10 +120,19 @@ namespace BucketList
         {
             return JsonNet.Serialize(goal);
         }
+        public static string SerializeSubgoals(List<Subgoal> subGoals)
+        {
+            return JsonNet.Serialize(subGoals);
+        }
 
         public static Subgoal DeserializeSubgoal(string goal)
         {
             return JsonNet.Deserialize<Subgoal>(goal);
+        }
+
+        public static List<Subgoal> DeserializeSubgoals(string goals)
+        {
+            return JsonNet.Deserialize<List<Subgoal>>(goals);
         }
 
         public static void SetImage(this ImageView imageView, string imagePath)
