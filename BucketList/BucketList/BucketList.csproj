@@ -59,6 +59,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountActivity.cs" />
     <Compile Include="AddSubgoalActivity.cs" />
     <Compile Include="AddGoalActivity.cs" />
     <Compile Include="CalendarActivity.cs" />
@@ -341,9 +342,16 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <AndroidResource Include="Resources\drawable-v21\anim.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+=======
+    <AndroidResource Include="Resources\layout\activity_account.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\arrow_chevron_right.xml" />
+>>>>>>> 1cdea5d6d26f497c4c62078eeb2fac71f9b884d4
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

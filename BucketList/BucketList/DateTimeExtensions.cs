@@ -23,5 +23,14 @@ namespace BucketList
             return new DateTime(1970, 1, 1).AddMilliseconds(millis);
         }
 
+        public static string ToNiceString(this DateTime dateTime)
+        {
+            var year = dateTime.Year;
+            var month = dateTime.Month;
+            var dayOfMonth = dateTime.Day;
+            var selectedDateInString
+                = $"{string.Format("{0:00}", dayOfMonth)}.{string.Format("{0:00}", month)}.{year}";
+            return selectedDateInString;
+        }
     }
 }

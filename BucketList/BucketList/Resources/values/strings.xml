@@ -34,4 +34,8 @@
 	<string name="main_future_goals">"Поставленные цели"</string>
 	<string name="main_done_goals">"Выполненные цели"</string>
 	<string name="main_failed_goals">"Просроченные цели"</string>
+
+	<string name="account_change_name">"Изменить имя"</string>
+	<string name="account_registration_date">"Дата регистрации"</string>
+	<string name="account_delete_account">"Удалить аккаунт"</string>
 </resources>
