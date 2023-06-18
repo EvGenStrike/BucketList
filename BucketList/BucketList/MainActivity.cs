@@ -296,7 +296,8 @@ namespace BucketList
             }
             else if (id == Resource.Id.nav_account)
             {
-
+                var intent = new Intent(this, typeof(AccountActivity));
+                StartActivityForResult(intent, 1);
             }
             else if (id == Resource.Id.nav_python_settings)
             {

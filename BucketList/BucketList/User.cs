@@ -32,6 +32,7 @@ namespace BucketList
             UserPhotoPath = userPhotoPath;
             UserStatistics = new Statistics();
             UserPythonSettings = new PythonSettings();
+            UserRegistrationDate = DateTime.Now;
         }
     }
 }

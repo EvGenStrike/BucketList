@@ -59,6 +59,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountActivity.cs" />
     <Compile Include="AddSubgoalActivity.cs" />
     <Compile Include="AddGoalActivity.cs" />
     <Compile Include="CalendarActivity.cs" />
@@ -338,6 +339,12 @@
     <AndroidResource Include="Resources\drawable-v21\deadlineMouseDeadWithPythonHead.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_account.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\arrow_chevron_right.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
