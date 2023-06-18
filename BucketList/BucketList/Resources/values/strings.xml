@@ -6,11 +6,13 @@
 	<string name="navigation_top_search_goals">Все цели</string>
 	<string name="empty_string">""</string>
 	
+	<string name="goal_title_text">"Цель:"</string>
 	<string name="goal_add_name_text">"Название цели"</string>
 	<string name="goal_add_date_text">"Дата дедлайна"</string>
 	<string name="goal_add_button_text">"Создать цель"</string>
 	<string name="goal_add_deadline_text">"Установить дедлайн"</string>
 
+	<string name="subgoal_title_text">"Подцели для текущей цели:"</string>
 	<string name="subgoal_add_name_text">"Название подцели"</string>
 	<string name="subgoal_add_button_text">"Создать подцель"</string>
 

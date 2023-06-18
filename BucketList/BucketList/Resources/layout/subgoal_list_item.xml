@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="62dp"
     android:clickable="true"
     android:id="@+id/subgoalRelativeLayout">
     <ImageView
@@ -12,6 +12,7 @@
         android:layout_marginStart="20dp"
         android:layout_height="45dp"
         android:src="@drawable/green_rect"
+        android:tint="@color/colorMainVioletDark"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"/>
 
@@ -47,6 +48,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="8dp"
         android:layout_centerVertical="true"
+        android:backgroundTint="@color/colorMainViolet"
         android:src="@android:drawable/ic_menu_my_calendar"
         app:fabSize="mini"
     />
