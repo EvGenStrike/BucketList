@@ -85,13 +85,15 @@ namespace BucketList
             var buttonFuture = dialogView.FindViewById<Button>(Resource.Id.buttonFuture);
             var buttonDone = dialogView.FindViewById<Button>(Resource.Id.buttonDone);
             var buttonFailed = dialogView.FindViewById<Button>(Resource.Id.buttonFailed);
+            var buttonAll = dialogView.FindViewById<Button>(Resource.Id.buttonAll);
 
             // Кнопки фильтров
             var filteredButtons = new List<Button>()
             {
                 buttonFuture,
                 buttonDone,
-                buttonFailed
+                buttonFailed,
+                buttonAll
             };
 
             var dialog = builder.Create();
@@ -171,7 +173,7 @@ namespace BucketList
                 Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
             Goals = Extensions.GetSavedGoals();
             user = Extensions.GetSavedUser();
-            currentGoalType = GoalType.Future;
+            currentGoalType = GoalType.Any;
             SetFailedGoals();
         }
 
@@ -231,8 +233,17 @@ namespace BucketList
         private void ChangeCurrentGoalType(GoalType newGoalType)
         {
             currentGoalType = newGoalType;
-            var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.GoalName).ToList();
-            UpdateGoalsViewForView(goals);
+            if (currentGoalType == GoalType.Any)
+            {
+                var goals = Goals.Select(x => x.GoalName).ToList();
+                UpdateGoalsViewForView(goals);
+            }
+            else
+            {
+                var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.GoalName).ToList();
+                UpdateGoalsViewForView(goals);
+            }
+            
         }
          
         public override void OnBackPressed()
@@ -320,6 +331,8 @@ namespace BucketList
 
         private List<string> GetGoalsForListViewWithGoalType(GoalType goalType)
         {
+            if (goalType == GoalType.Any)
+                return Goals.Select(x => x.GoalName).ToList();
             return Goals.Where(x => x.GoalType == goalType).Select(x => x.GoalName).ToList();
         }
 

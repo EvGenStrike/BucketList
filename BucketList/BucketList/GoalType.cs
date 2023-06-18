@@ -15,6 +15,7 @@ namespace BucketList
     {
         Future,
         Done,
-        Failed
+        Failed,
+        Any
     }
 }
