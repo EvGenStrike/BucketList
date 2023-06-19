@@ -80,6 +80,7 @@
     <Compile Include="Color.cs" />
     <Compile Include="NotificationReceiver.cs" />
     <Compile Include="NotificationService.cs" />
+    <Compile Include="PythonActivity.cs" />
     <Compile Include="PythonSettings.cs" />
     <Compile Include="RegistrationActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -355,6 +356,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-v21\red_circle.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\python_screen.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

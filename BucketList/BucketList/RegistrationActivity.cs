@@ -17,7 +17,7 @@ using static Android.Telephony.CarrierConfigManager;
 
 namespace BucketList
 {
-    [Activity(Label = "RegistrationActivity", MainLauncher = true)]
+    [Activity(Label = "Длинный питон", MainLauncher = true)]
     public class RegistrationActivity : Activity
     {
         public static readonly int PickImageId = 1000;

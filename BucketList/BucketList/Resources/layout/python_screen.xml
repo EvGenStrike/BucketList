@@ -1,0 +1,70 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMainVioletDark">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+    <ImageView
+        android:id="@+id/pythonScreenView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/pythoncalendar1"
+        android:rotation="-90"
+        android:scaleType="centerInside"/>
+    <TextView
+        android:id="@+id/pythonDeadlineCountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Съедено дедлайнов:"
+        android:textSize="18sp"
+        android:layout_marginStart="12dp"
+        android:textColor="@android:color/white"
+        android:layout_toEndOf="@id/pythonScreenView"
+        android:layout_alignTop="@id/pythonScreenView"
+            />
+    <TextView
+        android:singleLine="true"
+        android:id="@+id/pythonDeadlineCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginStart="12dp"
+        android:textSize="18sp"
+        android:layout_below="@id/pythonDeadlineCountTitle"
+        android:layout_toEndOf="@id/pythonScreenView"
+        android:textColor="@android:color/white"
+            />
+    
+    
+        </RelativeLayout>
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Удовлетворение вашего питона"
+        android:layout_marginStart="12dp"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
+            />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:progress="50"
+        android:max="100"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:progressTint="@color/colorMainYellow"
+        android:id="@+id/progressBar1"
+        android:layout_below="@id/pythonScreenView" />
+</RelativeLayout>

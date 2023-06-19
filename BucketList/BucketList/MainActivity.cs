@@ -325,7 +325,8 @@ namespace BucketList
             }
             else if (id == Resource.Id.nav_python_settings)
             {
-
+                var intent = new Intent(this, typeof(PythonActivity));
+                StartActivity(intent);
             }
             else if (id == Resource.Id.nav_allow_notifications)
             {
