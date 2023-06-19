@@ -16,6 +16,7 @@ using System.Reflection.Emit;
 using System.Text;
 using Android.Content.PM;
 using Google.Android.Material.FloatingActionButton;
+using System.Net.WebSockets;
 
 namespace BucketList
 {
@@ -23,11 +24,12 @@ namespace BucketList
     public class GoalActivity : Activity
     {
         private const int ReadExternalStoragePermissionRequestCode = 100;
-
+        private ListView listView;
         public List<Goal> Goals { get; private set; }
         public Goal CurrentGoal { get; private set; }
 
         private Subgoal currentSubgoal;
+        private bool isLongClick;
         User user;
 
         private DateTime selectedDate = DateTime.MinValue;
@@ -49,7 +51,7 @@ namespace BucketList
             SetFabAddSubgoal();
             SetGoalCalendarFab();
             SetDoGoalButton();
-            SetPythonCalendarView();
+            //SetPythonCalendarView();
         }
 
         private void SetCalendarValues()
@@ -191,13 +193,26 @@ namespace BucketList
         {
             UpdateSubgoalsListView();
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
+            this.listView = listView;
             listView.ItemClick += ListView_ItemClick;
-            listView.LongClick += ListView_LongClick;
+            //listView.LongClick += ListView_LongClick;
         }
 
-        private void ListView_LongClick(object sender, View.LongClickEventArgs e)
+        private void ListView_LongClick(object sender, int e)
         {
-            Toast.MakeText(this, "я в ахуе, гении", 0).Show();
+            isLongClick = true;
+            // Получите ссылку на ListView
+            var myListView = listView;
+            var adapter = sender as SubgoalAdapter;
+
+            // Получите выбранный элемент
+            var selectedItem = adapter.GetItem(e).Cast<Subgoal>();
+            currentSubgoal = CurrentGoal.Subgoals.First(x => x.Name == selectedItem.Name);
+            // Отобразите контекстное меню
+            RegisterForContextMenu(myListView);
+
+            // Откройте контекстное меню для выбранного элемента
+            OpenContextMenu(myListView);
         }
 
         private void SetFabAddSubgoal()
@@ -235,22 +250,13 @@ namespace BucketList
         {
             Extensions.OverwriteGoals(Goals);
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
-            //var adapter = new ArrayAdapter<string>(this,
-            //    Resource.Layout.subgoal_list_item,
-            //    Resource.Id.subgoal_name,
-            //    CurrentGoal.Subgoals.Select(x => x.Name).ToList());
             var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
-            adapter.calendarFabClick += CalendarFab_Click;
             
+            adapter.calendarFabClick += CalendarFab_Click;
+            adapter.ItemLongClick += ListView_LongClick;
             listView.Adapter = adapter;
-            //for (var i = 0; i < listView.Adapter.Count; i++)
-            //{
-            //    var item = listView.Adapter.GetItem(i);
-            //    var view = listView.Adapter.GetView(i, null, listView);
-            //    var button = view.FindViewById<Button>(Resource.Id.subgoal_calendar_button);
-            //    button.Focusable = true;
-            //    button.Click += CalendarFab_Click;
-            //}
+            datesPythonCalendar.Clear();
+            SetPythonCalendarView();
         }
 
         private void CalendarFab_Click(object sender, EventArgs e)
@@ -273,7 +279,7 @@ namespace BucketList
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             ListView myListView = sender as ListView;
-
+            isLongClick = false;
             var selectedItem = myListView.GetItemAtPosition(e.Position);
             currentSubgoal = selectedItem.Cast<Subgoal>();
 
@@ -296,13 +302,27 @@ namespace BucketList
 
         public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
         {
+            var adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
             base.OnCreateContextMenu(menu, v, menuInfo);
             // Установите заголовок контекстного меню
-            menu.SetHeaderTitle("Удалить подцель?");
+            if(isLongClick)
+            {
+                menu.SetHeaderTitle("Удалить подцель?");
 
-            // Добавьте пункт меню для удаления элемента
-            menu.Add(Menu.None, 0, Menu.None, "Да");
-            menu.Add(Menu.None, 1, Menu.None, "Нет");
+                // Добавьте пункт меню для удаления элемента
+                menu.Add(Menu.None, 0, Menu.None, "Да");
+                menu.Add(Menu.None, 1, Menu.None, "Нет");
+
+            }
+            else
+            {
+                menu.SetHeaderTitle("Выполнить подцель?");
+
+                // Добавьте пункт меню для удаления элемента
+                menu.Add(Menu.None, 2, Menu.None, "Да");
+                menu.Add(Menu.None, 3, Menu.None, "Нет");
+            }
+            
         }
 
         public override bool OnContextItemSelected(IMenuItem item)
@@ -310,6 +330,13 @@ namespace BucketList
             if (item.ItemId == 0)
             {
                 RemoveSubgoal(currentSubgoal);
+                return true;
+            }
+
+            if (item.ItemId == 2)
+            {
+                currentSubgoal.GoalType = GoalType.Done;
+                UpdateSubgoalsListView();
                 return true;
             }
 
@@ -411,7 +438,13 @@ namespace BucketList
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
                 }
                 else
-                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                {
+                    var goal = date.Goal as Subgoal;
+                    if (goal.GoalType == GoalType.Done)
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDead);
+                    else
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                }
             }
         }
 

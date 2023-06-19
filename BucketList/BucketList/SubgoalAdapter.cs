@@ -29,12 +29,13 @@ namespace BucketList
     public class SubgoalAdapter : BaseAdapter<Subgoal>, IOnItemClickListener, IOnItemLongClickListener
     {
         public EventHandler calendarFabClick { get; set; }
-
+        public event EventHandler<int> ItemLongClick;
         private ListView listView;
         private List<Subgoal> subgoals;
         private Activity activity;
         private long touchStartTime;
         private bool isLongClickPerformed;
+        public ImageView subgoalCircleState { get; set; }
 
         private Handler longClickHandler;
 
@@ -74,12 +75,18 @@ namespace BucketList
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.subgoal_list_item, parent, false);
-
+            
             var subgoalCircleState = view.FindViewById<ImageView>(Resource.Id.subgoal_circle_state);
+            
             var subgoalName = view.FindViewById<TextView>(Resource.Id.subgoal_name);
             var subgoalCalendarButton = view.FindViewById<FloatingActionButton>(Resource.Id.subgoal_calendar_button);
             subgoalCalendarButton.Tag = Extensions.SerializeSubgoal(subgoals[position]);
             subgoalName.Text = subgoals[position].Name;
+
+            if(subgoals[position].GoalType == GoalType.Future)
+                subgoalCircleState.Background = activity.GetDrawable(Resource.Drawable.red_circle);
+            else
+                subgoalCircleState.Background = activity.GetDrawable(Resource.Drawable.green_circle);
 
             view.Touch += (sender, e) =>
             {
@@ -96,7 +103,8 @@ namespace BucketList
                             // Выполнение действий при долгом нажатии (LongClick)
                             isLongClickPerformed = true;
                             view.Alpha = 1f;
-                            listView.PerformLongClick();
+                            ItemLongClick?.Invoke(this, position);
+                            //listView.PerformLongClick();
                         }
                     }, 1000);
                 }

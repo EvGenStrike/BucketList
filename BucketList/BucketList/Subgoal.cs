@@ -15,7 +15,8 @@ namespace BucketList
     {
         public string Name { get; set; }
         public DateTime Deadline { get; set; }
-
+        public GoalType GoalType { get; set; } = GoalType.Future;
+        public ImageView CircleState { get; set; }
         public Subgoal() { }
 
         public Subgoal(string subgoalName, DateTime deadline)
