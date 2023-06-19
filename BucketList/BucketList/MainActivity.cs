@@ -33,6 +33,7 @@ using Android.Content.Res;
 using AndroidX.Core.Content;
 using Google.Android.Material.Internal;
 using Android.Telephony;
+using System.Numerics;
 
 namespace BucketList
 {
@@ -140,7 +141,12 @@ namespace BucketList
             var previouslyFailedGoals = user.UserStatistics.PreviouslyFailedGoals;
             foreach (var failedGoal in failedGoals)
             {
-                var hashcode = failedGoal.GetHashCode();
+                long hashcode
+                    =
+                    failedGoal.Name.GetHashCode()
+                    + (failedGoal.ImagePath is null ? 0 : failedGoal.ImagePath.GetHashCode())
+                    + failedGoal.Deadline.GetHashCode()
+                    ;
                 if (previouslyFailedGoals.ContainsKey(hashcode))
                     continue;
                 previouslyFailedGoals.Add(hashcode, failedGoal);

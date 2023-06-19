@@ -22,8 +22,8 @@ namespace BucketList
 
         public User()
         {
-            UserStatistics = new Statistics();
-            UserPythonSettings = new PythonSettings();
+            //UserStatistics = new Statistics();
+            //UserPythonSettings = new PythonSettings();
         }
 
         public User(string userName, string userPhotoPath = null)

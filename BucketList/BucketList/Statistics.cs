@@ -7,13 +7,14 @@ using Android.Widget;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace BucketList
 {
     public class Statistics
     {
-        public Dictionary<int, Goal> PreviouslyFailedGoals { get; set; }
+        public Dictionary<long, Goal> PreviouslyFailedGoals { get; set; }
         public int GoalsCreatedCount { get; set; }
         public int GoalsDoneCount { get; set; }
         public int GoalsFailedCount { get => PreviouslyFailedGoals.Count; set { } }
@@ -21,7 +22,7 @@ namespace BucketList
 
         public Statistics()
         {
-            PreviouslyFailedGoals = new Dictionary<int, Goal>();
+            PreviouslyFailedGoals = new Dictionary<long, Goal>();
         }
     }
 }
