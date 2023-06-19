@@ -72,6 +72,9 @@ namespace BucketList
             if (CurrentGoal.GoalType == GoalType.Done)
             {
                 button.Text = "Цель уже выполнена";
+
+                button.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
+                button.SetTextColor(Android.Graphics.Color.LightGray);
                 return;
             }
             if (CurrentGoal.GoalType == GoalType.Failed)
@@ -200,7 +203,14 @@ namespace BucketList
         private void SetFabAddSubgoal()
         {
             var fab = FindViewById<FloatingActionButton>(Resource.Id.goal_screen_add_subgoal);
+            fab.BackgroundTintList = GetColorStateList(Resource.Color.colorMainViolet);
             if (CurrentGoal.GoalType == GoalType.Failed)
+            {
+                fab.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
+                return;
+            }
+
+            if (CurrentGoal.GoalType == GoalType.Done)
             {
                 fab.BackgroundTintList = GetColorStateList(Resource.Color.colorGray);
                 return;

@@ -68,7 +68,7 @@ namespace BucketList
             SetNavigationView();
             SetUserName();
             SetFab();
-            SetPythonCalendarView();
+            //SetPythonCalendarView();
             SetToolbar();
             SetSearchView();
             UpdateStatistics();
@@ -427,6 +427,7 @@ namespace BucketList
             //listView.Adapter = adapter;
             var goals = GetGoalsForListViewWithGoalType(currentGoalType);
             UpdateGoalsViewForView(goals);
+            SetPythonCalendarView();
         }
 
         private void UpdateGoalsViewForView(List<Goal> goals)
@@ -589,7 +590,14 @@ namespace BucketList
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
                 }
                 else
-                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                {
+                    var goal = date.Goal as Goal;
+                    if (goal.GoalType == GoalType.Done)
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDead);
+                    else
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                }    
+                    
             }
         }
 
@@ -640,7 +648,10 @@ namespace BucketList
             {
                 date.Goal = goal;
                 date.View.Tag = date;
-                date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                if (goal.GoalType != GoalType.Done)
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                else
+                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDead);
             }
         }
 

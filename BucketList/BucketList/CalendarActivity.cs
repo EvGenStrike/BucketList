@@ -187,7 +187,14 @@ namespace BucketList
                     date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDeadWithPythonHead);
                 }
                 else
-                    date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                {
+                    var goal = date.Goal as Goal;
+                    if (goal.GoalType == GoalType.Done)
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouseDead);
+                    else
+                        date.View.Background = GetDrawable(Resource.Drawable.deadlineMouse1);
+                }
+                
             }
         }
 

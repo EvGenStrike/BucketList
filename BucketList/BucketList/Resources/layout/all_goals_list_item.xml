@@ -13,10 +13,19 @@
         android:layout_marginStart="20dp"/>
     <ImageView
         android:id="@+id/rect1"
-        android:layout_width="70dp"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:src="@drawable/snake_in_listview"
         android:layout_marginStart="10dp"/>
+    <ImageView
+        android:id="@+id/imageGoal"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/snake_image"
+        android:layout_toRightOf="@id/rect1"/>
+    
     <ImageView
         android:id="@+id/rect2"
         android:layout_width="65dp"

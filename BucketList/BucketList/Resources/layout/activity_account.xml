@@ -22,7 +22,7 @@
      <ImageView
         android:id="@+id/account_screen_user_photo"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_marginTop="15dp"
         android:layout_below="@id/account_screen_back_arrow"
         android:src="@drawable/snake_image"
@@ -47,10 +47,11 @@
 
         <ImageView
             android:id="@+id/account_screen_star_for_name_change_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/abc_ic_star_black_36dp"
             android:layout_centerVertical="true"
+            android:backgroundTint="@color/colorYellow"
         />
 
         <!--<TextView
@@ -77,20 +78,23 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:backgroundTint="@android:color/white"
             android:hint="@string/account_change_name"
             style="@style/account_text"
-            android:textColorHint="#AAAAAA"
             android:gravity="center_vertical"
             android:inputType="text"
         />
 
         <ImageView
             android:id="@+id/account_screen_change_name_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/colorYellow"
             android:background="@drawable/arrow_chevron_right"
         />
 
@@ -106,8 +110,9 @@
 
         <ImageView
             android:id="@+id/account_screen_star_for_registration_date_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/colorYellow"
             android:background="@drawable/abc_ic_star_black_36dp"
             android:layout_centerVertical="true"
         />
@@ -129,11 +134,12 @@
 
         <ImageView
             android:id="@+id/account_screen_registration_date_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/colorYellow"
             android:background="@drawable/arrow_chevron_right"
         />
 

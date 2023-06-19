@@ -197,7 +197,6 @@
         android:layout_marginRight="20dp"
         android:layout_above="@id/goal_screen_do_goal_button"
         app:srcCompat="@drawable/ic_add"
-        android:backgroundTint="@color/colorMainViolet"
         app:maxImageSize="60dp"
     />
 

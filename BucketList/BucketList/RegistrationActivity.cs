@@ -25,6 +25,7 @@ namespace BucketList
         EditText username;
         private ImageView imageView;
         private string imagePath;
+        private Button buttonImageView;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -45,7 +46,8 @@ namespace BucketList
                 var button = FindViewById<Button>(Resource.Id.registration_button);
                 button.Click += OnClick;
                 imageView = FindViewById<ImageView>(Resource.Id.registration_add_user_photo);
-                imageView.Click += Image_OnClick;
+                buttonImageView = FindViewById<Button>(Resource.Id.registration_add_user_photo_button);
+                buttonImageView.Click += Image_OnClick;
             }
         }
 
@@ -56,7 +58,7 @@ namespace BucketList
 
         private void ShowContextMenu(object sender, EventArgs e)
         {
-            var myImageView = sender as ImageView;
+            var myImageView = sender as Button;
 
             RegisterForContextMenu(myImageView);
 

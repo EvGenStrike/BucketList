@@ -57,7 +57,7 @@ namespace BucketList
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.all_goals_list_item, parent, false);
 
             var rectangle = view.FindViewById<ImageView>(Resource.Id.rect);
-            var snakeImage = view.FindViewById<ImageView>(Resource.Id.rect1);
+            var snakeImage = view.FindViewById<ImageView>(Resource.Id.imageGoal);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.rectangle_1);
             snakeImage.SetImage(goals[position].ImagePath);
             subgoalName.Text = goals[position].Name;
