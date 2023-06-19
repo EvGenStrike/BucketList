@@ -18,8 +18,12 @@
             </group>
 		</menu>
 	</item>
+
 	
-    <item android:title="Дополнительно">
+    <item
+		android:title="Дополнительно"
+android:tooltipText="asdfasdfasdfsadf"
+		>
         <menu>
 			<group android:checkableBehavior="none">
                 <item

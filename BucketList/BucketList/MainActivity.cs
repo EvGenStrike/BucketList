@@ -52,6 +52,7 @@ namespace BucketList
         private GoalType currentGoalType;
         private RelativeLayout calendar;
         private Button buttonCalendarOpen;
+        private ListView listView;
 
         Button goalTypeButton;
 
@@ -171,8 +172,7 @@ namespace BucketList
             }
             var goals =
                 Goals
-                .Select(x => x.Name)
-                .Where(x => x.ToLower().Contains(text))
+                .Where(x => x.Name.ToLower().Contains(text))
                 .ToList();
             UpdateGoalsViewForView(goals);
         }
@@ -249,14 +249,14 @@ namespace BucketList
             currentGoalType = newGoalType;
             if (currentGoalType == GoalType.Any)
             {
-                var goals = Goals.Select(x => x.Name).ToList();
+                var goals = Goals.ToList();
                 datesPythonCalendar.Clear();
                 SetPythonCalendarView();
                 UpdateGoalsViewForView(goals);
             }
             else
             {
-                var goals = Goals.Where(x => x.GoalType == newGoalType).Select(x => x.Name).ToList();
+                var goals = Goals.Where(x => x.GoalType == newGoalType).ToList();
                 datesPythonCalendar.Clear();
                 SetPythonCalendarView();
                 UpdateGoalsViewForView(goals);
@@ -348,17 +348,17 @@ namespace BucketList
             }
         }
 
-        private List<string> GetGoalsForListViewWithGoalType(GoalType goalType)
+        private List<Goal> GetGoalsForListViewWithGoalType(GoalType goalType)
         {
             if (Goals != null)
             {
                 if (goalType == GoalType.Any)
-                    return Goals.Select(x => x.Name).ToList();
+                    return Goals.ToList();
                 var goals = Goals.Where(x => x.GoalType == goalType);
                 if (goals != null)
-                    return goals.Select(x => x.Name).ToList();
+                    return goals.ToList();
             }
-            return new List<string>();
+            return new List<Goal>();
         }
 
         private void AddGoal(Goal goal)
@@ -425,27 +425,63 @@ namespace BucketList
             //var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.Name).ToList());
             //listView.Adapter = adapter;
-            UpdateGoalsViewForView(GetGoalsForListViewWithGoalType(currentGoalType));
+            var goals = GetGoalsForListViewWithGoalType(currentGoalType);
+            UpdateGoalsViewForView(goals);
         }
 
-        private void UpdateGoalsViewForView(List<string> goals)
+        private void UpdateGoalsViewForView(List<Goal> goals)
         {
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
-            //var adapter = new GoalAdapter(this, goals, listView);
-            //adapter.ItemLongClick += MyListView_ItemLongClick;
-            var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Resource.Id.rectangle_1 , goals);
+            var adapter = new GoalAdapter(this, goals, listView);
+            adapter.ItemLongClick += Adapter_ItemLongClick;
+            //adapter.ItemLongClick += GoalAdapter_ItemLongClick;
             listView.Adapter = adapter;
+            //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Resource.Id.rectangle_1 , goals);
+            //listView.Adapter = adapter;
         }
-        
+
+        private void Adapter_ItemLongClick(object sender, int e)
+        {
+            // Получите ссылку на ListView
+            var myListView = listView;
+            var adapter = sender as GoalAdapter;
+
+            // Получите выбранный элемент
+            var selectedItem = adapter.GetItem(e).Cast<Goal>(); ;
+            currentGoalName = Goals.First(x => x.Name == selectedItem.Name);
+
+            // Отобразите контекстное меню
+            RegisterForContextMenu(myListView);
+
+            // Откройте контекстное меню для выбранного элемента
+            OpenContextMenu(myListView);
+        }
+
+        private void GoalAdapter_ItemLongClick(object sender, int e)
+        {
+            // Получите ссылку на ListView
+            ListView myListView = sender as ListView;
+
+            // Получите выбранный элемент
+            var selectedItem = myListView.GetItemAtPosition(e).Cast<Goal>();
+            currentGoalName = Goals.First(x => x.Name == selectedItem.Name);
+
+            // Отобразите контекстное меню
+            RegisterForContextMenu(myListView);
+
+            // Откройте контекстное меню для выбранного элемента
+            OpenContextMenu(myListView);
+        }
+
         private void OnGoalClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             // Получите ссылку на ListView
             ListView myListView = sender as ListView;
 
             // Получите выбранный элемент
-            var selectedItem = (string)myListView.GetItemAtPosition(e.Position);
+            var selectedItem = myListView.GetItemAtPosition(e.Position).Cast<Goal>();
             Intent intent = new Intent(this, typeof(GoalActivity));
-            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.Name == selectedItem)));
+            intent.PutExtra("goal", JsonNet.Serialize(Goals.First(x => x.Name == selectedItem.Name)));
             StartActivityForResult(intent, 1);
         }
 
@@ -473,11 +509,13 @@ namespace BucketList
 
         private void SetListView()
         {
-            UpdateGoalsView();
             var listView = FindViewById<ListView>(Resource.Id.goalsListView);
+            this.listView = listView;
+            UpdateGoalsView();
             listView.ItemClick += OnGoalClick;
-            listView.ItemLongClick += MyListView_ItemLongClick;
+            //listView.LongClick += MyListView_ItemLongClick;
         }
+
 
         private void SetFab()
         {

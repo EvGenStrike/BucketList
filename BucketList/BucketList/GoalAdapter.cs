@@ -19,6 +19,12 @@ namespace BucketList
         private ListView listView;
         private List<Goal> goals;
         private Activity activity;
+
+        private long touchStartTime;
+        private bool isLongClickPerformed;
+
+        private Handler longClickHandler;
+
         public GoalAdapter
             (
             Activity activity,
@@ -51,34 +57,44 @@ namespace BucketList
             var view = convertView ?? activity.LayoutInflater.Inflate(Resource.Layout.all_goals_list_item, parent, false);
 
             var rectangle = view.FindViewById<ImageView>(Resource.Id.rect);
+            var snakeImage = view.FindViewById<ImageView>(Resource.Id.rect1);
             var subgoalName = view.FindViewById<TextView>(Resource.Id.rectangle_1);
+            snakeImage.SetImage(goals[position].ImagePath);
             subgoalName.Text = goals[position].Name;
 
             view.Touch += (sender, e) =>
             {
-                //ItemClick?.Invoke(this, position);
                 if (e.Event.Action == MotionEventActions.Down)
                 {
-                    // Измените внешний вид элемента при нажатии
                     view.Alpha = 0.5f;
-                }
-                else if (e.Event.Action == MotionEventActions.Up)
-                {
-                    listView.PerformItemClick(view, position, listView.Adapter.GetItemId(position));
-                }
-                else if (e.Event.Action == MotionEventActions.Cancel)
-                {
-                    // Измените внешний вид элемента при отжатии или отмене нажатия
-                    view.Alpha = 1f;
+                    isLongClickPerformed = false;
 
-                    var item = listView.Adapter.GetItemId(position);
-                    //listView.PerformItemClick(view, position, item);
+                    longClickHandler = new Handler();
+                    longClickHandler.PostDelayed(() =>
+                    {
+                        if (!isLongClickPerformed)
+                        {
+                            // Выполнение действий при долгом нажатии (LongClick)
+                            isLongClickPerformed = true;
+                            view.Alpha = 1f;
+                            ItemLongClick?.Invoke(this, position);
+                        }
+                    }, 1000);
                 }
-            };
+                else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+                {
+                    if (!isLongClickPerformed)
+                    {
+                        // Выполнение действий при клике (Click)
+                        view.Alpha = 1f;
+                        var itemId = listView.Adapter.GetItemId(position);
+                        listView.PerformItemClick(view, position, itemId);
+                    }
 
-            view.LongClick += (sender, e) =>
-            {
-                ItemLongClick?.Invoke(this, position);
+                    // Отменяем задержку для LongClick
+                    longClickHandler?.RemoveCallbacksAndMessages(null);
+                    longClickHandler = null;
+                }
             };
 
             return view;
