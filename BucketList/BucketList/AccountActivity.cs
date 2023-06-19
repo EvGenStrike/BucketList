@@ -142,6 +142,7 @@ namespace BucketList
 
         public override void OnBackPressed()
         {
+            user.UserName = userNameTextView.Text;
             Extensions.OverwriteUser(user);
             base.OnBackPressed();
         }

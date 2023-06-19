@@ -153,6 +153,9 @@ namespace BucketList
                 subgoal.Deadline = selectedDate;
                 Toast.MakeText(this, $"Дедлайн подцели \"{subgoal.Name}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
             }
+            Extensions.OverwriteGoals(Goals);
+            datesPythonCalendar.Clear();
+            SetPythonCalendarView();
         }
 
         public void SetGoals()

@@ -328,10 +328,6 @@ namespace BucketList
                 var intent = new Intent(this, typeof(PythonActivity));
                 StartActivity(intent);
             }
-            else if (id == Resource.Id.nav_allow_notifications)
-            {
-
-            }
             drawer.CloseDrawer(GravityCompat.Start);
             return true;
         }
@@ -345,6 +341,7 @@ namespace BucketList
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
+            SetUserName();
             Goals = Extensions.GetSavedGoals();
             UpdateGoalsView();
             base.OnActivityResult(requestCode, resultCode, data);
@@ -353,6 +350,8 @@ namespace BucketList
                 var newGoal = JsonNet.Deserialize<Goal>(data.GetStringExtra("goal"));
                 AddGoal(newGoal);
             }
+            datesPythonCalendar.Clear();
+            SetPythonCalendarView();
         }
 
         private List<Goal> GetGoalsForListViewWithGoalType(GoalType goalType)
@@ -506,6 +505,8 @@ namespace BucketList
 
         private void SetUserName()
         {
+            var user = Extensions.GetSavedUser();
+            userName = user.UserName;
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             var headerView = navigationView.GetHeaderView(0);
             var usernameTextView = headerView.FindViewById<TextView>(Resource.Id.usernameMainTextView);

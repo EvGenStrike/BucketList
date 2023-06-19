@@ -29,12 +29,7 @@ android:tooltipText="asdfasdfasdfsadf"
                 <item
                     android:id="@+id/nav_python_settings"
                     android:icon="@drawable/goal_add_snake"
-                    android:title="Настройка питона" />
-                <item
-                    android:id="@+id/nav_allow_notifications"
-                    android:icon="@drawable/goal_add_snake"
-                    android:title="Разрешить уведомления"
-					/>
+                    android:title="Питон" />
 			</group>
         </menu>
     </item>

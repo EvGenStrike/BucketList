@@ -42,9 +42,10 @@
         android:layout_toRightOf="@id/imageGoal"
         android:layout_toLeftOf="@id/rect2"
         android:gravity="center"
-        android:textSize="27sp"
+        android:ellipsize="end"
+        android:textSize="21sp"
         android:textColor="@android:color/white"
-        android:text="1212121"
+        android:text=""
         android:maxLines="1"
         android:layout_centerVertical="true"
     />
