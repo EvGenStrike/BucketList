@@ -42,6 +42,12 @@ namespace BucketList
             }
         }
 
+        public static void ClearSaves()
+        {
+            OverwriteUser("");
+            OverwriteGoals(new List<Goal>());
+        }
+
         public static string ReadUser()
         {
             var data = Extensions.ReadTextFile("user.txt");

@@ -1,14 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.Util;
+using BucketList.Code.Enums;
+using BucketList.Code.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BucketList
 {
@@ -17,14 +14,12 @@ namespace BucketList
     {
         private User user;
 
-        private string changeNameString;
-
-        ImageView backArrow;
-        ImageView userPhoto;
-        TextView userNameTextView;
-        EditText changeNameEditText;
-        RelativeLayout registrationDateLayout;
-        Button deleteAccountButton;
+        private ImageView backArrow;
+        private ImageView userPhoto;
+        private TextView userNameTextView;
+        private EditText changeNameEditText;
+        private RelativeLayout registrationDateLayout;
+        private Button deleteAccountButton;
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,20 +34,6 @@ namespace BucketList
             SetDeleteAccountButton();
         }
 
-        private void SetDeleteAccountButton()
-        {
-            deleteAccountButton.Click += DeleteAccountButton_Click;
-        }
-
-        private void DeleteAccountButton_Click(object sender, EventArgs e)
-        {
-            var myButton = sender as Button;
-
-            RegisterForContextMenu(myButton);
-
-            OpenContextMenu(myButton);
-        }
-
         public override void OnCreateContextMenu(IContextMenu menu, View view, IContextMenuContextMenuInfo menuInfo)
         {
             base.OnCreateContextMenu(menu, view, menuInfo);
@@ -61,26 +42,61 @@ namespace BucketList
             {
                 menu.SetHeaderTitle("Вы уверены, что хотите удалить аккаунт?");
 
-                menu.Add(Menu.None, 0, Menu.None, "Да");
-                menu.Add(Menu.None, 1, Menu.None, "Нет");
+                menu.AddOption(ContextMenuOptions.Yes);
+                menu.AddOption(ContextMenuOptions.No);
             }
         }
 
         public override bool OnContextItemSelected(IMenuItem item)
         {
-            if (item.ItemId == 0)
+            var itemId = (ContextMenuOptions)item.ItemId;
+            switch (itemId)
             {
-                DeleteAccount();
-                return true;
+                case ContextMenuOptions.Yes:
+                    DeleteAccount();
+                    return true;
+                default:
+                    return base.OnContextItemSelected(item);
             }
+        }
 
-            return base.OnContextItemSelected(item);
+        public override void OnBackPressed()
+        {
+            UpdateUser();
+            base.OnBackPressed();
+        }
+
+        private void Initialize()
+        {
+            user = Extensions.GetSavedUser();
+
+            backArrow = FindViewById<ImageView>(Resource.Id.account_screen_back_arrow);
+            userPhoto = FindViewById<ImageView>(Resource.Id.account_screen_user_photo);
+            userNameTextView = FindViewById<TextView>(Resource.Id.account_screen_user_name_text);
+            changeNameEditText = FindViewById<EditText>(Resource.Id.account_screen_change_name_edit_text);
+            registrationDateLayout = FindViewById<RelativeLayout>(Resource.Id.account_screen_registration_date_layout);
+            deleteAccountButton = FindViewById<Button>(Resource.Id.account_screen_account_delete_button);
+        }
+
+        private void UpdateUser()
+        {
+            user.UserName = userNameTextView.Text;
+            Extensions.OverwriteUser(user);
+        }
+
+        private void SetDeleteAccountButton()
+        {
+            deleteAccountButton.Click += DeleteAccountButton_Click;
+        }
+
+        private void DeleteAccountButton_Click(object sender, EventArgs e)
+        {
+            this.CreateContextMenu(deleteAccountButton);
         }
 
         private void DeleteAccount()
         {
-            Extensions.OverwriteUser("");
-            Extensions.OverwriteGoals(new List<Goal>());
+            Extensions.ClearSaves();
             var intent = new Intent(this, typeof(RegistrationActivity));
             StartActivity(intent);
         }
@@ -113,39 +129,12 @@ namespace BucketList
         private void ChangeNameEditText_TextChanged(object sender, EventArgs e)
         {
             var text = changeNameEditText.Text;
-            if (string.IsNullOrEmpty(text))
-            {
-                userNameTextView.Text = user.UserName;
-            }
-            else
-            {
-                userNameTextView.Text = text;
-            }
+            userNameTextView.Text = string.IsNullOrEmpty(text) ? user.UserName : text;
         }
 
         private void SetBackArrow()
         {
             backArrow.Click += (sender, e) => { OnBackPressed(); };
         }
-
-        private void Initialize()
-        {
-            user = Extensions.GetSavedUser();
-
-            backArrow = FindViewById<ImageView>(Resource.Id.account_screen_back_arrow);
-            userPhoto = FindViewById<ImageView>(Resource.Id.account_screen_user_photo);
-            userNameTextView = FindViewById<TextView>(Resource.Id.account_screen_user_name_text);
-            changeNameEditText = FindViewById<EditText>(Resource.Id.account_screen_change_name_edit_text);
-            registrationDateLayout = FindViewById<RelativeLayout>(Resource.Id.account_screen_registration_date_layout);
-            deleteAccountButton = FindViewById<Button>(Resource.Id.account_screen_account_delete_button);
-        }
-
-        public override void OnBackPressed()
-        {
-            user.UserName = userNameTextView.Text;
-            Extensions.OverwriteUser(user);
-            base.OnBackPressed();
-        }
-
     }
 }

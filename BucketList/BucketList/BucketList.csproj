@@ -63,7 +63,9 @@
     <Compile Include="Code\Activities\AddSubgoalActivity.cs" />
     <Compile Include="Code\Activities\AddGoalActivity.cs" />
     <Compile Include="Code\Activities\CalendarActivity.cs" />
+    <Compile Include="Code\Enums\ContextMenuOptions.cs" />
     <Compile Include="Code\Extensions\CalendarExtensions.cs" />
+    <Compile Include="Code\Extensions\ContextMenuExtensions.cs" />
     <Compile Include="Code\Models\DatePythonCalendar.cs" />
     <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Enums\DeadlineMark.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="Code\Models\Subgoal.cs" />
     <Compile Include="Code\Adapters\SubgoalAdapter.cs" />
     <Compile Include="Code\Enums\SubgoalType.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Code\Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

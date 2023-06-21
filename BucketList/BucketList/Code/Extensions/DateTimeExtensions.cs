@@ -23,6 +23,11 @@ namespace BucketList
             return new DateTime(1970, 1, 1).AddMilliseconds(millis);
         }
 
+        /// <summary>
+        /// Преобразует дату в строку формата DD.MM.YYYY
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns>Строку формата DD.MM.YYYY</returns>
         public static string ToNiceString(this DateTime dateTime)
         {
             var year = dateTime.Year;
