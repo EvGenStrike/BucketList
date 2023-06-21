@@ -38,10 +38,10 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_add_subgoal);
             goalAddButton = FindViewById<Button>(Resource.Id.subgoal_add_button);
             goalAddButton.Click += OnClick;
-            allGoals = Extensions.GetSavedGoals();
-            currentGoal = Extensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
+            allGoals = SaveExtensions.GetSavedGoals();
+            currentGoal = SaveExtensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
             maxDeadline = DateTime.Parse(Intent.GetStringExtra("maxDeadline"));
-            goalAddNameEditText = FindViewById<EditText>(Resource.Id.subgoal_add_name_text);
+            goalAddNameEditText = FindViewById<EditText>(Resource.Id.subadd_goal_screen_add_goal_name_edit_text);
             
             var datePickerButton = FindViewById<Button>(Resource.Id.button2);
             datePickerButton.Click += DatePickerButton_Click;

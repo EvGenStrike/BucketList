@@ -1,11 +1,8 @@
 ﻿using Android.App;
 using Android.Views;
-using Android.Widget;
-using AndroidX.Core.Util;
-using BucketList.Code.Enums;
 using System;
 
-namespace BucketList.Code.Extensions
+namespace BucketList
 {
     public static class ContextMenuExtensions
     {
@@ -30,7 +27,12 @@ namespace BucketList.Code.Extensions
             AddOption(menu, (int)itemID, text);
         }
 
-        public static void CreateContextMenu(this Activity activity, View? view)
+        /// <summary>
+        /// Создаёт контекстное меню
+        /// </summary>
+        /// <param name="activity">Из какой Activity вызвать этот метод (обычно передаётся this - с текущей activity)</param>
+        /// <param name="view">Для какой View создаётся контекстное меню</param>
+        public static void CreateContextMenu(Activity activity, View view)
         {
             activity.RegisterForContextMenu(view);
             activity.OpenContextMenu(view);

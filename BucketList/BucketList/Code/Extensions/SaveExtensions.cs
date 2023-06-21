@@ -13,7 +13,7 @@ using System.Text;
 
 namespace BucketList
 {
-    public static class Extensions
+    public static class SaveExtensions
     {
         public static void WriteTextFile(string fileName, string text)
         {
@@ -50,18 +50,18 @@ namespace BucketList
 
         public static string ReadUser()
         {
-            var data = Extensions.ReadTextFile("user.txt");
+            var data = ReadTextFile("user.txt");
             return data;
         }
 
         public static void OverwriteUser(string data)
         {
-            Extensions.WriteTextFile("user.txt", data);
+            WriteTextFile("user.txt", data);
         }
 
         public static void OverwriteUser(User user)
         {
-            Extensions.WriteTextFile("user.txt", Extensions.SerializeUser(user));
+            WriteTextFile("user.txt", SerializeUser(user));
         }
 
         public static string SerializeUser(User user)
@@ -76,24 +76,24 @@ namespace BucketList
 
         public static User GetSavedUser()
         {
-            return Extensions.DeserializeUser(Extensions.ReadUser());
+            return DeserializeUser(ReadUser());
         }
 
         public static string ReadGoals()
         {
-            var data = Extensions.ReadTextFile("goals.txt");
+            var data = ReadTextFile("goals.txt");
             return data;
         }
 
         public static void OverwriteGoals(string data)
         {
-            Extensions.WriteTextFile("goals.txt", data);
+            WriteTextFile("goals.txt", data);
         }
 
         public static void OverwriteGoals(List<Goal> goals)
         {
-            var data = Extensions.SerializeGoals(goals);
-            Extensions.WriteTextFile("goals.txt", data);
+            var data = SerializeGoals(goals);
+            WriteTextFile("goals.txt", data);
         }
 
         public static string SerializeGoals(List<Goal> goals)
@@ -108,7 +108,7 @@ namespace BucketList
 
         public static List<Goal> GetSavedGoals()
         {
-            return Extensions.DeserializeGoals(Extensions.ReadGoals());
+            return DeserializeGoals(ReadGoals());
         }
 
 
@@ -139,29 +139,6 @@ namespace BucketList
         public static List<Subgoal> DeserializeSubgoals(string goals)
         {
             return JsonNet.Deserialize<List<Subgoal>>(goals);
-        }
-
-        public static void SetImage(this ImageView imageView, string imagePath)
-        {
-            if (!string.IsNullOrEmpty(imagePath))
-            {
-                imageView.SetImageURI(Android.Net.Uri.FromFile(new Java.IO.File(imagePath)));
-            }
-        }
-
-        public static void DeleteImage(string imagePath)
-        {
-            if (!string.IsNullOrEmpty(imagePath))
-            {
-                try
-                {
-                    File.Delete(imagePath);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error deleting image file {e.Message}");
-                }
-            }
         }
     }
 }

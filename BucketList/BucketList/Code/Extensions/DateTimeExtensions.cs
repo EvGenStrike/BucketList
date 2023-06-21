@@ -9,9 +9,8 @@ using System.Collections.Generic;
 
 namespace BucketList
 {
-   public static class DateTimeExtensions
+    public static class DateTimeExtensions
     {
-
         public static long GetDateTimeInMillis(this DateTime dateTime)
         {
             TimeSpan timeSpan = dateTime - new DateTime(1970, 1, 1);

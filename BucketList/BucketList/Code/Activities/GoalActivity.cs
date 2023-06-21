@@ -1,22 +1,13 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.Util;
-using AndroidX.Core.View;
-using AndroidX.DrawerLayout.Widget;
+using Google.Android.Material.FloatingActionButton;
 using Json.Net;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using Android.Content.PM;
-using Google.Android.Material.FloatingActionButton;
-using System.Net.WebSockets;
 
 namespace BucketList
 {
@@ -64,7 +55,7 @@ namespace BucketList
         private void ButtonCalendarOpen_Click(object sender, EventArgs e)
         {
             var intent = new Intent(this, typeof(CalendarActivity));
-            intent.PutExtra("goals", Extensions.SerializeSubgoals(CurrentGoal.Subgoals));
+            intent.PutExtra("goals", SaveExtensions.SerializeSubgoals(CurrentGoal.Subgoals));
             StartActivity(intent);
         }
 
@@ -93,10 +84,10 @@ namespace BucketList
         private void DoGoalButton_Click(object sender, EventArgs e)
         {
             CurrentGoal.GoalType = GoalType.Done;
-            Extensions.OverwriteGoals(Goals);
-            user = Extensions.GetSavedUser();
+            SaveExtensions.OverwriteGoals(Goals);
+            user = SaveExtensions.GetSavedUser();
             user.UserStatistics.GoalsDoneCount++;
-            Extensions.OverwriteUser(user);
+            SaveExtensions.OverwriteUser(user);
             OnBackPressed();
         }
 
@@ -153,14 +144,14 @@ namespace BucketList
                 subgoal.Deadline = selectedDate;
                 Toast.MakeText(this, $"Дедлайн подцели \"{subgoal.Name}\" изменён на {selectedDateInString}", ToastLength.Long).Show();
             }
-            Extensions.OverwriteGoals(Goals);
+            SaveExtensions.OverwriteGoals(Goals);
             datesPythonCalendar.Clear();
             SetPythonCalendarView();
         }
 
         public void SetGoals()
         {
-            Goals = Extensions.GetSavedGoals();
+            Goals = SaveExtensions.GetSavedGoals();
         }
 
         public void Initialize()
@@ -245,13 +236,13 @@ namespace BucketList
         {
             var intent = new Intent(this, typeof(AddSubgoalActivity));
             intent.PutExtra("maxDeadline", CurrentGoal.Deadline.ToString());
-            intent.PutExtra("currentGoal", Extensions.SerializeGoal(CurrentGoal));
+            intent.PutExtra("currentGoal", SaveExtensions.SerializeGoal(CurrentGoal));
             StartActivityForResult(intent, 1);
         }
 
         private void UpdateSubgoalsListView()
         {
-            Extensions.OverwriteGoals(Goals);
+            SaveExtensions.OverwriteGoals(Goals);
             var listView = FindViewById<ListView>(Resource.Id.goal_screen_subgoals_list_view);
             var adapter = new SubgoalAdapter(this, CurrentGoal.Subgoals, listView);
             
@@ -265,7 +256,7 @@ namespace BucketList
         private void CalendarFab_Click(object sender, EventArgs e)
         {
             var fab = sender as FloatingActionButton;
-            var subgoal = Extensions.DeserializeSubgoal((string)fab.Tag);
+            var subgoal = SaveExtensions.DeserializeSubgoal((string)fab.Tag);
             var datePickerDialog = GetDatePickerDialog
                 (
                 $"Изменить дедлайн подцели \"{subgoal.Name}\"?",

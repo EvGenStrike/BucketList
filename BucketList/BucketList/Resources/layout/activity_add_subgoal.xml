@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/subgoal_add_image"
+        android:id="@+id/subadd_goal_screen_goal_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginTop="20dp"
@@ -16,47 +16,47 @@
     />
 
     <ImageView
-        android:id="@+id/subgoal_add_name_snake_icon"
+        android:id="@+id/subadd_goal_screen_add_goal_name_snake_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/subgoal_add_image"
+        android:layout_below="@id/subadd_goal_screen_goal_image"
         android:tint="@color/colorYellow"
         android:src="@drawable/goal_add_snake"
     />
 
     <EditText
         android:inputType="text"
-        android:id="@+id/subgoal_add_name_text"
+        android:id="@+id/subadd_goal_screen_add_goal_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/subgoal_add_name_snake_icon"
+        android:layout_toEndOf="@id/subadd_goal_screen_add_goal_name_snake_icon"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:textColor="@android:color/white"
-        android:layout_below="@id/subgoal_add_image"
-        android:hint="@string/subgoal_add_name_text"
+        android:layout_below="@id/subadd_goal_screen_goal_image"
+        android:hint="@string/subadd_goal_screen_add_goal_name_edit_text"
         android:textColorHint="@android:color/white"
         android:backgroundTint="@android:color/white"
     />
 
     <ImageView
-        android:id="@+id/subgoal_add_date_snake_icon"
+        android:id="@+id/subadd_goal_screen_add_goal_deadline_snake_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/subgoal_add_name_text"
+        android:layout_below="@id/subadd_goal_screen_add_goal_name_edit_text"
         android:tint="@color/colorYellow"
         android:src="@drawable/goal_add_snake"
     />
 
     <Button
-        android:text="@string/subgoal_add_button_text"
+        android:text="@string/subadd_goal_screen_add_goal_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minWidth="25px"
@@ -69,14 +69,14 @@
         android:background="@drawable/button_rectangle"
     />
     <Button
-        android:text="@string/goal_add_deadline_text"
+        android:text="@string/add_goal_screen_add_goal_deadline_button"
         android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/subgoal_add_date_snake_icon"
-        android:layout_below="@id/subgoal_add_name_text"
+        android:layout_toRightOf="@id/subadd_goal_screen_add_goal_deadline_snake_icon"
+        android:layout_below="@id/subadd_goal_screen_add_goal_name_edit_text"
         android:id="@+id/button2"
         android:background="@drawable/button_rectangle"
     />

@@ -23,7 +23,7 @@ namespace BucketList
             var progBar = FindViewById<ProgressBar>(Resource.Id.progressBar1);
             var countDoneGoalsText = FindViewById<TextView>(Resource.Id.pythonDeadlineCountText);
 
-            var countDoneGoals = Extensions.GetSavedUser().UserStatistics.GoalsDoneCount;
+            var countDoneGoals = SaveExtensions.GetSavedUser().UserStatistics.GoalsDoneCount;
             // Увеличить прогресс на заданную величину
             progBar.Progress = countDoneGoals;
             countDoneGoalsText.Text = countDoneGoals.ToString();

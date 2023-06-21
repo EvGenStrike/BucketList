@@ -63,13 +63,16 @@
     <Compile Include="Code\Activities\AddSubgoalActivity.cs" />
     <Compile Include="Code\Activities\AddGoalActivity.cs" />
     <Compile Include="Code\Activities\CalendarActivity.cs" />
+    <Compile Include="Code\Constants\Constants.cs" />
     <Compile Include="Code\Enums\ContextMenuOptions.cs" />
     <Compile Include="Code\Extensions\CalendarExtensions.cs" />
     <Compile Include="Code\Extensions\ContextMenuExtensions.cs" />
+    <Compile Include="Code\Extensions\GoalExtensions.cs" />
+    <Compile Include="Code\Extensions\ImageExtensions.cs" />
     <Compile Include="Code\Models\DatePythonCalendar.cs" />
     <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Enums\DeadlineMark.cs" />
-    <Compile Include="Code\Extensions\Extensions.cs" />
+    <Compile Include="Code\Extensions\SaveExtensions.cs" />
     <Compile Include="Code\Models\Goal.cs" />
     <Compile Include="Code\Activities\GoalActivity.cs" />
     <Compile Include="Code\Adapters\GoalAdapter.cs" />

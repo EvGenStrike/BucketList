@@ -37,7 +37,7 @@ namespace BucketList
             var dialogTextView = datePickerView.FindViewById<TextView>(Resource.Id.addGoalTopText);
             dialogTextView.Text = dialogName;
             datePickerDialog.SetView(datePickerView);
-            calendarView.MinDate = DateTime.Now.GetDateTimeInMillis();
+            calendarView.MinDate = currentDate.GetDateTimeInMillis();
             calendarView.FirstDayOfWeek = 2;
             calendarView.DateChange += onDateChange;
             calendarSetup?.Invoke(calendarView);

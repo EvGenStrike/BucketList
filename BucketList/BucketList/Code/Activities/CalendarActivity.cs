@@ -4,16 +4,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Android.Graphics;
-using static Android.InputMethodServices.Keyboard;
 using System.Globalization;
 using Google.Android.Material.FloatingActionButton;
-using Android.Icu.Text;
 
 namespace BucketList
 {
@@ -32,7 +27,7 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_calendar);
 
             var goalsJson = Intent.GetStringExtra("goals");
-            goals = Extensions.DeserializeGoals(goalsJson).Cast<IGoal>().ToList();
+            goals = SaveExtensions.DeserializeGoals(goalsJson).Cast<IGoal>().ToList();
 
             var nextButton = FindViewById<FloatingActionButton>(Resource.Id.nextMonthButton);
             var previousButton = FindViewById<FloatingActionButton>(Resource.Id.previousMonthButton);

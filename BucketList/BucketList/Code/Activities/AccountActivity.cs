@@ -3,8 +3,6 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using BucketList.Code.Enums;
-using BucketList.Code.Extensions;
 using System;
 
 namespace BucketList
@@ -68,7 +66,7 @@ namespace BucketList
 
         private void Initialize()
         {
-            user = Extensions.GetSavedUser();
+            user = SaveExtensions.GetSavedUser();
 
             backArrow = FindViewById<ImageView>(Resource.Id.account_screen_back_arrow);
             userPhoto = FindViewById<ImageView>(Resource.Id.account_screen_user_photo);
@@ -78,32 +76,9 @@ namespace BucketList
             deleteAccountButton = FindViewById<Button>(Resource.Id.account_screen_account_delete_button);
         }
 
-        private void UpdateUser()
-        {
-            user.UserName = userNameTextView.Text;
-            Extensions.OverwriteUser(user);
-        }
-
         private void SetDeleteAccountButton()
         {
             deleteAccountButton.Click += DeleteAccountButton_Click;
-        }
-
-        private void DeleteAccountButton_Click(object sender, EventArgs e)
-        {
-            this.CreateContextMenu(deleteAccountButton);
-        }
-
-        private void DeleteAccount()
-        {
-            Extensions.ClearSaves();
-            var intent = new Intent(this, typeof(RegistrationActivity));
-            StartActivity(intent);
-        }
-
-        private void SetUserPhoto()
-        {
-            userPhoto.SetImage(user.UserPhotoPath);
         }
 
         private void SetRegistrationDate()
@@ -111,9 +86,32 @@ namespace BucketList
             registrationDateLayout.Click += RegistrationDateLayout_Click;
         }
 
+        private void DeleteAccountButton_Click(object sender, EventArgs e)
+        {
+            ContextMenuExtensions.CreateContextMenu(this, deleteAccountButton);
+        }
+
         private void RegistrationDateLayout_Click(object sender, EventArgs e)
         {
             Toast.MakeText(this, user.UserRegistrationDate.ToNiceString(), 0).Show();
+        }
+
+        private void UpdateUser()
+        {
+            user.UserName = userNameTextView.Text;
+            SaveExtensions.OverwriteUser(user);
+        }
+
+        private void DeleteAccount()
+        {
+            SaveExtensions.ClearSaves();
+            var intent = new Intent(this, typeof(RegistrationActivity));
+            StartActivity(intent);
+        }
+
+        private void SetUserPhoto()
+        {
+            userPhoto.SetImage(user.UserPhotoPath);
         }
 
         private void SetUserNameView()
