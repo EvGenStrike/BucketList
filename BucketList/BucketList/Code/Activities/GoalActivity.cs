@@ -235,7 +235,6 @@ namespace BucketList
         private void SwitchToAddGoalScreen()
         {
             var intent = new Intent(this, typeof(AddSubgoalActivity));
-            intent.PutExtra("maxDeadline", CurrentGoal.Deadline.ToString());
             intent.PutExtra("currentGoal", SaveExtensions.SerializeGoal(CurrentGoal));
             StartActivityForResult(intent, 1);
         }

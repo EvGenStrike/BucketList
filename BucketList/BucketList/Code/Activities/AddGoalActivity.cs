@@ -72,15 +72,47 @@ namespace BucketList
             base.OnBackPressed();
         }
 
+        public virtual void GetData()
+        {
+            goals = SaveExtensions.GetSavedGoals();
+        }
+
+        public virtual bool IsValidGoal(string goalName, DateTime goalDeadline)
+        {
+            if (goals.Any(x => x.Name == goalName))
+            {
+                Toast.MakeText(this, "Цель с таким названием уже существует", ToastLength.Short).Show();
+                return false;
+            }
+            if (!GoalExtensions.IsValidDeadline(goalDeadline))
+            {
+                Toast.MakeText(this, "Неверный дедлайн", ToastLength.Short).Show();
+                return false;
+            }
+            return true;
+        }
+
+        public virtual void CalendarSetup(CalendarView calendarView)
+        {
+            var selectedDate = GetGoalDateTime();
+            if (GoalExtensions.IsValidDeadline(selectedDate))
+                calendarView.Date = selectedDate.GetDateTimeInMillis();
+        }
+
+        public DateTime GetGoalDateTime()
+        {
+            return selectedDate;
+        }
+
         private void Initialize()
         {
             addGoalButton = FindViewById<Button>(Resource.Id.add_goal_screen_add_goal_button);
             goalNameEditText = FindViewById<EditText>(Resource.Id.add_goal_screen_add_goal_name_edit_text);
             chooseImageButton = FindViewById<Button>(Resource.Id.add_goal_screen_choose_image_button);
             goalImage = FindViewById<ImageView>(Resource.Id.add_goal_screen_goal_image);
-            goals = SaveExtensions.GetSavedGoals();
             datePickerButton = FindViewById<Button>(Resource.Id.add_goal_screen_add_goal_deadline_button);
-        }
+            GetData();
+        }        
 
         private void SetAddGoalButton()
         {
@@ -118,30 +150,9 @@ namespace BucketList
 
         private void DatePickerButton_Click(object sender, EventArgs e)
         {
-            Action<CalendarView> calendarSetup = (calendarView) =>
-            {
-                var selectedDate = GetGoalDateTime();
-                if (GoalExtensions.IsValidDeadline(GetGoalDateTime()))
-                    calendarView.Date = selectedDate.GetDateTimeInMillis();
-            };
-            var datePickerDialog = CalendarExtensions.GetDatePickerDialog(this, "Выберите дату", OnDateSet, OnDateChange, calendarSetup);
+            var datePickerDialog = CalendarExtensions.GetDatePickerDialog(this, "Выберите дату", OnDateSet, OnDateChange, CalendarSetup);
             datePickerDialog.Show();
-        }
-
-        private bool IsValidGoal(string goalName, DateTime goalDeadline)
-        {
-            if (string.IsNullOrEmpty(goalName) || goals.Any(x => x.Name == goalName))
-            {
-                Toast.MakeText(this, "Цель с таким названием уже существует", ToastLength.Short).Show();
-                return false;
-            }
-            if (!GoalExtensions.IsValidDeadline(goalDeadline))
-            {
-                Toast.MakeText(this, "Неверный дедлайн", ToastLength.Short).Show();
-                return false;
-            }
-            return true;
-        }
+        }      
 
         private string GetGoalNameText()
         {
@@ -150,12 +161,6 @@ namespace BucketList
                 ? "Новая цель"
                 : text;
         }
-
-        private DateTime GetGoalDateTime()
-        {
-            return selectedDate;
-        }
-
 
         private void OnDateChange(object sender, CalendarView.DateChangeEventArgs args)
         {

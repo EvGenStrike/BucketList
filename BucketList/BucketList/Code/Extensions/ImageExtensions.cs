@@ -16,6 +16,10 @@ namespace BucketList
             }
         }
 
+        /// <summary>
+        /// Удаляет изображение из файлов приложения
+        /// </summary>
+        /// <param name="imagePath"></param>
         public static void DeleteImage(string imagePath)
         {
             if (!string.IsNullOrEmpty(imagePath))

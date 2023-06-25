@@ -248,9 +248,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_add_subgoal.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable-v21\dateInCalendarWithPython.xml" />
   </ItemGroup>
   <ItemGroup>
