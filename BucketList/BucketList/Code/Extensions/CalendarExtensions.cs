@@ -15,7 +15,7 @@ namespace BucketList
     {
         public static DatePickerDialog GetDatePickerDialog
             (
-            this Context context,
+            Context context,
             string dialogName,
             EventHandler<DatePickerDialog.DateSetEventArgs> onDateSet,
             EventHandler<CalendarView.DateChangeEventArgs> onDateChange,

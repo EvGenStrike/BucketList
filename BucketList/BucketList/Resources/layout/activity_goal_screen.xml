@@ -199,6 +199,7 @@
         android:layout_above="@id/goal_screen_do_goal_button"
         app:srcCompat="@drawable/ic_add"
         app:maxImageSize="60dp"
+        app:backgroundTint="@color/colorMainViolet"
     />
 
     <Button

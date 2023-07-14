@@ -72,7 +72,7 @@ namespace BucketList
             base.OnBackPressed();
         }
 
-        public virtual void GetData()
+        public virtual void InitializeAdditionalData()
         {
             goals = SaveExtensions.GetSavedGoals();
         }
@@ -111,7 +111,7 @@ namespace BucketList
             chooseImageButton = FindViewById<Button>(Resource.Id.add_goal_screen_choose_image_button);
             goalImage = FindViewById<ImageView>(Resource.Id.add_goal_screen_goal_image);
             datePickerButton = FindViewById<Button>(Resource.Id.add_goal_screen_add_goal_deadline_button);
-            GetData();
+            InitializeAdditionalData();
         }        
 
         private void SetAddGoalButton()
@@ -170,7 +170,8 @@ namespace BucketList
 
         private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            if (!GoalExtensions.IsValidDeadline(GetGoalDateTime()))
+            var selectedDate = GetGoalDateTime();
+            if (!GoalExtensions.IsValidDeadline(selectedDate))
             {
                 Toast.MakeText(this, "Неверный дедлайн", ToastLength.Short).Show();
                 return;

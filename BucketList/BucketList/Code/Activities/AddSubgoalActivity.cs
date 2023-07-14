@@ -11,7 +11,7 @@ namespace BucketList
     {
         private Goal currentGoal;
 
-        public override void GetData()
+        public override void InitializeAdditionalData()
         {
             currentGoal = SaveExtensions.DeserializeGoal(Intent.GetStringExtra("currentGoal"));
         }

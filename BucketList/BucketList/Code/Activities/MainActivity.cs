@@ -27,7 +27,7 @@ namespace BucketList
 
 
         public List<Goal> Goals;
-        public List<DatePythonCalendar> datesPythonCalendar;
+        public List<DateInPythonCalendar> datesPythonCalendar;
         private User user;
         private string userName;
         private Goal currentGoalName;
@@ -166,7 +166,7 @@ namespace BucketList
 
         private void Initialize()
         {
-            datesPythonCalendar = new List<DatePythonCalendar>();
+            datesPythonCalendar = new List<DateInPythonCalendar>();
 
             if (string.IsNullOrEmpty(SaveExtensions.ReadGoals()))
                 SaveExtensions.OverwriteGoals(SaveExtensions.SerializeGoals(new List<Goal>()));
@@ -600,7 +600,7 @@ namespace BucketList
                 {
                     if (goal.Deadline.Date == firstDayInCalendar.Date)
                     {
-                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                         canAddDateWithoutGoal = false;
                         break;
                     }
@@ -612,7 +612,7 @@ namespace BucketList
                 {
                     if (goal.Deadline.Date == firstDayInCalendar.Date)
                     {
-                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                         canAddDateWithoutGoal = false;
                         break;
                     }
@@ -621,7 +621,7 @@ namespace BucketList
             
 
             if (canAddDateWithoutGoal)
-                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
+                datesPythonCalendar.Add(new DateInPythonCalendar(firstDayInCalendar, dateView));
         }
 
         private void ButtonCalendarOpen_Click(object sender, EventArgs e)
@@ -631,7 +631,7 @@ namespace BucketList
             StartActivity(intent);
         }
 
-        private void AddGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
+        private void AddGoalUpdateCalendar(Goal goal, DateInPythonCalendar date)
         {
             if (date.Deadline.Date == goal.Deadline.Date)
             {
@@ -644,7 +644,7 @@ namespace BucketList
             }
         }
 
-        private void DeleteGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
+        private void DeleteGoalUpdateCalendar(Goal goal, DateInPythonCalendar date)
         {
             if (goal.Deadline.Date == date.Deadline.Date)
             {

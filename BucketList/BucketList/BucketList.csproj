@@ -69,7 +69,7 @@
     <Compile Include="Code\Extensions\ContextMenuExtensions.cs" />
     <Compile Include="Code\Extensions\GoalExtensions.cs" />
     <Compile Include="Code\Extensions\ImageExtensions.cs" />
-    <Compile Include="Code\Models\DatePythonCalendar.cs" />
+    <Compile Include="Code\Models\DateInPythonCalendar.cs" />
     <Compile Include="Code\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Code\Enums\DeadlineMark.cs" />
     <Compile Include="Code\Extensions\SaveExtensions.cs" />

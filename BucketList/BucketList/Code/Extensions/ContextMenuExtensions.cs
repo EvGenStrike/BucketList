@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Views;
 using System;
+using static Android.Content.ClipData;
 
 namespace BucketList
 {
@@ -13,18 +14,30 @@ namespace BucketList
 
         public static void AddOption(this IContextMenu menu, ContextMenuOptions itemID)
         {
-            var text = itemID switch
-            {
-                ContextMenuOptions.Yes => "Да",
-                ContextMenuOptions.No => "Нет",
-                _ => throw new ArgumentOutOfRangeException(),
-            };
+            var text = GetStringRepresentationOfMenuOption(itemID);
             AddOption(menu, itemID, text);
         }
 
         public static void AddOption(this IContextMenu menu, ContextMenuOptions itemID, string text)
         {
             AddOption(menu, (int)itemID, text);
+        }
+
+        public static void AddOption(this IContextMenu menu, int itemID, ContextMenuOptions menuOption)
+        {
+            var text = GetStringRepresentationOfMenuOption(menuOption);
+            AddOption(menu, itemID, text);
+        }
+
+        private static string GetStringRepresentationOfMenuOption(ContextMenuOptions menuOption)
+        {
+            var text = menuOption switch
+            {
+                ContextMenuOptions.Yes => "Да",
+                ContextMenuOptions.No => "Нет",
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+            return text;
         }
 
         /// <summary>

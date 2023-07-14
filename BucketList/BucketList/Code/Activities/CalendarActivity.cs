@@ -15,7 +15,7 @@ namespace BucketList
     [Activity(Label = "CalendarActivity")]
     public class CalendarActivity : Activity
     {
-        private List<DatePythonCalendar> datesPythonCalendar = new List<DatePythonCalendar>();
+        private List<DateInPythonCalendar> datesPythonCalendar = new List<DateInPythonCalendar>();
         public List<TextView> textViewsWithClickEventSubscribe = new List<TextView>();
         private List<IGoal> goals = new List<IGoal>();
         private GridLayout calendar;
@@ -201,14 +201,14 @@ namespace BucketList
             {
                 if (goal.Deadline.Date == firstDayInCalendar.Date)
                 {
-                    datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                    datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                     canAddDateWithoutGoal = false;
                     break;
                 }
             }
 
             if (canAddDateWithoutGoal)
-                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
+                datesPythonCalendar.Add(new DateInPythonCalendar(firstDayInCalendar, dateView));
         }
 
         private int GetFirstDayIndexInCalendar(DayOfWeek dayOfWeek, GridLayout calendar)
@@ -271,7 +271,7 @@ namespace BucketList
         {
             var textView = sender as TextView;
 
-            var goal = textView.Tag.JavaCast<DatePythonCalendar>().Goal;
+            var goal = textView.Tag.JavaCast<DateInPythonCalendar>().Goal;
             CreateDateDialog(goal);
         }
 
