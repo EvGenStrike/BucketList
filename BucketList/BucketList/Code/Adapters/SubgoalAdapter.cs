@@ -80,7 +80,7 @@ namespace BucketList
             
             var subgoalName = view.FindViewById<TextView>(Resource.Id.subgoal_name);
             var subgoalCalendarButton = view.FindViewById<FloatingActionButton>(Resource.Id.subgoal_calendar_button);
-            subgoalCalendarButton.Tag = Extensions.SerializeSubgoal(subgoals[position]);
+            subgoalCalendarButton.Tag = SaveExtensions.SerializeSubgoal(subgoals[position]);
             subgoalName.Text = subgoals[position].Name;
 
             if(subgoals[position].GoalType == GoalType.Future)

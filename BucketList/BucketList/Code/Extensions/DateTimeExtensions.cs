@@ -9,9 +9,8 @@ using System.Collections.Generic;
 
 namespace BucketList
 {
-   public static class DateTimeExtensions
+    public static class DateTimeExtensions
     {
-
         public static long GetDateTimeInMillis(this DateTime dateTime)
         {
             TimeSpan timeSpan = dateTime - new DateTime(1970, 1, 1);
@@ -23,6 +22,11 @@ namespace BucketList
             return new DateTime(1970, 1, 1).AddMilliseconds(millis);
         }
 
+        /// <summary>
+        /// Преобразует дату в строку формата DD.MM.YYYY
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns>Строку формата DD.MM.YYYY</returns>
         public static string ToNiceString(this DateTime dateTime)
         {
             var year = dateTime.Year;

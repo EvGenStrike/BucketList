@@ -7,14 +7,14 @@
 	<string name="empty_string">""</string>
 	
 	<string name="goal_title_text">"Цель:"</string>
-	<string name="goal_add_name_text">"Название цели"</string>
+	<string name="add_goal_screen_add_goal_name_edit_text">"Название цели"</string>
 	<string name="goal_add_date_text">"Дата дедлайна"</string>
-	<string name="goal_add_button_text">"Создать цель"</string>
-	<string name="goal_add_deadline_text">"Установить дедлайн"</string>
+	<string name="add_goal_screen_add_goal_button">"Создать цель"</string>
+	<string name="add_goal_screen_add_goal_deadline_button">"Установить дедлайн"</string>
 
 	<string name="subgoal_title_text">"Подцели для текущей цели:"</string>
-	<string name="subgoal_add_name_text">"Название подцели"</string>
-	<string name="subgoal_add_button_text">"Создать подцель"</string>
+	<string name="subadd_goal_screen_add_goal_name_edit_text">"Название подцели"</string>
+	<string name="subadd_goal_screen_add_goal_button">"Создать подцель"</string>
 
 	<string name="registration_header_text">"Укажите имя"</string>
 	<string name="registration_add_name_text">"Имя пользователя"</string>

@@ -4,23 +4,18 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Android.Graphics;
-using static Android.InputMethodServices.Keyboard;
 using System.Globalization;
 using Google.Android.Material.FloatingActionButton;
-using Android.Icu.Text;
 
 namespace BucketList
 {
     [Activity(Label = "CalendarActivity")]
     public class CalendarActivity : Activity
     {
-        private List<DatePythonCalendar> datesPythonCalendar = new List<DatePythonCalendar>();
+        private List<DateInPythonCalendar> datesPythonCalendar = new List<DateInPythonCalendar>();
         public List<TextView> textViewsWithClickEventSubscribe = new List<TextView>();
         private List<IGoal> goals = new List<IGoal>();
         private GridLayout calendar;
@@ -32,7 +27,7 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_calendar);
 
             var goalsJson = Intent.GetStringExtra("goals");
-            goals = Extensions.DeserializeGoals(goalsJson).Cast<IGoal>().ToList();
+            goals = SaveExtensions.DeserializeGoals(goalsJson).Cast<IGoal>().ToList();
 
             var nextButton = FindViewById<FloatingActionButton>(Resource.Id.nextMonthButton);
             var previousButton = FindViewById<FloatingActionButton>(Resource.Id.previousMonthButton);
@@ -206,14 +201,14 @@ namespace BucketList
             {
                 if (goal.Deadline.Date == firstDayInCalendar.Date)
                 {
-                    datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                    datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                     canAddDateWithoutGoal = false;
                     break;
                 }
             }
 
             if (canAddDateWithoutGoal)
-                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
+                datesPythonCalendar.Add(new DateInPythonCalendar(firstDayInCalendar, dateView));
         }
 
         private int GetFirstDayIndexInCalendar(DayOfWeek dayOfWeek, GridLayout calendar)
@@ -276,7 +271,7 @@ namespace BucketList
         {
             var textView = sender as TextView;
 
-            var goal = textView.Tag.JavaCast<DatePythonCalendar>().Goal;
+            var goal = textView.Tag.JavaCast<DateInPythonCalendar>().Goal;
             CreateDateDialog(goal);
         }
 

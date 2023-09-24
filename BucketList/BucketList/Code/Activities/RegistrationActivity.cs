@@ -32,7 +32,7 @@ namespace BucketList
             SetContentView(Resource.Layout.activity_registration);
             username = FindViewById<EditText>(Resource.Id.registration_add_name_edittext);
 
-            var name = Extensions.ReadUser();
+            var name = SaveExtensions.ReadUser();
             //var name = "";
 
             if (!string.IsNullOrEmpty(name))
@@ -146,9 +146,9 @@ namespace BucketList
             if (!string.IsNullOrEmpty(name))
             {
                 var user = new User(name, imagePath);
-                var userSerialied = Extensions.SerializeUser(user);
-                Extensions.OverwriteUser(userSerialied);
-                Extensions.OverwriteGoals(new List<Goal>());
+                var userSerialied = SaveExtensions.SerializeUser(user);
+                SaveExtensions.OverwriteUser(userSerialied);
+                SaveExtensions.OverwriteGoals(new List<Goal>());
                 var intent = new Intent(this, typeof(MainActivity));
                 intent.PutExtra("username", "outdated");
                 StartActivity(intent);

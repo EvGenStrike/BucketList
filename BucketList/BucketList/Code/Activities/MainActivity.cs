@@ -1,39 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.Graphics;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Widget;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
+using Android.Widget;
+using Android.Content;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
-using Google.Android.Material.Snackbar;
-using Android.Widget;
-using Java.Lang;
 using System.Linq;
-using AndroidX.Core.Util;
-using Android.Content;
-using System.IO;
-using Android.Text;
-using Google.Android.Material.Resources;
-using Android.Text.Style;
-using Android.Util;
 using Json.Net;
 using AlertDialog = Android.App.AlertDialog;
-using Java.Util;
-using AndroidX.Core.App;
-using Android.App.Job;
 using Enum = System.Enum;
-using System.Drawing;
-using Android.Content.Res;
-using AndroidX.Core.Content;
-using Google.Android.Material.Internal;
-using Android.Telephony;
-using System.Numerics;
 
 namespace BucketList
 {
@@ -46,7 +27,7 @@ namespace BucketList
 
 
         public List<Goal> Goals;
-        public List<DatePythonCalendar> datesPythonCalendar;
+        public List<DateInPythonCalendar> datesPythonCalendar;
         private User user;
         private string userName;
         private Goal currentGoalName;
@@ -151,7 +132,7 @@ namespace BucketList
                     continue;
                 previouslyFailedGoals.Add(hashcode, failedGoal);
             }
-            Extensions.OverwriteUser(user);
+            SaveExtensions.OverwriteUser(user);
         }
 
         private List<Goal> GetFailedGoals()
@@ -185,13 +166,13 @@ namespace BucketList
 
         private void Initialize()
         {
-            datesPythonCalendar = new List<DatePythonCalendar>();
+            datesPythonCalendar = new List<DateInPythonCalendar>();
 
-            if (string.IsNullOrEmpty(Extensions.ReadGoals()))
-                Extensions.OverwriteGoals(Extensions.SerializeGoals(new List<Goal>()));
+            if (string.IsNullOrEmpty(SaveExtensions.ReadGoals()))
+                SaveExtensions.OverwriteGoals(SaveExtensions.SerializeGoals(new List<Goal>()));
 
-            Goals = Extensions.GetSavedGoals();
-            user = Extensions.GetSavedUser();
+            Goals = SaveExtensions.GetSavedGoals();
+            user = SaveExtensions.GetSavedUser();
 
             currentGoalType = GoalType.Any;
             SetFailedGoals();
@@ -342,12 +323,12 @@ namespace BucketList
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             SetUserName();
-            Goals = Extensions.GetSavedGoals();
+            Goals = SaveExtensions.GetSavedGoals();
             UpdateGoalsView();
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok && data != null)
             {
-                var newGoal = JsonNet.Deserialize<Goal>(data.GetStringExtra("goal"));
+                var newGoal = SaveExtensions.DeserializeGoal(data.GetStringExtra("goal"));
                 AddGoal(newGoal);
             }
             datesPythonCalendar.Clear();
@@ -375,7 +356,7 @@ namespace BucketList
                 AddGoalUpdateCalendar(goal, date);
             }
             user.UserStatistics.GoalsCreatedCount++;
-            Extensions.OverwriteUser(user);
+            SaveExtensions.OverwriteUser(user);
             UpdateGoalsView();
 
             var notificationTime = DateTime.Now.AddSeconds(15);
@@ -413,21 +394,21 @@ namespace BucketList
 
         private void RemoveGoal(Goal goal)
         {
-            Extensions.DeleteImage(goal.ImagePath);
+            ImageExtensions.DeleteImage(goal.ImagePath);
             Goals.Remove(goal);
             foreach (var date in datesPythonCalendar)
             {
                 DeleteGoalUpdateCalendar(goal, date);
             }
             user.UserStatistics.GoalsDeletedCount++;
-            Extensions.OverwriteUser(user);
+            SaveExtensions.OverwriteUser(user);
             UpdateGoalsView();
         }
 
         private void UpdateGoalsView()
         {
-            var serializedGoals = Extensions.SerializeGoals(Goals);
-            Extensions.OverwriteGoals(serializedGoals);
+            var serializedGoals = SaveExtensions.SerializeGoals(Goals);
+            SaveExtensions.OverwriteGoals(serializedGoals);
             //var listView = FindViewById<ListView>(Resource.Id.goalsListView);
             //var adapter = new ArrayAdapter<string>(this, Resource.Layout.all_goals_list_item, Goals.Select(x => x.Name).ToList());
             //listView.Adapter = adapter;
@@ -494,7 +475,7 @@ namespace BucketList
 
         private void SetNavigationView()
         {
-            var user = Extensions.GetSavedUser();
+            var user = SaveExtensions.GetSavedUser();
             userName = user.UserName;
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             var headerView = navigationView.GetHeaderView(0);
@@ -505,7 +486,7 @@ namespace BucketList
 
         private void SetUserName()
         {
-            var user = Extensions.GetSavedUser();
+            var user = SaveExtensions.GetSavedUser();
             userName = user.UserName;
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             var headerView = navigationView.GetHeaderView(0);
@@ -619,7 +600,7 @@ namespace BucketList
                 {
                     if (goal.Deadline.Date == firstDayInCalendar.Date)
                     {
-                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                         canAddDateWithoutGoal = false;
                         break;
                     }
@@ -631,7 +612,7 @@ namespace BucketList
                 {
                     if (goal.Deadline.Date == firstDayInCalendar.Date)
                     {
-                        datesPythonCalendar.Add(new DatePythonCalendar(goal, goal.Deadline, dateView));
+                        datesPythonCalendar.Add(new DateInPythonCalendar(goal, goal.Deadline, dateView));
                         canAddDateWithoutGoal = false;
                         break;
                     }
@@ -640,17 +621,17 @@ namespace BucketList
             
 
             if (canAddDateWithoutGoal)
-                datesPythonCalendar.Add(new DatePythonCalendar(firstDayInCalendar, dateView));
+                datesPythonCalendar.Add(new DateInPythonCalendar(firstDayInCalendar, dateView));
         }
 
         private void ButtonCalendarOpen_Click(object sender, EventArgs e)
         {
             var intent = new Intent(this, typeof(CalendarActivity));
-            intent.PutExtra("goals", Extensions.SerializeGoals(Goals));
+            intent.PutExtra("goals", SaveExtensions.SerializeGoals(Goals));
             StartActivity(intent);
         }
 
-        private void AddGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
+        private void AddGoalUpdateCalendar(Goal goal, DateInPythonCalendar date)
         {
             if (date.Deadline.Date == goal.Deadline.Date)
             {
@@ -663,7 +644,7 @@ namespace BucketList
             }
         }
 
-        private void DeleteGoalUpdateCalendar(Goal goal, DatePythonCalendar date)
+        private void DeleteGoalUpdateCalendar(Goal goal, DateInPythonCalendar date)
         {
             if (goal.Deadline.Date == date.Deadline.Date)
             {

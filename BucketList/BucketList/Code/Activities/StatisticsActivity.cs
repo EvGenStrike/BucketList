@@ -1,18 +1,6 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using AndroidX.AppCompat.App;
-using AndroidX.Core.View;
-using AndroidX.DrawerLayout.Widget;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using static Android.Telephony.CarrierConfigManager;
 
 namespace BucketList
 {
@@ -54,13 +42,13 @@ namespace BucketList
 
         private void SetUser()
         {
-            user = Extensions.GetSavedUser();
+            user = SaveExtensions.GetSavedUser();
         }
 
         private void SetUserPhoto()
         {
 
-            var photoPath = Extensions.GetSavedUser().UserPhotoPath;
+            var photoPath = SaveExtensions.GetSavedUser().UserPhotoPath;
             userPhoto = FindViewById<ImageView>(Resource.Id.statistics_screen_user_photo);
             userPhoto.SetImage(photoPath);
         }
